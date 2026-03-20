@@ -18,11 +18,11 @@ These items are specified but not implemented in v1.0. They are concrete enough 
 
 ### 2. Migration Assistant
 
-**What:** A guided flow for importing existing note collections into a generated Ars Contexta system. Detects common formats (Obsidian, Notion export, plain markdown), maps existing structure to the three-space architecture, and proposes schema additions for existing frontmatter.
+**What:** A guided flow for importing existing note collections into a generated CSP Workflow Engine system. Detects common formats (Obsidian, Notion export, plain markdown), maps existing structure to the three-space architecture, and proposes schema additions for existing frontmatter.
 
 **Why deferred:** Migration is engineering-heavy and domain-specific (Obsidian exports differ from Notion exports). New systems (greenfield) are the primary v1 target. Migration matters for adoption but doesn't affect the derivation engine's correctness.
 
-**When to ship:** When user feedback shows significant demand from existing vault owners who want to adopt Ars Contexta methodology on top of their current content.
+**When to ship:** When user feedback shows significant demand from existing vault owners who want to adopt CSP Workflow Engine methodology on top of their current content.
 
 ### 3. Multi-Platform Support
 
@@ -32,7 +32,7 @@ These items are specified but not implemented in v1.0. They are concrete enough 
 
 **When to ship:** When a second platform stabilizes enough for reliable operation, and when user demand validates multi-platform as a real use case.
 
-### 4. arscontexta.dev Website
+### 4. csp-workflow-engine.dev Website
 
 **What:** A web frontend rendering the research graph through a sliding-pane reader for human browsing, plus an MCP endpoint for agent architect queries. Built on the same knowledge graph that the derivation engine reasons from.
 
@@ -42,9 +42,9 @@ These items are specified but not implemented in v1.0. They are concrete enough 
 
 ### 5. MCP Hosted Server
 
-**What:** A hosted version of the Ars Contexta MCP server that users connect to without running locally. Provides `arscontexta_query`, `arscontexta_recommend`, and `arscontexta_dimensions` tools through a cloud endpoint.
+**What:** A hosted version of the CSP Workflow Engine MCP server that users connect to without running locally. Provides `csp-workflow-engine_query`, `csp-workflow-engine_recommend`, and `csp-workflow-engine_dimensions` tools through a cloud endpoint.
 
-**Why deferred:** The local MCP server (`npx arscontexta-mcp`) works for v1. Hosting adds infrastructure, authentication, rate limiting, and operational costs. The trade-off is reach (easier onboarding) vs complexity (ops burden).
+**Why deferred:** The local MCP server (`npx csp-workflow-engine-mcp`) works for v1. Hosting adds infrastructure, authentication, rate limiting, and operational costs. The trade-off is reach (easier onboarding) vs complexity (ops burden).
 
 **When to ship:** When the local MCP server sees enough adoption that hosting becomes a friction reducer rather than a premature investment.
 
@@ -166,7 +166,7 @@ These questions don't have clear answers yet. They inform the research graph's d
 
 **Question:** Can a generated system support multiple agents with different roles?
 
-**Context:** The research vault supports two operators (Cornelius/Heinrich) with shared methodology and separate infrastructure. But this is hand-crafted, not generated. Multi-agent templates would need: shared notes/ and ops/, per-agent self/, task distribution across agents, and conflict resolution when agents modify the same notes.
+**Context:** The research vault supports two operators (jaime/jaime) with shared methodology and separate infrastructure. But this is hand-crafted, not generated. Multi-agent templates would need: shared notes/ and ops/, per-agent self/, task distribution across agents, and conflict resolution when agents modify the same notes.
 
 **Research direction:** Federated wiki patterns, CRDTs for markdown, and stigmergic coordination (agents leaving traces for others) are potential approaches. No generated system has tested multi-agent operation yet.
 

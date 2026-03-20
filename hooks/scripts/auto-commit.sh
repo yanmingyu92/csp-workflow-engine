@@ -1,5 +1,5 @@
 #!/bin/bash
-# Ars Contexta — Auto-Commit Hook
+# CSP Workflow Engine — Auto-Commit Hook
 # Commits changes after writes to keep the vault in version control.
 # Runs as async PostToolUse hook on Write events.
 #
@@ -10,7 +10,7 @@ set -e
 # Change to project directory
 cd "${CLAUDE_PROJECT_DIR:-$(pwd)}"
 
-# Only run in Ars Contexta vaults
+# Only run in CSP Workflow Engine vaults
 GUARD_DIR="$(cd "$(dirname "$0")" && pwd)"
 "$GUARD_DIR/vaultguard.sh" || exit 0
 

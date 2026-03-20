@@ -17,7 +17,7 @@ user-invocable: true
 allowed-tools: Read, Write, Edit, Grep, Glob, mcp__qmd__vector_search
 context: fork
 model: opus
-generated_from: "arscontexta-{plugin_version}"
+generated_from: "csp-workflow-engine-{plugin_version}"
 ---
 
 ## Runtime Configuration (Step 0 — before any processing)

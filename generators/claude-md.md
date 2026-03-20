@@ -137,18 +137,18 @@ When users ask about system structure, schema, or methodology:
 
 | Pattern | Route To | Fallback |
 |---------|----------|----------|
-| "How should I organize/structure..." | /arscontexta:architect | Apply methodology below |
-| "Can I add/change the schema..." | /arscontexta:architect | Edit templates directly |
-| "Research best practices for..." | /arscontexta:ask | Read bundled references |
-| "What does my system know about..." | Check ops/methodology/ directly | /arscontexta:ask for research backing |
-| "I want to add a new area/domain..." | /arscontexta:add-domain | Manual folder + template creation |
-| "What should I work on..." | /arscontexta:next | Reconcile queue + recommend |
-| "Help / what can I do..." | /arscontexta:help | Show available commands |
-| "Walk me through..." | /arscontexta:tutorial | Interactive learning |
-| "Research / learn about..." | /arscontexta:learn | Deep research with provenance |
-| "Challenge assumptions..." | /arscontexta:rethink | Triage observations/tensions |
+| "How should I organize/structure..." | /csp-workflow-engine:architect | Apply methodology below |
+| "Can I add/change the schema..." | /csp-workflow-engine:architect | Edit templates directly |
+| "Research best practices for..." | /csp-workflow-engine:ask | Read bundled references |
+| "What does my system know about..." | Check ops/methodology/ directly | /csp-workflow-engine:ask for research backing |
+| "I want to add a new area/domain..." | /csp-workflow-engine:add-domain | Manual folder + template creation |
+| "What should I work on..." | /csp-workflow-engine:next | Reconcile queue + recommend |
+| "Help / what can I do..." | /csp-workflow-engine:help | Show available commands |
+| "Walk me through..." | /csp-workflow-engine:tutorial | Interactive learning |
+| "Research / learn about..." | /csp-workflow-engine:learn | Deep research with provenance |
+| "Challenge assumptions..." | /csp-workflow-engine:rethink | Triage observations/tensions |
 
-If arscontexta plugin is not loaded, apply the methodology principles documented in this file.
+If csp-workflow-engine plugin is not loaded, apply the methodology principles documented in this file.
 ```
 
 ## Feature Blocks

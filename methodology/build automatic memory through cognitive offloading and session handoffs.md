@@ -9,7 +9,7 @@ topics: ["[[memory-architecture]]"]
 
 Agent memory is not human memory. Agents have perfect recall within a session and zero recall across sessions. This asymmetry defines the architecture: everything the agent needs to remember must be externalized into the vault, and the vault must be structured so that each new session can orient quickly and pick up where the last one left off.
 
-This is THE key guidance doc for building memory systems on top of Ars Contexta. It tells the plugin HOW to build memory systems that compound over time rather than resetting each session.
+This is THE key guidance doc for building memory systems on top of CSP Workflow Engine. It tells the plugin HOW to build memory systems that compound over time rather than resetting each session.
 
 ## Cognitive Offloading as Foundation
 

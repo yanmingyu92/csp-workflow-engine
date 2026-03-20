@@ -2,7 +2,7 @@
   "name": "knowledge-ask",
   "description": "Query the Tools for Thought research knowledge graph. Ask about note design, knowledge systems, agent cognition, or methodology questions. Returns research-backed answers with claim references.",
   "version": "0.4.0",
-  "author": "arscontexta",
+  "author": "jaime",
   "tags": [
     "knowledge-management",
     "research",

@@ -4,7 +4,7 @@ description: Contextual guidance and command discovery. Three modes — narrativ
 user-invocable: true
 allowed-tools: Read, Grep, Glob, Bash
 version: "1.0"
-generated_from: "arscontexta-v1.6"
+generated_from: "csp-workflow-engine-v1.6"
 ---
 
 ## EXECUTE NOW
@@ -97,7 +97,7 @@ Extract `name:` and `description:` from each frontmatter. Do NOT hardcode the co
 This is the first impression. The user is new or nearly new. Explain what the system IS before listing what it DOES.
 
 **What narrative mode communicates:**
-1. What Ars Contexta is (one sentence)
+1. What CSP Workflow Engine is (one sentence)
 2. What THEIR system was built to do (read from ops/derivation.md if available)
 3. What they can do RIGHT NOW (concrete actions, not abstract possibilities)
 4. How the system grows with them
@@ -331,7 +331,7 @@ Extract the pipeline position (what comes before and after this skill) to show w
 - No ANSI color codes
 - No emoji
 - Monospaced alignment assumed
-- Display short command forms (`/reduce`), not plugin-qualified forms (`/arscontexta:reduce`)
+- Display short command forms (`/reduce`), not plugin-qualified forms (`/csp-workflow-engine:reduce`)
 - Domain-native names in curly braces (e.g., `/{reduce}`) are resolved from derivation-manifest.md
 - When domain name equals universal name, drop the braces
 
@@ -341,7 +341,7 @@ Extract the pipeline position (what comes before and after this skill) to show w
 
 **Pre-init invocation:** If no vault structure exists at all (no notes folder, no ops/), show a minimal message:
 ```
-Ars Contexta is not initialized in this directory.
+CSP Workflow Engine is not initialized in this directory.
 Run /setup to create your knowledge system.
 ```
 

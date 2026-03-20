@@ -2,7 +2,7 @@
 name: workflow
 description: Manage workflow execution, stage transitions, and validation gates. Routes skills based on current workflow position and enforces dependency constraints. Triggers on "/workflow", "/workflow status", "/workflow advance", "/workflow gates", "/workflow skills", "/workflow context", "/workflow graph", "/workflow next".
 version: "1.1"
-generated_from: "arscontexta-v2.0"
+generated_from: "csp-workflow-engine-v2.0"
 user-invocable: true
 context: fork
 model: sonnet

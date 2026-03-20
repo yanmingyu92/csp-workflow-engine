@@ -2,7 +2,7 @@
 name: seed
 description: Add a source file to the processing queue. Checks for duplicates, creates archive folder, moves source from inbox, creates extract task, and updates queue. Triggers on "/seed", "/seed [file]", "queue this for processing".
 version: "1.0"
-generated_from: "arscontexta-v1.6"
+generated_from: "csp-workflow-engine-v1.6"
 user-invocable: true
 context: fork
 model: sonnet

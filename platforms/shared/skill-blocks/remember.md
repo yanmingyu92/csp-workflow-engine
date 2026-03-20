@@ -14,7 +14,7 @@ platform: shared
 name: remember
 description: Capture friction as methodology notes. Three modes — explicit description, contextual (review recent corrections), session mining (scan transcripts for patterns). Triggers on "/remember", "/remember [description]".
 version: "1.0"
-generated_from: "arscontexta-{plugin_version}"
+generated_from: "csp-workflow-engine-{plugin_version}"
 user-invocable: true
 context: fork
 model: opus

@@ -1,6 +1,6 @@
 # Reference Document Content Audit Report
 
-**Auditor:** Heinrich (Claude Code)
+**Auditor:** jaime (Claude Code)
 **Date:** 2026-02-13
 **PRD Section:** 15 — Reference Document Structural Template
 
@@ -189,7 +189,7 @@ Additionally, the following non-document items exist in `reference/`:
 
 ### 2. personality-layer.md — High Priority
 
-**Why critical:** Personality derivation is a differentiating feature of Ars Contexta. The document contains rich, discrete claims (each personality dimension, each signal pattern, each conflict resolution rule) that would directly benefit from the Summary/Derivation Implication/Source format. It is referenced by session-lifecycle.md, self-space.md, and use-case-presets.md.
+**Why critical:** Personality derivation is a differentiating feature of CSP Workflow Engine. The document contains rich, discrete claims (each personality dimension, each signal pattern, each conflict resolution rule) that would directly benefit from the Summary/Derivation Implication/Source format. It is referenced by session-lifecycle.md, self-space.md, and use-case-presets.md.
 
 **Recommendation:** Add all five sections. Each personality dimension section can be restructured as curated claims. The signal patterns table and conflict resolution rules are natural claim candidates with clear derivation implications.
 

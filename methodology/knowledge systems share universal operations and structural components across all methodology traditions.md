@@ -3,7 +3,7 @@ description: Eight operations and nine structural components recur across Zettel
 kind: research
 topics: ["[[design-dimensions]]"]
 methodology: ["PKM Research", "Systems Theory"]
-source: [[arscontexta-notes]]
+source: [[csp-workflow-engine-notes]]
 ---
 
 # knowledge systems share universal operations and structural components across all methodology traditions

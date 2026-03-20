@@ -3,7 +3,7 @@ description: Structural health checks (validation, orphans, links, MOC coherence
 kind: research
 topics: ["[[maintenance-patterns]]", "[[design-dimensions]]"]
 methodology: ["Original", "Digital Gardening"]
-source: [[arscontexta-notes]]
+source: [[csp-workflow-engine-notes]]
 ---
 
 # maintenance operations are more universal than creative pipelines because structural health is domain-invariant

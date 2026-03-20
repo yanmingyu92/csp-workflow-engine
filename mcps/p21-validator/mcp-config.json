@@ -2,7 +2,7 @@
   "name": "p21-validator",
   "description": "Pinnacle 21 validation MCP server for SDTM, ADaM, and Define-XML compliance checking",
   "version": "1.0.0",
-  "author": "arscontexta-csp",
+  "author": "jaime",
   "type": "mock",
   "tools": [
     {

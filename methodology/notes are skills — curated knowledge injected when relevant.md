@@ -7,7 +7,7 @@ source: [[2026-01-19-vibe-note-taking-101]]
 
 # notes are skills — curated knowledge injected when relevant
 
-extracted from Heinrich's vibe-note-taking-101, 2026-02-01
+extracted from jaime's vibe-note-taking-101, 2026-02-01
 
 ## The Insight
 

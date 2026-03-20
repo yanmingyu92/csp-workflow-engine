@@ -1,8 +1,8 @@
 ---
 name: upgrade
-description: Apply plugin knowledge base updates to an existing generated system. Consults the Ars Contexta research graph for methodology improvements, proposes skill upgrades with research justification. Never auto-implements. Triggers on "/upgrade", "upgrade skills", "check for improvements", "update methodology".
+description: Apply plugin knowledge base updates to an existing generated system. Consults the CSP Workflow Engine research graph for methodology improvements, proposes skill upgrades with research justification. Never auto-implements. Triggers on "/upgrade", "upgrade skills", "check for improvements", "update methodology".
 version: "1.0"
-generated_from: "arscontexta-v1.6"
+generated_from: "csp-workflow-engine-v1.6"
 user-invocable: true
 context: fork
 model: opus
@@ -110,12 +110,12 @@ Present inventory:
 --=={ upgrade : inventory }==--
 
 System: {domain description}
-Engine: arscontexta-{version}
+Engine: csp-workflow-engine-{version}
 Skills: {count} installed ({modified_count} user-modified)
 
   Skill               Version  Generated From    Modified
-  /{vocabulary.reduce}    1.0  arscontexta-v1.6  no
-  /{vocabulary.reflect}   1.0  arscontexta-v1.6  yes
+  /{vocabulary.reduce}    1.0  csp-workflow-engine-v1.6  no
+  /{vocabulary.reflect}   1.0  csp-workflow-engine-v1.6  yes
   ...
 ```
 
@@ -235,7 +235,7 @@ Option (b) requires the upgrade to be compatible with the user's changes. If the
 ```
 --=={ upgrade }==--
 
-Plugin: arscontexta-{current_version}
+Plugin: csp-workflow-engine-{current_version}
 Knowledge base: {count} research claims, {count} guidance docs
 Skills checked: {count}
 
@@ -298,7 +298,7 @@ Update the skill's frontmatter:
 ```yaml
 ---
 version: "{incremented}"
-generated_from: "arscontexta-{current_plugin_version}"
+generated_from: "csp-workflow-engine-{current_plugin_version}"
 ---
 ```
 
@@ -386,7 +386,7 @@ All upgrades are advisory. The user owns the files.
 
 **No ops/derivation-manifest.md:** Use universal vocabulary for all output.
 
-**Plugin knowledge base unavailable:** Report that knowledge base consultation requires the Ars Contexta plugin. Without the plugin's bundled methodology/ and reference/ directories, /upgrade cannot evaluate skills.
+**Plugin knowledge base unavailable:** Report that knowledge base consultation requires the CSP Workflow Engine plugin. Without the plugin's bundled methodology/ and reference/ directories, /upgrade cannot evaluate skills.
 
 **User rejects upgrades consistently:** This is a signal, not an error. Note the pattern — it may indicate the knowledge base recommendations don't match this user's domain. Log to ops/observations/ if it persists across multiple /upgrade runs.
 

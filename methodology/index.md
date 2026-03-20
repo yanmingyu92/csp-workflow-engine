@@ -1,11 +1,11 @@
 ---
-description: Entry point to the Ars Contexta research substrate -- start here to navigate the knowledge graph
+description: Entry point to the CSP Workflow Engine research substrate -- start here to navigate the knowledge graph
 type: moc
 ---
 
 # index
 
-The Ars Contexta research substrate. This vault contains the research claims, operational guidance, and worked domain examples that power the plugin's derivation engine.
+The CSP Workflow Engine research substrate. This vault contains the research claims, operational guidance, and worked domain examples that power the plugin's derivation engine.
 
 ## Research Areas
 

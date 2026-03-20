@@ -2,7 +2,7 @@
 # workflow-orient.sh
 #
 # Injects workflow state at session start using graph-router for token-efficient skill loading
-# Part of arscontexta workflow enforcement system
+# Part of csp-workflow-engine workflow enforcement system
 
 #
 # Phase 3 completion: Integrates graph-router.py into SessionStart hook
@@ -11,7 +11,7 @@
 set -e
 
 # Guard: Check if this is a vault
-if [ ! -f ".arscontexta" ]; then
+if [ ! -f ".csp-workflow" ]; then
     exit 0
 fi
 

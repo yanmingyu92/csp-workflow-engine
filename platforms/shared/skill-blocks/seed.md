@@ -14,7 +14,7 @@ platform: shared
 name: seed
 description: Add a source file to the processing queue. Checks for duplicates, creates archive folder, moves source from {vocabulary.inbox}, creates extract task, and updates queue. Triggers on "/seed", "/seed [file]", "queue this for processing".
 version: "1.0"
-generated_from: "arscontexta-{plugin_version}"
+generated_from: "csp-workflow-engine-{plugin_version}"
 user-invocable: true
 context: fork
 model: opus

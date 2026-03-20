@@ -1,6 +1,6 @@
 #!/bin/bash
-# Ars Contexta — Config Reader
-# Reads values from .arscontexta vault marker (which doubles as config).
+# CSP Workflow Engine — Config Reader
+# Reads values from .csp-workflow vault marker (which doubles as config).
 # Usage: read_config.sh <key> [default]
 # Returns: value for key, or default if key/file missing.
 # Default default: "true" (preserves existing behaviour when no config exists).
@@ -18,7 +18,7 @@ fi
 
 # Find project root — use CLAUDE_PROJECT_DIR if set, otherwise walk up
 PROJECT_DIR="${CLAUDE_PROJECT_DIR:-$(pwd)}"
-CONFIG_FILE="$PROJECT_DIR/.arscontexta"
+CONFIG_FILE="$PROJECT_DIR/.csp-workflow"
 
 if [ ! -f "$CONFIG_FILE" ]; then
   echo "$DEFAULT"

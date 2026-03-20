@@ -37,7 +37,7 @@ Nine tests that verify the derivation engine produces coherent, functional syste
 - validation-hooks: PARTIAL — vault has PostToolUse validation hooks (automation trending beyond convention)
 
 **Gaps between derived and actual:**
-1. Vault has **dual operators** (Cornelius/Heinrich) — init generates for single operator. This is a multi-agent extension, not a base derivation concern.
+1. Vault has **dual operators** (jaime/jaime) — init generates for single operator. This is a multi-agent extension, not a base derivation concern.
 2. Vault has **04_meta/logs/** (observations, tensions) — a maturity feature that emerged through practice. Could become a feature for processing ≥ heavy.
 3. Vault has **03_twitter/** — domain-specific content pipeline not represented in generic research preset. Would be a second domain in composition test.
 4. Vault evolved **numbered folder prefixes** (00_, 01_, 02_, 03_, 04_) — Obsidian ordering convention. Init uses generic names (notes/, inbox/, archive/). Both are valid.
@@ -430,7 +430,7 @@ Scan the entire generated output for research-domain terms that should have been
 **Expected result:** Zero leaked terms across all generated files.
 
 **Acceptable exceptions (narrow):**
-1. Meta-documentation explaining the system's origin ("this system was derived from Ars Contexta methodology") may use the word "methodology" in its technical sense
+1. Meta-documentation explaining the system's origin ("this system was derived from CSP Workflow Engine methodology") may use the word "methodology" in its technical sense
 2. The ops/derivation.md file records the derivation rationale and may reference the research-domain mapping as part of its provenance trail
 3. Template `_schema` blocks use structural field names (`entity_type`, `applies_to`) that are system-internal, not user-facing
 
@@ -640,7 +640,7 @@ Observe (create observation/tension)
 
 4. **Multi-domain composition works through shared-graph-with-separate-templates.** Our vault already proves this pattern. The derivation engine needs to support it explicitly: generate separate templates per domain, shared navigation, and cross-domain linking conventions.
 
-5. **The kernel requires only filesystem access and conventions.** The minimal platform test (Test 5) proves that all 15 primitives can be satisfied through context file instructions alone. Automation improves reliability but is not required for structural completeness. This means Ars Contexta can generate valid systems for ANY platform that supports text files — the kernel's requirement floor is genuinely minimal.
+5. **The kernel requires only filesystem access and conventions.** The minimal platform test (Test 5) proves that all 15 primitives can be satisfied through context file instructions alone. Automation improves reliability but is not required for structural completeness. This means CSP Workflow Engine can generate valid systems for ANY platform that supports text files — the kernel's requirement floor is genuinely minimal.
 
 6. **The constraint system is productive, not just prohibitive.** The violation recovery test (Test 6) shows that incoherent configurations are not dead ends — the constraint system guides users toward valid configurations by recommending minimal corrections. This is essential for conversational derivation where users express individually reasonable preferences that are collectively incoherent.
 

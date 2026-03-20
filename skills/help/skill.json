@@ -2,7 +2,7 @@
   "name": "knowledge-help",
   "description": "Contextual guidance and command discovery. Shows available commands, active skills, and intelligent suggestions based on vault state.",
   "version": "0.4.0",
-  "author": "arscontexta",
+  "author": "jaime",
   "tags": [
     "knowledge-management",
     "onboarding",

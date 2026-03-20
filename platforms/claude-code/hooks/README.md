@@ -85,7 +85,7 @@ Both use the same nested matcher-group format. Each event type contains an array
 
 ```json
 {
-  "description": "Ars Contexta plugin hooks",
+  "description": "CSP Workflow Engine plugin hooks",
   "hooks": {
     "SessionStart": [
       {

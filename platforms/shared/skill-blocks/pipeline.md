@@ -14,7 +14,7 @@ platform: shared
 name: pipeline
 description: End-to-end source processing -- seed, {vocabulary.reduce}, process all {vocabulary.note_plural} through {vocabulary.reflect}/{vocabulary.reweave}/{vocabulary.verify}, archive. The full pipeline in one command. Triggers on "/pipeline", "/pipeline [file]", "process this end to end", "full pipeline".
 version: "1.0"
-generated_from: "arscontexta-{plugin_version}"
+generated_from: "csp-workflow-engine-{plugin_version}"
 user-invocable: true
 context: fork
 model: opus

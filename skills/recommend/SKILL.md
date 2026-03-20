@@ -2,7 +2,7 @@
 name: recommend
 description: Get research-backed architecture advice for your knowledge system. Describe your use case, constraints, and goals — get specific recommendations grounded in TFT research with rationale for each decision. Triggers on "/recommend", "what would you recommend", "architecture advice", "knowledge system for".
 version: "1.0"
-generated_from: "arscontexta-v1.6"
+generated_from: "csp-workflow-engine-v1.6"
 user-invocable: true
 context: fork
 model: opus

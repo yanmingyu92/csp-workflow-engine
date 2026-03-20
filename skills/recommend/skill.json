@@ -2,7 +2,7 @@
   "name": "knowledge-recommend",
   "description": "Get research-backed architecture advice for your knowledge system. Describe your use case, constraints, and goals to get specific recommendations grounded in TFT research with rationale.",
   "version": "0.4.0",
-  "author": "arscontexta",
+  "author": "jaime",
   "tags": [
     "knowledge-management",
     "research",

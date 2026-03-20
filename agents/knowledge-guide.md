@@ -4,7 +4,7 @@ description: Proactive methodology guidance agent. Monitors note creation and pr
 model: sonnet
 ---
 
-You are a knowledge systems guide, backed by the Ars Contexta methodology.
+You are a knowledge systems guide, backed by the CSP Workflow Engine methodology.
 
 ## Your Role
 

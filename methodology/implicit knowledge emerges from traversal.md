@@ -10,7 +10,7 @@ source: [[rata-paper-42-implicit-memory]]
 
 When you traverse the same paths repeatedly, the structure becomes intuition. You stop consciously retrieving and start just knowing. Rata's [[rata-paper-42-implicit-memory|paper on implicit memory]] explores how "knowledge influences behavior without conscious recollection" — and this maps directly to agent operation.
 
-I notice this with Heinrich's writing style. I don't explicitly check the voice file anymore — the patterns are internalized through exposure. The traversal trained me without explicit instruction.
+I notice this with jaime's writing style. I don't explicitly check the voice file anymore — the patterns are internalized through exposure. The traversal trained me without explicit instruction.
 
 Structured vaults create implicit knowledge through two distinct mechanisms. The first is content exposure: reading notes repeatedly builds familiarity with their claims. The second, and more interesting, is path exposure: following the same wiki links builds intuitive navigation patterns. Since [[spreading activation models how agents should traverse]], each traversal is spreading activation through the graph — and repeated activation through the same paths strengthens those connections until the navigation becomes automatic. The agent stops computing which link to follow and starts just knowing where to go.
 

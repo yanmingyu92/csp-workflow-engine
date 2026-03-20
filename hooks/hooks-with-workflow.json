@@ -1,5 +1,5 @@
 {
-  "description": "Ars Contexta plugin hooks — session orientation, note validation, auto-commit, hooks",
+  "description": "CSP Workflow Engine plugin hooks — session orientation, note validation, auto-commit, hooks",
  [
   {
     "hooks": [

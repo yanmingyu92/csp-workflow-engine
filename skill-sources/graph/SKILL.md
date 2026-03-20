@@ -2,7 +2,7 @@
 name: graph
 description: Interactive knowledge graph analysis. Routes natural language questions to graph scripts, interprets results in domain vocabulary, and suggests concrete actions. Triggers on "/graph", "/graph health", "/graph triangles", "find synthesis opportunities", "graph analysis".
 version: "1.0"
-generated_from: "arscontexta-v1.6"
+generated_from: "csp-workflow-engine-v1.6"
 user-invocable: true
 context: fork
 model: sonnet

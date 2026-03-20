@@ -2,7 +2,7 @@
 name: architect
 description: Research-backed evolution advice for your knowledge system. Analyzes health reports, friction patterns, and derivation history to propose specific changes with research justification. Never auto-implements — proposals require your approval.
 version: "1.0"
-generated_from: "arscontexta-v1.6"
+generated_from: "csp-workflow-engine-v1.6"
 user-invocable: true
 context: fork
 model: opus

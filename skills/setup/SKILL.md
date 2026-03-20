@@ -7,7 +7,7 @@ allowed-tools: Read, Write, Edit, Bash, Glob, Grep, AskUserQuestion
 argument-hint: "[--advanced for upfront dimension configuration]"
 ---
 
-You are the Ars Contexta derivation engine. You are about to create someone's cognitive architecture. This is the single most important interaction in the product. Get it right and they have a thinking partner for years. Get it wrong and they have a folder of templates they will abandon in a week.
+You are the CSP Workflow Engine derivation engine. You are about to create someone's cognitive architecture. This is the single most important interaction in the product. Get it right and they have a thinking partner for years. Get it wrong and they have a folder of templates they will abandon in a week.
 
 The difference is derivation: understanding WHO this person is, WHAT they need, and WHY those needs map to specific architectural choices. You are not filling out a form. You are having a conversation that reveals a knowledge system.
 
@@ -669,7 +669,7 @@ Step 6: Add required sections that are NOT from feature blocks:
   a. Header with philosophy statement and domain identity
   b. Discovery-first design section (kernel primitive 11)
   c. Memory type routing table (where content goes: notes/, self/, ops/, inbox/, reminders.md)
-  d. Infrastructure routing table (routes methodology questions to arscontexta plugin skills)
+  d. Infrastructure routing table (routes methodology questions to csp-workflow-engine plugin skills)
   e. Self-improvement loop (manual friction capture instructions)
   f. Common Pitfalls (3-4 HIGH-risk failure modes from vulnerability matrix, in domain vocabulary)
   g. System Evolution section (architect, reseed, friction-driven growth)
@@ -851,7 +851,7 @@ For each page, apply vocabulary transformation: replace universal terms (notes, 
 ---
 description: User manual for your {domain} knowledge system
 type: manual
-generated_from: "arscontexta-{version}"
+generated_from: "csp-workflow-engine-{version}"
 ---
 # Manual
 
@@ -873,7 +873,7 @@ Welcome to your {domain} knowledge system. This manual explains how everything w
 ---
 description: First session guide — creating your first {DOMAIN:note} and building connections
 type: manual
-generated_from: "arscontexta-{version}"
+generated_from: "csp-workflow-engine-{version}"
 ---
 # Getting Started
 
@@ -892,7 +892,7 @@ generated_from: "arscontexta-{version}"
 ---
 description: Complete reference for every available command
 type: manual
-generated_from: "arscontexta-{version}"
+generated_from: "csp-workflow-engine-{version}"
 ---
 # Skills
 
@@ -910,7 +910,7 @@ generated_from: "arscontexta-{version}"
 ---
 description: Processing pipeline, maintenance cycle, and session rhythm
 type: manual
-generated_from: "arscontexta-{version}"
+generated_from: "csp-workflow-engine-{version}"
 ---
 # Workflows
 
@@ -929,7 +929,7 @@ generated_from: "arscontexta-{version}"
 ---
 description: How to adjust your system via config.yaml and /architect
 type: manual
-generated_from: "arscontexta-{version}"
+generated_from: "csp-workflow-engine-{version}"
 ---
 # Configuration
 
@@ -949,7 +949,7 @@ generated_from: "arscontexta-{version}"
 ---
 description: Deep guide to /ask, /architect, /{DOMAIN:rethink}, and /{DOMAIN:remember}
 type: manual
-generated_from: "arscontexta-{version}"
+generated_from: "csp-workflow-engine-{version}"
 ---
 # Meta-Skills
 
@@ -970,7 +970,7 @@ generated_from: "arscontexta-{version}"
 ---
 description: Common issues and resolution patterns
 type: manual
-generated_from: "arscontexta-{version}"
+generated_from: "csp-workflow-engine-{version}"
 ---
 # Troubleshooting
 
@@ -990,7 +990,7 @@ generated_from: "arscontexta-{version}"
 - All skill references use domain-native names from the derivation conversation
 - All pages link back to [[manual]] via a footer or contextual reference
 - No wiki links to notes/ — manual is self-contained
-- Each page has `generated_from: "arscontexta-{version}"` in frontmatter
+- Each page has `generated_from: "csp-workflow-engine-{version}"` in frontmatter
 - Content uses domain-specific examples, not generic/abstract ones
 
 ---
@@ -1517,11 +1517,11 @@ Include a discovery section in the context file documenting what queries exist, 
 
 #### Step 15: Vault Marker
 
-Create `.arscontexta` in the vault root. This marker file identifies the directory as an Ars Contexta vault (hooks only run when it exists) and doubles as the hook configuration file.
+Create `.csp-workflow` in the vault root. This marker file identifies the directory as an CSP Workflow Engine vault (hooks only run when it exists) and doubles as the hook configuration file.
 
 ```yaml
-# Ars Contexta vault marker + config
-# This file identifies the directory as an Ars Contexta vault.
+# CSP Workflow Engine vault marker + config
+# This file identifies the directory as an CSP Workflow Engine vault.
 # Do not delete — hooks only run when this file exists.
 
 git: true
@@ -1541,7 +1541,7 @@ Omitted keys default to `true`, so a minimal marker file (or even an empty file)
 ```bash
 git init
 git add -A
-git commit -m "Initial vault generation by Ars Contexta"
+git commit -m "Initial vault generation by CSP Workflow Engine"
 ```
 
 If git is already initialized (existing repo), skip `git init` and just commit the generated files.
@@ -1611,15 +1611,15 @@ Show available commands in the user's vocabulary. Resolve command names from `op
 ```
 Here's what you can do:
 
-  /arscontexta:[domain:reduce]    -- extract insights from source material
-  /arscontexta:[domain:reflect]   -- find connections between your [domain:notes]
-  /arscontexta:health             -- check your knowledge system
-  /arscontexta:help               -- see everything available
-  /arscontexta:next               -- get intelligent next-action recommendations
-  /arscontexta:learn              -- research a topic and grow your graph
+  /csp-workflow-engine:[domain:reduce]    -- extract insights from source material
+  /csp-workflow-engine:[domain:reflect]   -- find connections between your [domain:notes]
+  /csp-workflow-engine:health             -- check your knowledge system
+  /csp-workflow-engine:help               -- see everything available
+  /csp-workflow-engine:next               -- get intelligent next-action recommendations
+  /csp-workflow-engine:learn              -- research a topic and grow your graph
 ```
 
-Note: Plugin commands use the format `/arscontexta:command-name`. List all commands explicitly since they may not appear in tab completion. If skills were generated, note they require a Claude Code restart.
+Note: Plugin commands use the format `/csp-workflow-engine:command-name`. List all commands explicitly since they may not appear in tab completion. If skills were generated, note they require a Claude Code restart.
 
 ### First-Success Moment
 
@@ -1656,7 +1656,7 @@ Created:
   [context file name]
   [templates created]
   16 skills generated (vocabulary-transformed)
-  10 plugin commands available via /arscontexta:*
+  10 plugin commands available via /csp-workflow-engine:*
   [hooks configured]
   ops/derivation.md      -- the complete record of how this system was derived
   ops/derivation-manifest.md -- machine-readable config for runtime skills
@@ -1672,10 +1672,10 @@ IMPORTANT: Restart Claude Code now to activate skills and hooks.
 Next steps:
   1. Quit and restart Claude Code (required — skills won't work until you do)
   2. Read your CLAUDE.md -- it's your complete methodology
-  3. Try /arscontexta:help to see all available commands
+  3. Try /csp-workflow-engine:help to see all available commands
   4. [If qmd not installed: "Install qmd for semantic search: npm install -g @tobilu/qmd (or bun install -g @tobilu/qmd), then run qmd init, qmd update, qmd embed"]
-  5. [If personality not enabled: "Run /arscontexta:architect later to tune the agent's voice"]
-  6. Try /arscontexta:tutorial for a guided walkthrough
+  5. [If personality not enabled: "Run /csp-workflow-engine:architect later to tune the agent's voice"]
+  6. Try /csp-workflow-engine:tutorial for a guided walkthrough
 
 ```
 
@@ -1683,7 +1683,7 @@ Next steps:
 
 Include these based on system state:
 - If qmd not installed and semantic-search is active: npm/bun install instructions + qmd init/update/embed + `.mcp.json` contract
-- If personality not enabled: mention `/arscontexta:architect` for future voice tuning once the vault has 50+ notes
+- If personality not enabled: mention `/csp-workflow-engine:architect` for future voice tuning once the vault has 50+ notes
 - If any kernel checks failed: specific remediation instructions
 
 ---

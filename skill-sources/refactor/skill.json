@@ -2,7 +2,7 @@
   "name": "knowledge-refactor",
   "description": "Plan vault restructuring from config changes. Compares config.yaml against derivation.md, identifies dimension shifts, shows restructuring plan, executes on approval.",
   "version": "0.4.0",
-  "author": "arscontexta",
+  "author": "jaime",
   "tags": [
     "knowledge-management",
     "maintenance",

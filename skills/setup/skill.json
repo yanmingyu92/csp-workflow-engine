@@ -2,7 +2,7 @@
   "name": "knowledge-setup",
   "description": "Scaffold a complete knowledge system. Detects platform, conducts conversation, derives configuration, generates everything. Validates against 15 kernel primitives.",
   "version": "0.4.0",
-  "author": "arscontexta",
+  "author": "jaime",
   "tags": [
     "knowledge-management",
     "onboarding",

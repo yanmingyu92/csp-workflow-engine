@@ -136,7 +136,7 @@ These hold across all generated systems:
 | Directory | Contents | Lifecycle |
 |-----------|----------|-----------|
 | `derivation.md` | The original derivation rationale — dimension positions, tradition mapping, vocabulary choices, rationale for each decision | Semi-permanent — updated only during reseed |
-| `derivation-manifest.md` | Version tracking — arscontexta version, research snapshot date, feature blocks enabled, coherence validation results | Semi-permanent — updated during reseed |
+| `derivation-manifest.md` | Version tracking — csp-workflow-engine version, research snapshot date, feature blocks enabled, coherence validation results | Semi-permanent — updated during reseed |
 | `reminders.md` | User-delegated time-bound actions — flat markdown, checked at orient, items removed on completion | Active rotation — items added and removed regularly |
 | `sessions/` | Session logs — what happened today, handoff notes for next session | Rolling archive — logs older than 30 days can be archived without knowledge loss |
 | `health/` | Schema validation results, orphan lists, link health metrics — point-in-time snapshots | Superseding — yesterday's report is superseded by today's |

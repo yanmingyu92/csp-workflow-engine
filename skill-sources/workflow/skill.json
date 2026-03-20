@@ -2,7 +2,7 @@
   "name": "workflow-engine",
   "description": "Manage workflow execution, stage transitions, and validation gates. Routes skills based on current workflow position and enforces dependency constraints.",
   "version": "1.0.0",
-  "author": "arscontexta",
+  "author": "jaime",
   "tags": [
     "workflow",
     "orchestration",

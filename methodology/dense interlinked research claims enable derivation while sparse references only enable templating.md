@@ -3,7 +3,7 @@ description: Four structural properties of TFT research — atomic composability
 kind: research
 topics: ["[[design-dimensions]]"]
 methodology: ["Original"]
-source: [[arscontexta-notes]]
+source: [[csp-workflow-engine-notes]]
 ---
 
 # dense interlinked research claims enable derivation while sparse references only enable templating

@@ -3,7 +3,7 @@ description: The five-component note architecture (prose-title, YAML frontmatter
 kind: research
 topics: ["[[design-dimensions]]", "[[note-design]]"]
 methodology: ["Original"]
-source: [[arscontexta-notes]]
+source: [[csp-workflow-engine-notes]]
 ---
 
 # schema field names are the only domain specific element in the universal note pattern

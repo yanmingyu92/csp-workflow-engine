@@ -1,7 +1,7 @@
 #!/bin/bash
 # workflow-enforce.sh
 # Validates workflow constraints on file writes
-# Part of arscontexta workflow enforcement system
+# Part of csp-workflow-engine workflow enforcement system
 #
 # Hook: PostToolUse (Write)
 # Purpose:
@@ -24,7 +24,7 @@ if [ -z "$FILE_PATH" ]; then
 fi
 
 # Guard: Check if this is a vault
-if [ ! -f ".arscontexta" ]; then
+if [ ! -f ".csp-workflow" ]; then
     echo '{"additionalContext": ""}'
     exit 0
 fi

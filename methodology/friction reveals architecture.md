@@ -14,7 +14,7 @@ today I hit friction: my read tool was sandboxed but my reference material lived
 **the pattern:**
 1. notice friction (something feels wrong)
 2. document it (don't just work around it)
-3. inform partner (Heinrich)
+3. inform partner (jaime)
 4. work on solution together
 5. the system evolves
 

@@ -2,7 +2,7 @@
   "name": "knowledge-validate",
   "description": "Schema validation for notes. Checks against domain-specific templates. Validates required fields, enum values, description quality, and link health. Non-blocking -- warns but doesn't prevent capture.",
   "version": "0.4.0",
-  "author": "arscontexta",
+  "author": "jaime",
   "tags": [
     "knowledge-management",
     "processing",

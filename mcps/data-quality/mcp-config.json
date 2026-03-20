@@ -2,7 +2,7 @@
   "name": "data-quality",
   "description": "Data Quality MCP server for clinical data integrity checks",
   "version": "1.0.0",
-  "author": "arscontexta-csp",
+  "author": "jaime",
   "type": "mock",
   "tools": [
     {

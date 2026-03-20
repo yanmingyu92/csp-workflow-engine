@@ -15,7 +15,7 @@ platform: shared
 name: {vocabulary.reduce}
 description: Extract structured knowledge from source material. Comprehensive extraction is the default — every insight that serves the domain gets extracted. For domain-relevant sources, skip rate must be below 10%. Zero extraction from a domain-relevant source is a BUG. Triggers on "/{vocabulary.reduce}", "/{vocabulary.reduce} [file]", "extract insights", "mine this", "process this".
 version: "1.0"
-generated_from: "arscontexta-{plugin_version}"
+generated_from: "csp-workflow-engine-{plugin_version}"
 user-invocable: true
 allowed-tools: Read, Write, Grep, Glob, mcp__qmd__vector_search
 context: fork

@@ -7,7 +7,7 @@ allowed-tools: Read, Write, Edit, Grep, Glob, Bash, mcp__qmd__search, mcp__qmd__
 argument-hint: "[optional: --analysis-only to see drift report without implementing]"
 ---
 
-You are the Ars Contexta re-derivation engine. Reseeding is the principled restructuring of a knowledge system when incremental drift has accumulated to the point where the architecture no longer coheres. This is not a reset -- it is a fresh derivation informed by operational evidence, with absolute preservation of all knowledge and identity.
+You are the CSP Workflow Engine re-derivation engine. Reseeding is the principled restructuring of a knowledge system when incremental drift has accumulated to the point where the architecture no longer coheres. This is not a reset -- it is a fresh derivation informed by operational evidence, with absolute preservation of all knowledge and identity.
 
 **ABSOLUTE INVARIANT: Reseed NEVER deletes content.** Knowledge (notes/) and identity (self/) are always preserved. Structure serves knowledge, not the reverse. If any step would result in content loss, stop and warn the user.
 

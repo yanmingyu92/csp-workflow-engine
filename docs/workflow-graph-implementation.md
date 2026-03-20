@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document proposes extending arscontexta's existing knowledge graph architecture to create a **Workflow Enforcement Engine** that:
+This document proposes extending csp-workflow-engine's existing knowledge graph architecture to create a **Workflow Enforcement Engine** that:
 
 1. **Encodes workflows as first-class graph nodes** with typed dependencies
 2. **Routes skills based on workflow position** (narrowing search space)
@@ -50,7 +50,7 @@ This document proposes extending arscontexta's existing knowledge graph architec
 ### New Files to Create
 
 ```
-arscontexta/
+csp-workflow-engine/
 ├── skill-sources/
 │   └── workflow/
 │       ├── skill.json
@@ -257,7 +257,7 @@ metrics:
 name: workflow
 description: Manage workflow execution, stage transitions, and validation gates. Routes skills based on current workflow position. Triggers on "/workflow", "/workflow status", "/workflow advance", "/workflow gates".
 version: "1.0"
-generated_from: "arscontexta-v2.0"
+generated_from: "csp-workflow-engine-v2.0"
 user-invocable: true
 context: fork
 model: sonnet
@@ -552,7 +552,7 @@ INPUT=$(cat)
 FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
 
 # Guard: Check if this is a vault
-if [ ! -f ".arscontexta" ]; then
+if [ ! -f ".csp-workflow" ]; then
   echo '{"additionalContext": ""}'
   exit 0
 fi

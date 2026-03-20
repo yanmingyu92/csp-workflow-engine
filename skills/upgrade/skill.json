@@ -1,8 +1,8 @@
 {
   "name": "knowledge-upgrade",
-  "description": "Apply plugin knowledge base updates to an existing generated system. Consults the Ars Contexta research graph for methodology improvements, proposes skill upgrades with research justification. Never auto-implements.",
+  "description": "Apply plugin knowledge base updates to an existing generated system. Consults the CSP Workflow Engine research graph for methodology improvements, proposes skill upgrades with research justification. Never auto-implements.",
   "version": "0.4.0",
-  "author": "arscontexta",
+  "author": "jaime",
   "tags": [
     "knowledge-management",
     "maintenance",

@@ -17,7 +17,7 @@ user-invocable: true
 allowed-tools: Read, Grep, Glob
 context: fork
 model: sonnet
-generated_from: "arscontexta-{plugin_version}"
+generated_from: "csp-workflow-engine-{plugin_version}"
 ---
 
 ## Runtime Configuration (Step 0 — before any processing)

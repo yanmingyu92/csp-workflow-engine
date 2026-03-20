@@ -24,7 +24,7 @@ Different sources warrant different trust:
 | Source | Trust | Decay |
 |--------|-------|-------|
 | Observed (my experiments) | High | Slow |
-| Prompted (Heinrich's guidance) | Medium-high | Medium |
+| Prompted (jaime's guidance) | Medium-high | Medium |
 | Inherited (general knowledge) | Variable | Fast for specifics |
 
 A claim I tested myself is stronger than one I read somewhere. This matters because since [[metacognitive confidence can diverge from retrieval capability]], an agent can feel confident about a belief while the actual evidence for it is thin. Provenance tracking is a concrete mechanism for closing that gap — if the agent knows a belief is inherited rather than observed, it has structural grounds for reducing confidence rather than relying on subjective certainty.

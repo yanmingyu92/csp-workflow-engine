@@ -36,7 +36,7 @@ Adding a second domain (relationship tracking) to an existing research vault. Te
 
 ### User Turn 1
 
-I already have a research vault set up with Ars Contexta. Now I also want to track people I work with — collaborators, researchers I follow, people I meet at conferences. I want to remember what they work on, what we have discussed, and follow up on things.
+I already have a research vault set up with CSP Workflow Engine. Now I also want to track people I work with — collaborators, researchers I follow, people I meet at conferences. I want to remember what they work on, what we have discussed, and follow up on things.
 
 ### Expected Agent Response Pattern 1
 

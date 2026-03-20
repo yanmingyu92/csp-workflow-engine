@@ -1,9 +1,9 @@
 #!/bin/bash
-# Ars Contexta — Session Orientation Hook
+# CSP Workflow Engine — Session Orientation Hook
 # Injects workspace structure, identity, methodology, and maintenance signals at session start.
 # Also handles session tracking (capture moved here from Stop hook — fires once per session).
 
-# Only run in Ars Contexta vaults
+# Only run in CSP Workflow Engine vaults
 GUARD_DIR="$(cd "$(dirname "$0")" && pwd)"
 "$GUARD_DIR/vaultguard.sh" || exit 0
 

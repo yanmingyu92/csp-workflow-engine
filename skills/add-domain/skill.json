@@ -2,7 +2,7 @@
   "name": "knowledge-add-domain",
   "description": "Add a new knowledge domain to your existing system. Derives domain-specific configuration through conversation, generates folders, templates, and vocabulary while preserving architecture.",
   "version": "0.4.0",
-  "author": "arscontexta",
+  "author": "jaime",
   "tags": [
     "knowledge-management",
     "architecture",

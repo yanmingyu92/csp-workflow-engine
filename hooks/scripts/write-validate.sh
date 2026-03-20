@@ -1,10 +1,10 @@
 #!/bin/bash
-# Ars Contexta — Schema Enforcement Hook
+# CSP Workflow Engine — Schema Enforcement Hook
 # Validates notes in the knowledge space have required fields.
 # Runs as PostToolUse hook on Write events.
 # Receives tool input as JSON on stdin.
 
-# Only run in Ars Contexta vaults
+# Only run in CSP Workflow Engine vaults
 GUARD_DIR="$(cd "$(dirname "$0")" && pwd)"
 if ! "$GUARD_DIR/vaultguard.sh"; then
   cat > /dev/null  # drain stdin

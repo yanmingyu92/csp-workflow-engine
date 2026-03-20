@@ -1,4 +1,4 @@
-# Ars Contexta Methodology Reference
+# CSP Workflow Engine Methodology Reference
 
 A portable, domain-agnostic distillation of the Tools for Thought for Agents research. This document powers design decisions across all commands and skills.
 

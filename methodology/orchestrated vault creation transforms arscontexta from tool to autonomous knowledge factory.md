@@ -6,7 +6,7 @@ confidence: speculative
 methodology: ["Original"]
 ---
 
-# orchestrated vault creation transforms arscontexta from tool to autonomous knowledge factory
+# orchestrated vault creation transforms csp-workflow-engine from tool to autonomous knowledge factory
 
 ArsContexta v1 is a derivation engine: give it a persona and a domain, it derives a complete knowledge system with the right configuration, vocabulary, templates, and skills. But the derived system is empty. The notes directory has an index.md and nothing else. The human or their agent still needs to do the actual knowledge work — capturing sources, extracting claims, finding connections. Derivation solves the architectural problem but not the content problem.
 

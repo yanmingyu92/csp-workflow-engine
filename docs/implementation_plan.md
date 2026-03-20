@@ -2,7 +2,7 @@
 
 ## Problem & Background
 
-The current Ars Contexta project provides a **knowledge management plugin** for Claude Code with skills, hooks, and a workflow graph layer (see `docs/workflow-graph-implementation.md`). The existing workflow graph already sketches a 6-stage SDTM-to-submission pipeline, but the **review report scored it 60/100** with 27 gaps — most critically: pseudocode-only skills, no real enforcement, no expression evaluator, and no formal state machine.
+The current CSP Workflow Engine project provides a **knowledge management plugin** for Claude Code with skills, hooks, and a workflow graph layer (see `docs/workflow-graph-implementation.md`). The existing workflow graph already sketches a 6-stage SDTM-to-submission pipeline, but the **review report scored it 60/100** with 27 gaps — most critically: pseudocode-only skills, no real enforcement, no expression evaluator, and no formal state machine.
 
 **What we need now** is to pivot toward **clinical trial statistical programming** as a first-class domain, where:
 
@@ -86,7 +86,7 @@ The core data structure: a YAML-defined DAG where each node is a regulatory task
 
 ---
 
-#### [NEW] [regulatory-graph.yaml](file:///c:/Users/yanmi/arscontexta/graph/regulatory-graph.yaml)
+#### [NEW] [regulatory-graph.yaml](file:///c:/Users/yanmi/csp-workflow-engine/graph/regulatory-graph.yaml)
 
 The master graph definition with ~40 nodes across 7 layers. Each node specifies:
 - `id`, `name`, `layer`, `description`
@@ -137,7 +137,7 @@ nodes:
 
 ---
 
-#### [NEW] [graph-layers.yaml](file:///c:/Users/yanmi/arscontexta/graph/graph-layers.yaml)
+#### [NEW] [graph-layers.yaml](file:///c:/Users/yanmi/csp-workflow-engine/graph/graph-layers.yaml)
 
 Layer definitions that group nodes and define the regulatory phase boundaries:
 
@@ -187,7 +187,7 @@ layers:
 
 ---
 
-#### [MODIFY] [workflow-schema.yaml](file:///c:/Users/yanmi/arscontexta/reference/workflow-schema.yaml)
+#### [MODIFY] [workflow-schema.yaml](file:///c:/Users/yanmi/csp-workflow-engine/reference/workflow-schema.yaml)
 
 Extend the existing schema to support the richer graph structure:
 
@@ -269,7 +269,7 @@ The key innovation: the agent never loads all skills. It loads only skills for t
 
 ---
 
-#### [NEW] [graph-router.py](file:///c:/Users/yanmi/arscontexta/scripts/graph-router.py)
+#### [NEW] [graph-router.py](file:///c:/Users/yanmi/csp-workflow-engine/scripts/graph-router.py)
 
 Python script that:
 1. Reads `graph/regulatory-graph.yaml`
@@ -301,7 +301,7 @@ def get_active_skills(graph, state):
 
 ---
 
-#### [MODIFY] [workflow/SKILL.md](file:///c:/Users/yanmi/arscontexta/skill-sources/workflow/SKILL.md)
+#### [MODIFY] [workflow/SKILL.md](file:///c:/Users/yanmi/csp-workflow-engine/skill-sources/workflow/SKILL.md)
 
 Update the `/workflow skills` command to use graph-router.py instead of the current grep-based approach:
 
@@ -311,7 +311,7 @@ Update the `/workflow skills` command to use graph-router.py instead of the curr
 
 ---
 
-#### [NEW] [context-loader.py](file:///c:/Users/yanmi/arscontexta/scripts/context-loader.py)
+#### [NEW] [context-loader.py](file:///c:/Users/yanmi/csp-workflow-engine/scripts/context-loader.py)
 
 Minimal-token context builder that constructs the LLM prompt context:
 - Load only the `SKILL.md` files for active skills (from graph-router)
@@ -327,7 +327,7 @@ Allow users (or the LLM itself) to add new nodes to the graph while ensuring reg
 
 ---
 
-#### [NEW] [evaluation.py](file:///c:/Users/yanmi/arscontexta/scripts/evaluation.py)
+#### [NEW] [evaluation.py](file:///c:/Users/yanmi/csp-workflow-engine/scripts/evaluation.py)
 
 ```python
 def can_add_node(graph, new_node):
@@ -365,7 +365,7 @@ def evaluate_completion(graph, node_id, outputs):
 
 ---
 
-#### [NEW] [regulatory-patterns.yaml](file:///c:/Users/yanmi/arscontexta/graph/regulatory-patterns.yaml)
+#### [NEW] [regulatory-patterns.yaml](file:///c:/Users/yanmi/csp-workflow-engine/graph/regulatory-patterns.yaml)
 
 Templates for common node patterns that evaluation functions validate against:
 
@@ -425,7 +425,7 @@ docs/regulatory/
 
 ---
 
-#### [NEW] [doc-index.yaml](file:///c:/Users/yanmi/arscontexta/docs/regulatory/index.yaml)
+#### [NEW] [doc-index.yaml](file:///c:/Users/yanmi/csp-workflow-engine/docs/regulatory/index.yaml)
 
 Maps documents to graph nodes for retrieval:
 
