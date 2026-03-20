@@ -1,0 +1,16 @@
+{
+  "name": "csp-workflow",
+  "description": "Track and manage regulatory workflow progression through the task graph",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": ["csp", "global", "workflow", "state"],
+  "entry": "SKILL.md",
+  "layer": -1,
+  "graph_node": "_global",
+  "scope": "global",
+  "platform_hints": {"claude-code": {"context": "fork", "model": "sonnet"}},
+  "triggers": ["workflow", "progress", "advance", "next step", "status", "what's next"],
+  "dependencies": [],
+  "produces": ["ops/workflow-state.yaml"],
+  "consumes": ["graph/regulatory-graph.yaml"]
+}

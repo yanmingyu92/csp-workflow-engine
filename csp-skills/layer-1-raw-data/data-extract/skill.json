@@ -1,0 +1,17 @@
+{
+  "name": "csp-data-extract",
+  "description": "Extract raw clinical data from EDC system to working format",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": ["csp", "layer-1", "raw-data", "extraction", "edc"],
+  "entry": "SKILL.md",
+  "layer": 1,
+  "graph_node": "edc-extract",
+  "platform_hints": {
+    "claude-code": {"context": "fork", "model": "sonnet"}
+  },
+  "triggers": ["EDC", "data extraction", "raw data", "data cut", "extract data", "Rave", "Medidata", "InForm"],
+  "dependencies": ["protocol-setup"],
+  "produces": ["data/raw/", "data/raw/extraction-manifest.yaml"],
+  "consumes": ["specs/study-config.yaml"]
+}

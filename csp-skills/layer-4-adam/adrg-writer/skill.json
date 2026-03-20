@@ -1,0 +1,39 @@
+{
+  "name": "csp-adrg-writer",
+  "description": "Write ADaM Reviewers Guide (ADRG)",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-4"
+  ],
+  "entry": "SKILL.md",
+  "layer": 4,
+  "graph_node": "adam-reviewer-guide",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "ADRG",
+    "ADaM reviewer",
+    "ADaM reviewer guide",
+    "ADaM reviewer's guide",
+    "derivation documentation",
+    "PhUSE ADRG"
+  ],
+  "dependencies": [
+    "p21-adam-validation",
+    "adam-traceability-check"
+  ],
+  "produces": [
+    "docs/adrg.pdf"
+  ],
+  "consumes": [
+    "All ADaM datasets",
+    "P21 ADaM validation report",
+    "Traceability report"
+  ]
+}

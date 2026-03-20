@@ -1,3 +1,8 @@
 .DS_Store
 *.local.md
-.claude/settings.local.json
+__pycache__/
+
+# Claude Code directories (local config, not for repo)
+.claude/
+.claude-plugin/
+nul

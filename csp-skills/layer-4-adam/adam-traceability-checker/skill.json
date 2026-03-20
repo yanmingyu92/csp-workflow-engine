@@ -1,0 +1,45 @@
+{
+  "name": "csp-adam-traceability-checker",
+  "description": "Verify ADaM-to-SDTM traceability",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-4",
+    "adam"
+  ],
+  "entry": "SKILL.md",
+  "layer": 4,
+  "graph_node": "adam-traceability-check",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "traceability",
+    "ADaM traceability",
+    "SDTM to ADaM",
+    "variable lineage",
+    "derivation lineage",
+    "source variable",
+    "traceability report",
+    "data lineage"
+  ],
+  "dependencies": [
+    "adam-adsl",
+    "adam-adae",
+    "adam-adlb",
+    "adam-adtte",
+    "adam-adeff"
+  ],
+  "produces": [
+    "reports/adam-traceability-report.html"
+  ],
+  "consumes": [
+    "All ADaM datasets",
+    "All SDTM datasets",
+    "ADaM derivation specification"
+  ]
+}

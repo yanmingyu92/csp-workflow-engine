@@ -1,0 +1,505 @@
+# SDTM to Submission Package Workflow
+# Version: 1.0
+# Purpose: Complete clinical trial statistical programming workflow from raw data to regulatory submission
+# Domain: Clinical Trial Statistical Programming
+
+id: sdtm-to-submission
+name: "SDTM to Submission Package"
+description: |
+  Complete clinical trial statistical programming workflow covering:
+  1. Raw data validation
+  2. SDTM mapping and compliance
+  3. ADaM dataset derivation
+  4. TFL (Tables, Figures, Listings) generation
+  5. Define.xml creation
+  6. Submission package assembly
+
+version: "1.0"
+metadata:
+  domain: clinical-trial
+  created: "2026-03-16"
+  author: csp-workflow-engine
+  tags:
+    - cdisc
+    - sdtm
+    - adam
+    - regulatory
+    - fda-submission
+
+# Global skills available in all stages
+global_skills_allowed:
+  - /help
+  - /status
+  - /workflow
+
+# Skills blocked in all stages (dangerous operations)
+global_skills_blocked: []
+
+# =============================================================================
+# WORKFLOW STAGES
+# =============================================================================
+
+stages:
+  # ---------------------------------------------------------------------------
+  # Stage 1: Raw Data Validation
+  # ---------------------------------------------------------------------------
+  - id: raw-data-validation
+    name: "Raw Data Validation"
+    sequence: 0
+    description: |
+      Validate incoming raw data against specifications:
+      - Check data completeness
+      - Verify variable types and formats
+      - Identify missing data patterns
+      - Generate data quality report
+
+    skills_allowed:
+      - /data-import
+      - /data-validator
+      - /spec-check
+      - /quality-report
+      - /missing-data-analysis
+
+    skills_blocked:
+      - /sdtm-mapper
+      - /adam-derive
+      - /tfl-generate
+      - /define-export
+
+    dependencies: []
+
+    validation_gates:
+      - id: raw-data-complete
+        name: "Raw Data Completeness"
+        skill: /data-validator
+        pass_condition: "all_datasets_present && all_variables_mapped"
+        failure_action: block
+        auto_run: true
+        watch_outputs:
+          - "data/raw/*.sas7bdat"
+          - "data/raw/*.xpt"
+
+      - id: spec-alignment
+        name: "Specification Alignment"
+        skill: /spec-check
+        pass_condition: "raw_data_matches_spec"
+        failure_action: warn
+        auto_run: true
+
+    outputs:
+      - artifact_type: dataset
+        format: sas7bdat
+        path_pattern: "data/raw/*.sas7bdat"
+        required_for: [sdtm-mapping]
+
+      - artifact_type: report
+        format: pdf
+        path_pattern: "reports/data-validation/*.pdf"
+        required_for: []
+
+    timeout:
+      duration: 8h
+      action: warn
+
+  # ---------------------------------------------------------------------------
+  # Stage 2: SDTM Mapping
+  # ---------------------------------------------------------------------------
+  - id: sdtm-mapping
+    name: "SDTM Mapping"
+    sequence: 1
+    description: |
+      Map raw data to CDISC SDTM standards:
+      - Domain mapping (DM, AE, LB, VS, etc.)
+      - Variable standardization
+      - Controlled terminology application
+      - Supplemental qualifiers
+
+    skills_allowed:
+      - /sdtm-mapper
+      - /sdtm-validator
+      - /p21-check
+      - /terminology-apply
+      - /domain-mapper
+      - /spec-import
+
+    skills_blocked:
+      - /adam-derive
+      - /tfl-generate
+      - /define-export
+      - /package-assemble
+
+    dependencies:
+      - raw-data-validation
+
+    validation_gates:
+      - id: p21-compliance
+        name: "Pinnacle 21 Compliance"
+        skill: /p21-check
+        pass_condition: "p21_errors == 0 && p21_warnings < 10"
+        failure_action: block
+        auto_run: true
+        watch_outputs:
+          - "data/sdtm/*.xpt"
+
+      - id: sdtm-consistency
+        name: "SDTM Consistency Check"
+        skill: /sdtm-validator
+        pass_condition: "all_domains_valid && cross_domain_consistent"
+        failure_action: block
+        auto_run: true
+
+      - id: terminology-correct
+        name: "Controlled Terminology"
+        skill: /terminology-check
+        pass_condition: "all_ct_codes_valid"
+        failure_action: warn
+
+    outputs:
+      - artifact_type: dataset
+        format: xpt
+        path_pattern: "data/sdtm/*.xpt"
+        required_for: [adam-derivation]
+        validation:
+          required: true
+          min_count: 1
+
+      - artifact_type: specification
+        format: xlsx
+        path_pattern: "specs/sdtm/*.xlsx"
+        required_for: [adam-derivation]
+
+    exit_conditions:
+      - condition: "all_gates_passed && outputs_validated"
+        action: advance
+        message: "SDTM datasets validated and ready for ADaM derivation"
+
+      - condition: "p21_errors > 0"
+        action: block
+        message: "Pinnacle 21 validation errors must be resolved"
+
+    timeout:
+      duration: 24h
+      action: escalate
+
+  # ---------------------------------------------------------------------------
+  # Stage 3: ADaM Derivation
+  # ---------------------------------------------------------------------------
+  - id: adam-derivation
+    name: "ADaM Derivation"
+    sequence: 2
+    description: |
+      Derive Analysis Datasets (ADaM):
+      - ADSL (Subject Level)
+      - ADAE (Adverse Events)
+      - ADLB (Lab Results)
+      - ADVS (Vital Signs)
+      - Study-specific analysis datasets
+
+    skills_allowed:
+      - /adam-derive
+      - /adam-validator
+      - /analysis-variable-derive
+      - /statistician
+      - /spec-import
+
+    skills_blocked:
+      - /sdtm-mapper
+      - /package-assemble
+      - /submission-validator
+
+    dependencies:
+      - sdtm-mapping
+
+    validation_gates:
+      - id: adam-compliance
+        name: "ADaM Compliance"
+        skill: /adam-validator
+        pass_condition: "adam_structure_valid && all_required_vars_present"
+        failure_action: block
+        auto_run: true
+        watch_outputs:
+          - "data/adam/*.xpt"
+
+      - id: traceability
+        name: "SDTM-ADaM Traceability"
+        skill: /traceability-check
+        pass_condition: "all_adam_vars_traceable_to_sdtm"
+        failure_action: warn
+
+      - id: analysis-ready
+        name: "Analysis Ready Check"
+        skill: /analysis-check
+        pass_condition: "statistical_analysis_feasible"
+        failure_action: warn
+
+    outputs:
+      - artifact_type: dataset
+        format: xpt
+        path_pattern: "data/adam/*.xpt"
+        required_for: [tfl-generation]
+        validation:
+          required: true
+          min_count: 1
+
+      - artifact_type: specification
+        format: xlsx
+        path_pattern: "specs/adam/*.xlsx"
+        required_for: [tfl-generation]
+
+    timeout:
+      duration: 48h
+      action: escalate
+
+  # ---------------------------------------------------------------------------
+  # Stage 4: TFL Generation
+  # ---------------------------------------------------------------------------
+  - id: tfl-generation
+    name: "TFL Generation"
+    sequence: 3
+    description: |
+      Generate Tables, Figures, and Listings:
+      - Demographic tables
+      - Efficacy tables
+      - Safety tables
+      - Kaplan-Meier plots
+      - Patient listings
+
+    skills_allowed:
+      - /tfl-generate
+      - /table-producer
+      - /figure-producer
+      - /listing-producer
+      - /qc-validator
+      - /statistician
+
+    skills_blocked:
+      - /sdtm-mapper
+      - /adam-derive
+      - /package-assemble
+
+    dependencies:
+      - adam-derivation
+
+    validation_gates:
+      - id: tfl-complete
+        name: "TFL Completeness"
+        skill: /tfl-validator
+        pass_condition: "all_shells_filled && all_outputs_match_spec"
+        failure_action: block
+        auto_run: true
+
+      - id: statistical-review
+        name: "Statistical Review"
+        skill: /statistician
+        pass_condition: "calculations_correct && formatting_compliant"
+        failure_action: warn
+
+      - id: qc-match
+        name: "QC Match Check"
+        skill: /qc-validator
+        pass_condition: "production_matches_qc"
+        failure_action: block
+
+    outputs:
+      - artifact_type: report
+        format: rtf
+        path_pattern: "reports/tfl/*.rtf"
+        required_for: [submission-package]
+
+      - artifact_type: report
+        format: pdf
+        path_pattern: "reports/tfl/*.pdf"
+        required_for: [submission-package]
+
+      - artifact_type: code
+        format: sas
+        path_pattern: "programs/tfl/*.sas"
+        required_for: [define-xml]
+
+    timeout:
+      duration: 72h
+      action: escalate
+
+  # ---------------------------------------------------------------------------
+  # Stage 5: Define.xml Generation
+  # ---------------------------------------------------------------------------
+  - id: define-xml
+    name: "Define.xml Generation"
+    sequence: 4
+    description: |
+      Create regulatory submission metadata:
+      - Define.xml for SDTM and ADaM
+      - Analysis results metadata
+      - Computational method documentation
+      - Controlled terminology definitions
+
+    skills_allowed:
+      - /define-export
+      - /define-validator
+      - /metadata-builder
+      - /method-documenter
+
+    skills_blocked:
+      - /sdtm-mapper
+      - /adam-derive
+      - /tfl-generate
+
+    dependencies:
+      - tfl-generation
+
+    validation_gates:
+      - id: define-valid
+        name: "Define.xml Validation"
+        skill: /define-validator
+        pass_condition: "schema_valid && all_references_resolved"
+        failure_action: block
+        auto_run: true
+
+      - id: metadata-complete
+        name: "Metadata Completeness"
+        skill: /metadata-check
+        pass_condition: "all_datasets_documented && all_variables_described"
+        failure_action: warn
+
+    outputs:
+      - artifact_type: metadata
+        format: xml
+        path_pattern: "define.xml"
+        required_for: [submission-package]
+
+      - artifact_type: metadata
+        format: xml
+        path_pattern: "define/*.xml"
+        required_for: [submission-package]
+
+    timeout:
+      duration: 24h
+      action: block
+
+  # ---------------------------------------------------------------------------
+  # Stage 6: Submission Package Assembly
+  # ---------------------------------------------------------------------------
+  - id: submission-package
+    name: "Submission Package Assembly"
+    sequence: 5
+    description: |
+      Assemble final regulatory submission package:
+      - Folder structure per FDA guidance
+      - File naming conventions
+      - Reviewer's guide
+      - Validation reports
+
+    skills_allowed:
+      - /package-assemble
+      - /submission-validator
+      - /reviewer-guide
+      - /file-organizer
+
+    skills_blocked:
+      - /sdtm-mapper
+      - /adam-derive
+      - /tfl-generate
+
+    dependencies:
+      - define-xml
+
+    validation_gates:
+      - id: fda-compliance
+        name: "FDA Compliance Check"
+        skill: /submission-validator
+        pass_condition: "folder_structure_valid && naming_conventions_met && all_required_files_present"
+        failure_action: block
+        auto_run: true
+
+      - id: completeness-check
+        name: "Package Completeness"
+        skill: /completeness-check
+        pass_condition: "all_study_data_included && all_documents_included"
+        failure_action: block
+
+    outputs:
+      - artifact_type: package
+        format: regulatory-submission
+        path_pattern: "submission/"
+        required_for: []
+        validation:
+          required: true
+
+    exit_conditions:
+      - condition: "all_gates_passed"
+        action: advance
+        message: "Submission package complete and validated"
+
+    timeout:
+      duration: 8h
+      action: block
+
+# =============================================================================
+# WORKFLOW EDGE DEFINITIONS (for graph representation)
+# =============================================================================
+
+# These define the relationships between stages and artifacts
+# Used by /workflow graph to generate visualizations
+
+edges:
+  # Stage dependencies (blocking)
+  - from: raw-data-validation
+    to: sdtm-mapping
+    type: requires
+    label: "validates data"
+
+  - from: sdtm-mapping
+    to: adam-derivation
+    type: requires
+    label: "produces SDTM"
+
+  - from: adam-derivation
+    to: tfl-generation
+    type: requires
+    label: "produces ADaM"
+
+  - from: tfl-generation
+    to: define-xml
+    type: requires
+    label: "produces TFL"
+
+  - from: define-xml
+    to: submission-package
+    type: requires
+    label: "produces metadata"
+
+  # Validation gates (non-blocking relationships)
+  - from: p21-compliance
+    to: sdtm-mapping
+    type: validates
+    label: "validates SDTM"
+
+  - from: adam-compliance
+    to: adam-derivation
+    type: validates
+    label: "validates ADaM"
+
+  - from: define-valid
+    to: define-xml
+    type: validates
+    label: "validates Define.xml"
+
+  - from: fda-compliance
+    to: submission-package
+    type: validates
+    label: "validates package"
+
+# =============================================================================
+# DEFAULTS AND OVERRIDES
+# =============================================================================
+
+defaults:
+  gate_retry:
+    max_attempts: 3
+    delay: "5m"
+
+  checkpoint_frequency: "on_stage_change"
+
+  logging:
+    level: info
+    include_artifacts: true

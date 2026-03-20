@@ -1,0 +1,150 @@
+{
+  "name": "p21-validator",
+  "description": "Pinnacle 21 validation MCP server for SDTM, ADaM, and Define-XML compliance checking",
+  "version": "1.0.0",
+  "author": "arscontexta-csp",
+  "type": "mock",
+  "tools": [
+    {
+      "name": "validate_sdtm",
+      "description": "Validate SDTM datasets against FDA conformance rules",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "datasets_path": {
+            "type": "string",
+            "description": "Path to SDTM datasets directory or single XPT file"
+          },
+          "config_path": {
+            "type": "string",
+            "description": "Optional path to P21 configuration XML"
+          },
+          "standard_version": {
+            "type": "string",
+            "default": "3.4",
+            "description": "SDTM IG version"
+          }
+        },
+        "required": ["datasets_path"]
+      },
+      "outputSchema": {
+        "type": "object",
+        "properties": {
+          "status": {"type": "string", "enum": ["PASS", "FAIL"]},
+          "error_count": {"type": "integer"},
+          "warning_count": {"type": "integer"},
+          "report_path": {"type": "string"}
+        }
+      }
+    },
+    {
+      "name": "validate_adam",
+      "description": "Validate ADaM datasets against FDA conformance rules",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "datasets_path": {
+            "type": "string",
+            "description": "Path to ADaM datasets directory or single XPT file"
+          },
+          "config_path": {
+            "type": "string",
+            "description": "Optional path to P21 configuration XML"
+          },
+          "standard_version": {
+            "type": "string",
+            "default": "1.3",
+            "description": "ADaM IG version"
+          }
+        },
+        "required": ["datasets_path"]
+      }
+    },
+    {
+      "name": "validate_define",
+      "description": "Validate Define-XML file against CDISC Define-XML specification",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "define_path": {
+            "type": "string",
+            "description": "Path to Define-XML file"
+          },
+          "standard_version": {
+            "type": "string",
+            "default": "2.1",
+            "description": "Define-XML version"
+          }
+        },
+        "required": ["define_path"]
+      }
+    },
+    {
+      "name": "get_issues",
+      "description": "Get categorized list of validation issues from last run",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "severity": {
+            "type": "string",
+            "enum": ["Error", "Warning", "Info", "all"],
+            "default": "all"
+          },
+          "domain": {
+            "type": "string",
+            "description": "Filter by domain (e.g., DM, AE)"
+          }
+        }
+      }
+    },
+    {
+      "name": "generate_report",
+      "description": "Generate validation report in specified format",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "format": {
+            "type": "string",
+            "enum": ["xlsx", "html", "json"],
+            "default": "xlsx"
+          },
+          "output_path": {
+            "type": "string",
+            "description": "Output file path"
+          }
+        },
+        "required": ["output_path"]
+      }
+    }
+  ],
+  "bound_to_nodes": [
+    "p21-sdtm-validation",
+    "p21-adam-validation",
+    "define-xml-validation",
+    "esub-final-validation"
+  ],
+  "configuration": {
+    "p21_cli_path": "${P21_CLI_PATH:-p21-cli}",
+    "java_path": "${JAVA_PATH:-java}",
+    "timeout_seconds": 300,
+    "max_datasets": 100
+  },
+  "mock_responses": {
+    "validate_sdtm": {
+      "status": "PASS",
+      "error_count": 0,
+      "warning_count": 0,
+      "report_path": "reports/p21-sdtm-report.xlsx"
+    },
+    "validate_adam": {
+      "status": "PASS",
+      "error_count": 0,
+      "warning_count": 0
+    },
+    "validate_define": {
+      "status": "PASS",
+      "schema_valid": true,
+      "stylesheet_renders": true
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "name": "csp-define-draft-builder",
+  "description": "Generate draft Define.xml metadata for SDTM",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-3",
+    "submission"
+  ],
+  "entry": "SKILL.md",
+  "layer": 3,
+  "graph_node": "sdtm-define-draft",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "Define.xml draft",
+    "SDTM Define",
+    "define draft",
+    "dataset metadata",
+    "variable metadata",
+    "CRT-DD",
+    "define-xml",
+    "Define-XML draft"
+  ],
+  "dependencies": [
+    "p21-sdtm-validation"
+  ],
+  "produces": [
+    "output/define/define-sdtm-draft.xml"
+  ],
+  "consumes": [
+    "All SDTM domain datasets",
+    "SDTM mapping specification"
+  ]
+}

@@ -1,0 +1,38 @@
+# Invalid Layer Crossing node for Testing
+#
+# This node should FAIL layer ordering validation.
+# Dependencies create invalid cross-layer backward edge.
+id: adam-invalid-layer-cross
+name: "ADaM Invalid Layer Crossing Test"
+layer: 4
+description: >
+  Test node with invalid layer ordering.
+  Attempts to create a dependency from ADaM (layer 4) back to SDTM (layer 2).
+  This violates the dependency ordering rule.
+skills_bound:
+  - /adam-adsl-builder
+mcps_bound:
+  - p21-validator
+inputs_required:
+  - type: specification
+    name: ADaM derivation specification
+    format: xlsx|yaml
+  - type: dataset
+    name: SDTM AE domain
+    format: xpt
+outputs_produced:
+  - type: dataset
+    name: Test ADaM dataset
+    format: xpt
+regulatory_refs:
+  - CDISC SDTM IG v3.4
+dependencies:
+  # Invalid: references layer 2 node, SDTM domain is not allowed
+  - node: sdtm-ae-mapping
+    edge_type: requires
+  - node: sdtm-dm-mapping
+    edge_type: requires  # This creates backward edge: Layer 4 -> Layer 2
+evaluation_criteria:
+  mandatory:
+    - All required variables present per SDTM IG
+    - P21 validation must 0 errors

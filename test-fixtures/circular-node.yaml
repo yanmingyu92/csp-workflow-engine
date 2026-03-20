@@ -1,0 +1,31 @@
+# Circular Dependency Node for Testing
+#
+# This node creates a circular dependency and should FAIL validation.
+id: sdtm-ae-circular
+name: "SDTM AE Circular Dependency Test"
+layer: 2
+description: >
+  Test node that creates a circular dependency by depending on AE mapping.
+  This should fail validation.
+skills_bound:
+  - /sdtm-ae-mapper
+inputs_required:
+  - type: specification
+    name: SDTM mapping specification
+    format: xlsx|yaml
+outputs_produced:
+  - type: dataset
+    name: AE domain (ae.xpt)
+    format: xpt
+regulatory_refs:
+  - CDISC SDTM IG v3.4
+dependencies:
+  # This creates a cycle: AE -> DM -> AE
+  - node: sdtm-dm-mapping
+    edge_type: requires
+  - node: sdtm-ae-circular  # Self-reference!
+    edge_type: requires
+evaluation_criteria:
+  mandatory:
+    - All required AE variables present per SDTM IG
+    - USUBJID uniquely identifies each subject

@@ -1,0 +1,466 @@
+# =============================================================================
+# REGULATORY Node Patterns
+#
+# Templates for common node patterns that evaluation functions validate against.
+# Each pattern defines the required inputs, outputs, validation, and layer constraints
+#
+# Version: 1.0
+# Standard: CDISC SDTM IG v3.4, ADaM IG v1.3
+# =============================================================================
+
+schema_version: 1
+description: >
+  Regulatory node patterns for validating graph extensions. Each pattern defines
+
+  expected structure, required inputs/outputs, and layer constraints for common
+  regulatory workflow nodes.
+
+
+  Layer Assignment:
+  - Layer 0: Protocol & Planning
+  - Layer 1: Raw Data Management
+  - Layer 2: SDTM Creation
+  - Layer 3: SDTM Quality Control
+  - Layer 4: ADaM Creation
+  - Layer 5: TFL Generation
+  - Layer 6: Define.xml & Submission
+
+
+  Valid Artifact Types:
+  - document: PDF, DOCX files
+  - specification: YAML, Xlsx specs
+  - dataset: XPT, CSV, SAS7BDAT files
+  - report: HTML, PDF reports
+  - metadata: XML, YAML metadata
+  - package: Directory packages
+
+# =============================================================================
+# SDTM DOMAIN PATTERNS
+# =============================================================================
+
+patterns:
+  # ---------------------------------------------------------------------------
+  # SDTM Domain Mapping Pattern (Layer 2)
+  # Base pattern for all SDTM domain mapping nodes
+  # ---------------------------------------------------------------------------
+  sdtm-domain-mapping:
+    name: "SDTM Domain Mapping"
+    description: >
+      Base pattern for mapping raw data to SDTM domains. Covers domain-specific
+      validation requirements and layer constraints.
+    required_inputs:
+      - raw-data           # Raw clinical data (CSV/SAS7BDAT)
+      - mapping-spec       # SDTM mapping specification
+    required_outputs:
+      - xpt-dataset        # SDTM domain dataset (.xpt)
+    required_validation:
+      - p21-compliance      # Must pass Pinnacle 21 validation
+      - ct-alignment        # Controlled terminology must be CDISC CT
+    layer_range: [2, 2]
+    skills_example:
+      - /sdtm-dm-mapper
+      - /sdtm-ae-mapper
+      - /sdtm-lb-mapper
+    evaluation_template:
+      mandatory:
+        - "All required domain variables present per SDTM IG"
+        - "USUBJID uniquely identifies each subject"
+        - "Controlled terminology matches CDISC CT"
+      recommended:
+        - "P21 validation returns 0 warnings"
+        - "Dataset passes cross-domain consistency checks"
+    valid_node_ids:
+      - sdtm-dm-mapping
+      - sdtm-ae-mapping
+      - sdtm-lb-mapping
+      - sdtm-vs-mapping
+      - sdtm-cm-mapping
+      - sdtm-mh-mapping
+      - sdtm-ex-mapping
+      - sdtm-ds-mapping
+      - sdtm-sv-mapping
+      - sdtm-custom-domain
+      - sdtm-suppqual
+      - sdtm-relrec
+      - sdtm-trial-design
+
+  # ---------------------------------------------------------------------------
+  # ADaM Derivation Pattern (Layer 4)
+  # Base pattern for all ADaM derivation nodes
+  # ---------------------------------------------------------------------------
+  adam-derivation:
+    name: "ADaM Dataset Derivation"
+    description: >
+      Base pattern for deriving ADaM analysis datasets from SDTM sources.
+      Covers BDS, OCCDS, and ADSL-specific patterns.
+    required_inputs:
+      - sdtm-dataset        # Source SDTM domain
+      - analysis-spec        # ADaM derivation specification
+      - adsl                 # ADSL dataset (for ADaM datasets other than ADSL)
+    required_outputs:
+      - adam-dataset        # ADaM dataset (.xpt)
+    required_validation:
+      - adam-compliance       # Must comply with ADaM IG
+      - traceability          # Must maintain SDTM traceability
+    layer_range: [4, 4]
+    skills_example:
+      - /adam-adsl-builder
+      - /adam-adae-builder
+      - /adam-adlb-builder
+      - /adam-adtte-builder
+      - /adam-adeff-builder
+    evaluation_template:
+      mandatory:
+        - "All ADaM fundamental principles satisfied"
+        - "Traceability to SDTM source maintained"
+        - "One record per subject (for ADSL)"
+      recommended:
+        - "P21 ADaM validation returns 0 warnings"
+        - "All SAP-required variables derived"
+    valid_node_ids:
+      - adam-adsl
+      - adam-adae
+      - adam-adlb
+      - adam-adtte
+      - adam-adeff
+      - adam-custom-analysis
+
+  # ---------------------------------------------------------------------------
+  # TFL Generation Pattern (Layer 5)
+  # Base pattern for all TFL generation nodes
+  # ---------------------------------------------------------------------------
+  tfl-generation:
+    name: "TFL Generation"
+    description: >
+      Base pattern for generating tables, figures, and listings
+      from ADaM datasets. Covers output formatting and QC requirements.
+    required_inputs:
+      - adam-dataset        # Source ADaM dataset
+      - tfl-shell            # TFL shell/mock-up specification
+    required_outputs:
+      - report-output        # TFL output (RTF/PDF/PNG)
+    required_validation:
+      - qc-review             # Must pass QC review
+      - shell-compliance       # Must match shell specifications
+    layer_range: [5, 5]
+    skills_example:
+      - /tfl-table-generator
+      - /tfl-listing-generator
+      - /tfl-figure-generator
+    evaluation_template:
+      mandatory:
+        - "All SAP-mandated outputs produced"
+        - "Statistical results match independent QC"
+        - "Formatting matches shell specifications"
+      recommended:
+        - "Consistent decimal precision across tables"
+        - "Publication-quality resolution for figures"
+    valid_node_ids:
+      - tfl-table-generation
+      - tfl-listing-generation
+      - tfl-figure-generation
+
+  # ---------------------------------------------------------------------------
+  # Quality Gate Pattern (Layers 3, 4, 6)
+  # Pattern for validation and QC nodes
+  # ---------------------------------------------------------------------------
+  quality-gate:
+    name: "Quality Gate Validation"
+    description: >
+      Pattern for validation nodes that act as quality gates between
+      workflow phases. Ensures regulatory compliance.
+    required_inputs:
+      - dataset              # Dataset(s) to validate
+    required_outputs:
+      - report               # Validation report
+    required_validation:
+      - zero-errors            # Must have 0 blocking errors
+      - documented-issues    # All issues must be tracked
+    layer_range: [3, 6]
+    skills_example:
+      - /p21-validator
+      - /p21-report-reviewer
+      - /define-xml-validator
+    evaluation_template:
+      mandatory:
+        - "Zero validation errors"
+        - "All warnings reviewed and documented"
+      recommended:
+        - "Zero validation warnings"
+        - "Automated tracking in place"
+    valid_node_ids:
+      - p21-sdtm-validation
+      - p21-adam-validation
+      - define-xml-validation
+      - tfl-qc-validation
+
+  # ---------------------------------------------------------------------------
+  # Define.xml Pattern (Layer 6)
+  # Pattern for Define.xml generation nodes
+  # ---------------------------------------------------------------------------
+  define-xml-generation:
+    name: "Define.xml Metadata Generation"
+    description: >
+      Pattern for generating Define.xml metadata files.
+      Includes dataset/variable metadata and controlled terminology references.
+    required_inputs:
+      - dataset              # Dataset(s) to document
+      - specification         # Mapping/derivation specification
+    required_outputs:
+      - metadata             # Define.xml file
+    required_validation:
+      - schema-compliance      # Must be valid against Define-XML schema
+      - ct-references         # All CT references must to be valid
+    layer_range: [6, 6]
+    skills_example:
+      - /define-xml-builder
+      - /define-xml-validator
+    evaluation_template:
+      mandatory:
+        - "Schema-valid against Define-XML v2.1"
+        - "All datasets and variables documented"
+        - "Controlled terminology references valid"
+      recommended:
+        - "Renders correctly in stylesheet"
+        - "All hyperlinks functional"
+    valid_node_ids:
+      - define-xml-sdtm
+      - define-xml-adam
+
+  # ---------------------------------------------------------------------------
+  # Specification Pattern (Layer 0)
+  # Pattern for specification creation nodes
+  # ---------------------------------------------------------------------------
+  specification-creation:
+    name: "Specification Creation"
+    description: >
+      Pattern for creating mapping and derivation, or shell
+      specifications that drive downstream work.
+    required_inputs:
+      - document              # Source document (SAP, protocol)
+    required_outputs:
+      - specification         # Specification file (YAML/XLSX)
+    required_validation:
+      - completeness           # Must cover all required elements
+      - review-approved        # Must be reviewed and approved
+    layer_range: [0, 0]
+    skills_example:
+      - /sap-parser
+      - /study-setup
+      - /spec-builder
+      - /spec-reviewer
+    evaluation_template:
+      mandatory:
+        - "All required sections present"
+        - "Version control established"
+      recommended:
+        - "Reviewed and signed off"
+        - "Change tracking in place"
+    valid_node_ids:
+      - sap-review
+      - protocol-setup
+      - spec-creation
+
+  # ---------------------------------------------------------------------------
+  # Raw Data Management Pattern (Layer 1)
+  # Pattern for raw data handling nodes
+  # ---------------------------------------------------------------------------
+  raw-data-management:
+    name: "Raw Data Management"
+    description: >
+      Pattern for raw data extraction, validation, and
+      reconciliation. Ensures data quality before SDTM mapping.
+    required_inputs:
+      - configuration          # Study configuration
+    required_outputs:
+      - dataset               # Raw or validated dataset
+      - report                # Quality or reconciliation report
+    required_validation:
+      - completeness           # All required data extracted
+      - quality-checks          # Data quality checks passed
+    layer_range: [1, 1]
+    skills_example:
+      - /data-extract
+      - /crf-annotator
+      - /crf-validator
+      - /data-validator
+      - /data-reconciler
+    evaluation_template:
+      mandatory:
+        - "All CRF forms extracted"
+        - "Data quality report generated"
+      recommended:
+        - "Reconciliation complete"
+        - "Data exported in multiple formats"
+    valid_node_ids:
+      - edc-extract
+      - crf-validation
+      - raw-data-validation
+      - data-reconciliation
+
+  # ---------------------------------------------------------------------------
+  # eCTD Submission Pattern (Layer 6)
+  # Pattern for submission package assembly
+  # ---------------------------------------------------------------------------
+  ectd-submission:
+    name: "eCTD Submission Assembly"
+    description: >
+      Pattern for assembling the final eCTD Module 5 submission
+      package. Includes all study data, metadata, and supporting documents.
+    required_inputs:
+      - dataset              # All SDTM/ADaM datasets
+      - metadata             # Define.xml files
+      - report                # All TFLs
+      - document              # Supporting documents (aCRF, reviewer's guides)
+    required_outputs:
+      - package               # eCTD submission package directory
+    required_validation:
+      - completeness           # All required components present
+      - structure-compliance    # eCTD structure compliant
+    layer_range: [6, 6]
+    skills_example:
+      - /esub-assembler
+      - /esub-validator
+      - /submission-checklist
+    evaluation_template:
+      mandatory:
+        - "All required components present"
+        - "eCTD directory structure correct"
+        - "File naming conventions followed"
+      recommended:
+        - "Package size within FDA limits"
+        - "Test submission successful"
+    valid_node_ids:
+      - esub-package-assembly
+      - esub-final-validation
+
+# =============================================================================
+# PATTERN COMPATIBILITY RULES
+# =============================================================================
+
+compatibility_rules:
+  # Layer transition rules
+  valid_transitions:
+    - from: 0
+      to: [1, 2]
+      description: "Planning can transition to data work or SDTM"
+
+    - from: 1
+      to: [2]
+      description: "Raw data validated before SDTM mapping"
+
+    - from: 2
+      to: [3]
+      description: "SDTM created before validation"
+
+    - from: 3
+      to: [4]
+      description: "SDTM validated before ADaM derivation"
+
+    - from: 4
+      to: [5]
+      description: "ADaM ready before TFL generation"
+
+    - from: 5
+      to: [6]
+      description: "TFL complete before submission"
+
+  # Backward transition rules (for corrections)
+  valid_backward:
+    - from: 2
+      to: 1
+      reason: "Return to raw data if SDTM mapping reveals data issues"
+      allowed: true
+
+    - from: 3
+      to: 2
+      reason: "Fix SDTM datasets if P21 validation fails"
+      allowed: true
+
+    - from: 4
+      to: 3
+      reason: "Return to SDTM QC if ADaM derivation reveals issues"
+      allowed: true
+
+    - from: 5
+      to: 4
+      reason: "Fix ADaM if TFL generation fails"
+      allowed: true
+
+    - from: 6
+      to: 5
+      reason: "Regenerate TFLs if submission validation fails"
+      allowed: true
+  # Invalid transitions
+  invalid_transitions:
+    - from: 0
+      to: [4, 5, 6]
+      reason: "Cannot skip layers - must follow progression"
+      allowed: false
+
+    - from: 1
+      to: [4, 5, 6]
+      reason: "Cannot skip to ADaM/TFL without SDTM"
+      allowed: false
+
+    - from: 2
+      to: [5, 6]
+      reason: "Cannot skip validation and ADaM layers"
+      allowed: false
+
+# =============================================================================
+# ARTIFACT TYPE COMPATIBILITY
+# =============================================================================
+
+artifact_types:
+  document:
+    description: "PDF, DOCX files"
+    valid_formats: ["pdf", "docx", "rtf"]
+
+  specification:
+    description: "YAML, xlsx specification files"
+    valid_formats: ["yaml", "yml", "xlsx", "xls"]
+
+  dataset:
+    description: "Data files in various formats"
+    valid_formats: ["xpt", "csv", "sas7bdat", "parquet"]
+
+  report:
+    description: "Output reports"
+    valid_formats: ["html", "pdf", "rtf", "xlsx"]
+
+  metadata:
+    description: "Metadata files"
+    valid_formats: ["xml", "yaml", "yml", "json"]
+
+  package:
+    description: "Directory packages"
+    valid_formats: ["directory"]
+
+# =============================================================================
+# SKILL BINDING VALIDATION
+# =============================================================================
+
+skill_validation:
+  naming_convention: "/{domain}-{function}"
+  examples:
+    - /sdtm-dm-mapper
+    - /adam-adsl-builder
+    - /tfl-table-generator
+    - /p21-validator
+    - /define-xml-builder
+  required_files:
+    - SKILL.md (required)
+    - script.py (optional)
+    - spec.yaml (optional)
+
+# =============================================================================
+# MCP BINDING VALIDATION
+# =============================================================================
+
+mcp_validation:
+  known_mcps:
+    - p21-validator
+    - cdisc-library
+    - data-quality
+  naming_convention: "{function}-{type}"

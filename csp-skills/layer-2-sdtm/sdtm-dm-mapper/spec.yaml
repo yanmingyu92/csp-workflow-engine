@@ -1,0 +1,125 @@
+skill_id: "sdtm-dm-mapper"
+graph_node: "sdtm-dm-mapping"
+layer: 2
+
+inputs:
+  - id: raw_dm
+    type: dataset
+    required: true
+    formats: [csv, sas7bdat, xpt]
+    path_pattern: data/raw/dm.*
+    variables:
+      - name: STUDYID
+        type: string
+        required: true
+      - name: SITEID
+        type: string
+        required: true
+      - name: SUBJID
+        type: string
+        required: true
+      - name: AGE
+        type: numeric
+        required: true
+      - name: SEX
+        type: string
+        required: true
+      - name: RACE
+        type: string
+        required: true
+
+  - id: mapping_spec
+    type: specification
+    required: true
+    format: yaml
+    path_pattern: specs/sdtm-mapping-spec.yaml
+
+  - id: study_config
+    type: specification
+    required: false
+    format: yaml
+    path_pattern: specs/study-config.yaml
+
+outputs:
+  - id: dm_domain
+    type: dataset
+    format: xpt
+    path_pattern: output/sdtm/dm.xpt
+    validation: p21-compliance
+    key_variables: [STUDYID, USUBJID]
+
+variable_mappings:
+  - target: STUDYID
+    source: RAW.DM.STUDYID
+    required: true
+
+  - target: DOMAIN
+    derivation: '"DM"'
+    required: true
+
+  - target: USUBJID
+    derivation: "concatenate(STUDYID, '-', SITEID, '-', SUBJID)"
+    required: true
+
+  - target: SUBJID
+    source: RAW.DM.SUBJID
+    required: true
+
+  - target: SITEID
+    source: RAW.DM.SITEID
+    required: true
+
+  - target: AGE
+    source: RAW.DM.AGE
+    type: numeric
+    required: true
+
+  - target: AGEU
+    derivation: '"YEARS"'
+    required: true
+
+  - target: SEX
+    source: RAW.DM.SEX
+    ct_codelist: C66731
+    required: true
+
+  - target: RACE
+    source: RAW.DM.RACE
+    ct_codelist: C74457
+    required: true
+
+  - target: ETHNIC
+    source: RAW.DM.ETHNIC
+    ct_codelist: C66790
+    required: false
+
+  - target: ARM
+    source: RAW.DM.ARM
+    required: true
+
+  - target: ARMCD
+    source: RAW.DM.ARMCD
+    derivation: "substr(ARM, 1, 8) if missing"
+    required: true
+
+  - target: COUNTRY
+    source: RAW.DM.COUNTRY
+    ct_codelist: C66742
+    required: true
+
+validation_rules:
+  - id: DM001
+    description: "USUBJID must be unique"
+    check: "count(distinct USUBJID) == count(*)"
+
+  - id: DM002
+    description: "All required variables present"
+    check: "all required variables non-missing"
+
+  - id: DM003
+    description: "SEX valid per CDISC CT"
+    check: "SEX in (M, F, U, UNDIFFERENTIATED)"
+
+  - id: DM004
+    description: "RACE valid per CDISC CT"
+    check: "RACE in CT codelist C74457"

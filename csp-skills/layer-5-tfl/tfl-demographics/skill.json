@@ -1,0 +1,15 @@
+{
+  "name": "csp-demographics-table",
+  "description": "Generate demographics summary table (Age, Sex, Race) by treatment",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": ["csp", "layer-5", "tfl", "demographics", "table"],
+  "entry": "SKILL.md",
+  "layer": 5,
+  "graph_node": "tfl-table-generation",
+  "platform_hints": {"claude-code": {"context": "fork", "model": "haiku"}},
+  "triggers": ["demographics", "baseline characteristics", "Table 1", "Age, Sex, Race"],
+  "dependencies": ["adam-adsl-builder"],
+  "produces": ["output/tfl/t_demographics.rtf", "output/tfl/t_demographics.xlsx"],
+  "consumes": ["output/adam/adsl.xpt"]
+}

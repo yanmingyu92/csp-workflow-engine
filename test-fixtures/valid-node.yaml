@@ -1,0 +1,43 @@
+# Valid Node for Testing
+#
+# This node should pass all validation checks.
+id: sdtm-eg-mapping
+name: "SDTM EG Domain Mapping Test"
+layer: 2
+description: >
+  Test node for SDTM EG (Exposure) domain mapping.
+  Maps raw adverse event grade data to SDTM EG domain structure.
+skills_bound:
+  - /sdtm-eg-mapper
+  - /sdtm-validator
+mcps_bound:
+  - p21-validator
+inputs_required:
+  - type: specification
+    name: SDTM mapping specification
+    format: xlsx|yaml
+  - type: dataset
+    name: Raw adverse event data
+    format: csv|sas7bdat
+outputs_produced:
+  - type: dataset
+    name: EG domain (eg.xpt)
+    format: xpt
+    validation: p21-compliance
+    path_pattern: output/sdtm/eg.xpt
+regulatory_refs:
+  - CDISC SDTM IG v3.4 Section 6.2
+  - MedDRA coding guidelines
+dependencies:
+  - node: raw-data-validation
+    edge_type: requires
+  - node: spec-creation
+    edge_type: requires
+evaluation_criteria:
+  mandatory:
+    - All EG records coded with MedDRA PT and SOC
+    - AESTDTC and AEENDTC in ISO 8601 format
+    - AESER and AEREL populated for all records
+  recommended:
+    - AEGRPID used for grouping related events
+    - All required EG variables present per SDTM IG

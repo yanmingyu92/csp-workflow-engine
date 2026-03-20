@@ -1,0 +1,17 @@
+{
+  "name": "csp-sdtm-validator",
+  "description": "Validate SDTM domain datasets against CDISC standards",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": ["csp", "layer-2", "sdtm", "validation", "cdisc"],
+  "entry": "SKILL.md",
+  "layer": 2,
+  "graph_node": "p21-sdtm-validation",
+  "platform_hints": {
+    "claude-code": {"context": "fork", "model": "sonnet"}
+  },
+  "triggers": ["SDTM validation", "validate SDTM", "P21", "compliance", "domain validation"],
+  "dependencies": [],
+  "produces": ["reports/sdtm-validation.yaml"],
+  "consumes": ["output/sdtm/*.xpt"]
+}

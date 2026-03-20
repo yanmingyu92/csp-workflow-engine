@@ -1,0 +1,42 @@
+skill_id: "study-setup"
+graph_node: "protocol-setup"
+layer: 0
+
+inputs:
+  - id: protocol_document
+    type: document
+    required: true
+    formats: [pdf, docx]
+
+outputs:
+  - id: study_config
+    type: specification
+    format: yaml
+    path_pattern: specs/study-config.yaml
+
+configuration_schema:
+  study:
+    id: string
+    name: string
+    phase: string
+    therapeutic_area: string
+    indication: string
+
+  design:
+    type: string
+    blinding: string
+    randomization: string
+    stratification_factors: list
+
+  arms:
+    - id: string
+      name: string
+      description: string
+      armcd: string
+
+  visits:
+    - id: string
+      name: string
+      visitnum: integer
+      window_days: integer
+      description: string

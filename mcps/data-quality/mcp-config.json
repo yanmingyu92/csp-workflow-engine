@@ -1,0 +1,180 @@
+{
+  "name": "data-quality",
+  "description": "Data Quality MCP server for clinical data integrity checks",
+  "version": "1.0.0",
+  "author": "arscontexta-csp",
+  "type": "mock",
+  "tools": [
+    {
+      "name": "check_referential_integrity",
+      "description": "Check referential integrity between parent and child datasets",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "parent_dataset": {
+            "type": "string",
+            "description": "Path to parent dataset (e.g., DM)"
+          },
+          "child_dataset": {
+            "type": "string",
+            "description": "Path to child dataset (e.g., AE)"
+          },
+          "key_variable": {
+            "type": "string",
+            "default": "USUBJID",
+            "description": "Key variable for join"
+          }
+        },
+        "required": ["parent_dataset", "child_dataset"]
+      }
+    },
+    {
+      "name": "check_date_consistency",
+      "description": "Check date consistency across related records",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "datasets": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "List of dataset paths to check"
+          },
+          "subject_variable": {
+            "type": "string",
+            "default": "USUBJID"
+          },
+          "date_variables": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Date variables to check (e.g., RFSTDTC, DTHDTC)"
+          }
+        },
+        "required": ["datasets"]
+      }
+    },
+    {
+      "name": "check_missing_values",
+      "description": "Analyze missing value patterns in dataset",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "dataset_path": {
+            "type": "string",
+            "description": "Path to dataset"
+          },
+          "variables": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Variables to check (default: all)"
+          },
+          "threshold_percent": {
+            "type": "number",
+            "default": 5.0,
+            "description": "Alert threshold for missing percent"
+          }
+        },
+        "required": ["dataset_path"]
+      }
+    },
+    {
+      "name": "check_duplicates",
+      "description": "Check for duplicate records based on key variables",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "dataset_path": {
+            "type": "string",
+            "description": "Path to dataset"
+          },
+          "key_variables": {
+            "type": "array",
+            "items": {"type": "string"},
+            "description": "Key variables for uniqueness check"
+          }
+        },
+        "required": ["dataset_path", "key_variables"]
+      }
+    },
+    {
+      "name": "check_value_ranges",
+      "description": "Check numeric values against expected ranges",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "dataset_path": {
+            "type": "string"
+          },
+          "variable": {
+            "type": "string"
+          },
+          "min_value": {
+            "type": "number"
+          },
+          "max_value": {
+            "type": "number"
+          }
+        },
+        "required": ["dataset_path", "variable"]
+      }
+    },
+    {
+      "name": "generate_quality_report",
+      "description": "Generate comprehensive data quality report",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "datasets_path": {
+            "type": "string",
+            "description": "Path to datasets directory"
+          },
+          "output_path": {
+            "type": "string",
+            "description": "Output report path"
+          },
+          "checks": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": ["missing", "duplicates", "ranges", "integrity", "all"]
+            },
+            "default": ["all"]
+          }
+        },
+        "required": ["datasets_path", "output_path"]
+      }
+    }
+  ],
+  "bound_to_nodes": [
+    "raw-data-validation",
+    "data-reconciliation",
+    "sdtm-crossdomain-check",
+    "adam-traceability-check"
+  ],
+  "configuration": {
+    "max_records": 1000000,
+    "parallel_checks": true,
+    "output_format": "html"
+  },
+  "mock_responses": {
+    "check_referential_integrity": {
+      "status": "PASS",
+      "parent_records": 150,
+      "child_records": 500,
+      "orphan_records": 0,
+      "issues": []
+    },
+    "check_missing_values": {
+      "total_records": 150,
+      "variables_checked": 25,
+      "issues": [
+        {"variable": "AGEU", "missing_count": 5, "missing_percent": 3.3}
+      ]
+    },
+    "check_duplicates": {
+      "total_records": 500,
+      "unique_keys": 500,
+      "duplicate_count": 0,
+      "status": "PASS"
+    }
+  }
+}

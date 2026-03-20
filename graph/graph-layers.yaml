@@ -1,0 +1,468 @@
+# =============================================================================
+# GRAPH LAYER DEFINITIONS — Clinical Trial Statistical Programming
+# =============================================================================
+#
+# Defines the 7 regulatory phases (layers) that group workflow nodes.
+# Layers provide phase boundaries and enable context-aware skill routing.
+#
+# IMPORTANT: Layers represent phases, not parallel tasks. Within each layer,
+# nodes CAN have dependencies on other nodes in the same layer. For example,
+# in Layer 0 (Protocol & Planning), spec-creation depends on sap-review and
+# protocol-setup. This internal ordering is by design.
+#
+# Version: 1.0
+# Standard: CDISC SDTM IG v3.4, ADaM IG v1.3, ICH E3/E6/E9
+# =============================================================================
+
+schema_version: 1
+description: >
+  Layer definitions grouping the regulatory task graph nodes into
+  logical phases. Each layer represents a distinct stage in the
+  clinical trial statistical programming lifecycle.
+
+layer_semantics:
+  definition: "Layers are regulatory phases, not parallel stages"
+  internal_ordering: "Nodes within a layer can have dependencies on each other"
+  phase_boundary: "Quality gates at layer transitions enforce completion"
+
+# =============================================================================
+# LAYER DEFINITIONS
+# =============================================================================
+
+layers:
+  # ---------------------------------------------------------------------------
+  # LAYER 0: Protocol & Planning
+  # ---------------------------------------------------------------------------
+  # Study setup, SAP review, and specification creation.
+  # No SDTM/ADaM work begins until these foundational documents are ready.
+  # ---------------------------------------------------------------------------
+  - id: 0
+    name: "Protocol & Planning"
+    description: >
+      Study setup, Statistical Analysis Plan review, and specification creation.
+      This layer establishes the foundational documents that drive all downstream work.
+    nodes:
+      - sap-review
+      - protocol-setup
+      - spec-creation
+    entry_node: protocol-setup
+    exit_nodes:
+      - spec-creation
+    deliverables:
+      - "Parsed SAP specifications"
+      - "Study configuration"
+      - "SDTM mapping specification"
+      - "ADaM derivation specification"
+      - "TFL shell specifications"
+    regulatory_context:
+      - "ICH E9: Statistical Principles for Clinical Trials"
+      - "ICH E3: Structure and Content of Clinical Study Reports"
+      - "ICH E6(R2): Good Clinical Practice"
+    skills_typical:
+      - /sap-parser
+      - /study-setup
+      - /spec-builder
+      - /spec-reviewer
+    typical_duration: "1-2 weeks"
+
+  # ---------------------------------------------------------------------------
+  # LAYER 1: Raw Data Management
+  # ---------------------------------------------------------------------------
+  # Data acquisition, CRF validation, and raw data QC.
+  # Ensures data quality before SDTM mapping begins.
+  # ---------------------------------------------------------------------------
+  - id: 1
+    name: "Raw Data Management"
+    description: >
+      Data extraction from EDC, CRF annotation and validation, raw data quality checks,
+      and cross-source reconciliation. Ensures data integrity before SDTM mapping.
+    nodes:
+      - edc-extract
+      - crf-validation
+      - raw-data-validation
+      - data-reconciliation
+    entry_node: edc-extract
+    exit_nodes:
+      - data-reconciliation
+    deliverables:
+      - "Raw EDC datasets"
+      - "Extraction manifest"
+      - "Annotated CRF (draft)"
+      - "Data quality report"
+      - "Validated raw datasets"
+      - "Reconciliation report"
+    regulatory_context:
+      - "21 CFR Part 11: Electronic Records"
+      - "CDISC CDASH v2.2"
+      - "ICH E6(R2): Data Management"
+    skills_typical:
+      - /data-extract
+      - /crf-annotator
+      - /crf-validator
+      - /data-validator
+      - /quality-report
+      - /data-reconciler
+    typical_duration: "1-3 weeks per data cut"
+
+  # ---------------------------------------------------------------------------
+  # LAYER 2: SDTM Creation
+  # ---------------------------------------------------------------------------
+  # Map raw data to CDISC SDTM domains.
+  # This is the core data transformation layer.
+  # ---------------------------------------------------------------------------
+  - id: 2
+    name: "SDTM Creation"
+    description: >
+      Map raw clinical data to CDISC SDTM standard domains (DM, AE, LB, VS, CM, MH, EX, DS, SV)
+      and supplementary structures (SUPPXX, RELREC, custom domains, trial design metadata).
+    nodes:
+      - sdtm-dm-mapping
+      - sdtm-ae-mapping
+      - sdtm-lb-mapping
+      - sdtm-vs-mapping
+      - sdtm-cm-mapping
+      - sdtm-mh-mapping
+      - sdtm-ex-mapping
+      - sdtm-ds-mapping
+      - sdtm-sv-mapping
+      - sdtm-trial-design
+      - sdtm-suppqual
+      - sdtm-custom-domain
+      - sdtm-relrec
+    entry_node: sdtm-dm-mapping
+    exit_nodes:
+      - sdtm-relrec
+      - sdtm-suppqual
+    deliverables:
+      - "SDTM domain datasets (.xpt) — DM, AE, LB, VS, CM, MH, EX, DS, SV"
+      - "Trial Design datasets (TS, TA, TI, TV)"
+      - "SUPPXX datasets"
+      - "RELREC dataset"
+      - "Custom domain datasets"
+    regulatory_context:
+      - "CDISC SDTM IG v3.4"
+      - "FDA Study Data Technical Conformance Guide"
+    skills_typical:
+      - /sdtm-dm-mapper
+      - /sdtm-ae-mapper
+      - /sdtm-lb-mapper
+      - /sdtm-vs-mapper
+      - /sdtm-cm-mapper
+      - /sdtm-mh-mapper
+      - /sdtm-ex-mapper
+      - /sdtm-ds-mapper
+      - /sdtm-sv-mapper
+      - /sdtm-trial-design-builder
+      - /sdtm-supp-builder
+      - /sdtm-custom-builder
+      - /sdtm-relrec-builder
+      - /sdtm-validator
+    typical_duration: "2-6 weeks"
+
+  # ---------------------------------------------------------------------------
+  # LAYER 3: SDTM Quality Control
+  # ---------------------------------------------------------------------------
+  # Validate SDTM datasets, generate supporting docs.
+  # Critical layer for regulatory compliance.
+  # ---------------------------------------------------------------------------
+  - id: 3
+    name: "SDTM Quality Control"
+    description: >
+      Validate SDTM datasets using Pinnacle 21, perform cross-domain consistency checks,
+      generate draft Define.xml, finalize annotated CRF, and write the Reviewer's Guide.
+    nodes:
+      - p21-sdtm-validation
+      - sdtm-crossdomain-check
+      - sdtm-define-draft
+      - sdtm-annotated-crf
+      - sdtm-reviewer-guide
+    entry_node: p21-sdtm-validation
+    exit_nodes:
+      - sdtm-reviewer-guide
+      - sdtm-define-draft
+      - sdtm-annotated-crf
+    deliverables:
+      - "P21 SDTM validation report"
+      - "P21 issue tracker"
+      - "Cross-domain consistency report"
+      - "SDTM Define.xml (draft)"
+      - "Final annotated CRF"
+      - "SDTM Reviewer's Guide (SDRG)"
+    regulatory_context:
+      - "FDA Data Standards Catalog"
+      - "FDA Pre-NDA/BLA Meeting Checklist"
+      - "CDISC Define-XML v2.1"
+      - "PhUSE Reviewer's Guide Template"
+    skills_typical:
+      - /p21-validator
+      - /p21-report-reviewer
+      - /sdtm-consistency-checker
+      - /define-draft-builder
+      - /acrf-finalizer
+      - /sdrg-writer
+    typical_duration: "1-2 weeks"
+
+  # ---------------------------------------------------------------------------
+  # LAYER 4: ADaM Creation
+  # ---------------------------------------------------------------------------
+  # Derive analysis datasets from SDTM.
+  # Creates the analysis-ready data structures.
+  # ---------------------------------------------------------------------------
+  - id: 4
+    name: "ADaM Creation"
+    description: >
+      Derive ADaM analysis datasets from SDTM sources. Creates ADSL (subject-level),
+      ADAE (adverse events), ADLB (labs), ADTTE (time-to-event), ADEFF (efficacy),
+      custom analysis datasets, and verifies traceability.
+    nodes:
+      - adam-adsl
+      - adam-adae
+      - adam-adlb
+      - adam-adtte
+      - adam-adeff
+      - adam-custom-analysis
+      - adam-traceability-check
+      - p21-adam-validation
+      - adam-reviewer-guide
+    entry_node: adam-adsl
+    exit_nodes:
+      - adam-reviewer-guide
+      - p21-adam-validation
+    deliverables:
+      - "ADSL dataset"
+      - "ADAE dataset"
+      - "ADLB dataset"
+      - "ADTTE dataset"
+      - "ADEFF dataset(s)"
+      - "Custom ADaM datasets"
+      - "Traceability report"
+      - "P21 ADaM validation report"
+      - "ADaM Reviewer's Guide (ADRG)"
+    regulatory_context:
+      - "CDISC ADaM IG v1.3"
+      - "CDISC ADaM ADSL Supplement"
+      - "CDISC ADaM OCCDS Supplement"
+      - "CDISC ADaM BDS Supplement"
+      - "CDISC ADaM ADTTE Supplement"
+      - "PhUSE ADaM Reviewer's Guide Template"
+    skills_typical:
+      - /adam-adsl-builder
+      - /adam-adae-builder
+      - /adam-adlb-builder
+      - /adam-adtte-builder
+      - /adam-adeff-builder
+      - /adam-custom-builder
+      - /adam-traceability-checker
+      - /adam-validator
+      - /p21-validator
+      - /p21-report-reviewer
+      - /adrg-writer
+    typical_duration: "2-4 weeks"
+
+  # ---------------------------------------------------------------------------
+  # LAYER 5: TFL Generation
+  # ---------------------------------------------------------------------------
+  # Generate tables, figures, and listings for CSR.
+  # Primary output layer for clinical study report.
+  # ---------------------------------------------------------------------------
+  - id: 5
+    name: "TFL Generation"
+    description: >
+      Generate tables, figures, and listings from ADaM datasets. Includes shell review,
+      table/listing/figure generation, QC validation, and double programming verification.
+    nodes:
+      - tfl-shell-review
+      - tfl-table-generation
+      - tfl-listing-generation
+      - tfl-figure-generation
+      - tfl-qc-validation
+      - tfl-double-programming
+    entry_node: tfl-shell-review
+    exit_nodes:
+      - tfl-qc-validation
+      - tfl-double-programming
+    deliverables:
+      - "TFL programming templates"
+      - "Analysis tables (RTF/PDF)"
+      - "Patient data listings"
+      - "Analysis figures (PNG/PDF)"
+      - "TFL QC report"
+      - "Double programming comparison report"
+    regulatory_context:
+      - "ICH E3 Section 11 (Tables)"
+      - "ICH E3 Section 12 (Figures)"
+      - "ICH E3 Section 14 (Listings)"
+      - "Company SOP: Double Programming"
+    skills_typical:
+      - /tfl-shell-reviewer
+      - /tfl-template-builder
+      - /tfl-table-generator
+      - /tfl-listing-generator
+      - /tfl-figure-generator
+      - /tfl-formatter
+      - /tfl-qc-validator
+      - /tfl-double-programmer
+      - /tfl-comparator
+    typical_duration: "4-8 weeks"
+
+  # ---------------------------------------------------------------------------
+  # LAYER 6: Define.xml & Submission
+  # ---------------------------------------------------------------------------
+  # Create Define.xml metadata, assemble eCTD submission.
+  # Final regulatory submission preparation.
+  # ---------------------------------------------------------------------------
+  - id: 6
+    name: "Define.xml & Submission"
+    description: >
+      Generate final Define.xml files for SDTM and ADaM, validate Define.xml,
+      assemble the eCTD Module 5 submission package, and perform final validation.
+    nodes:
+      - define-xml-sdtm
+      - define-xml-adam
+      - define-xml-validation
+      - esub-package-assembly
+      - esub-final-validation
+    entry_node: define-xml-sdtm
+    exit_nodes:
+      - esub-final-validation
+    deliverables:
+      - "Define.xml for SDTM"
+      - "Define.xml for ADaM"
+      - "Define.xml validation report"
+      - "eCTD Module 5 submission package"
+      - "Submission readiness report"
+      - "Final submission checklist"
+    regulatory_context:
+      - "CDISC Define-XML v2.1"
+      - "ICH M8 eCTD v4.0"
+      - "FDA eCTD Guidance"
+      - "FDA Pre-NDA/BLA Meeting Checklist"
+      - "FDA Study Data Validation Rules"
+    skills_typical:
+      - /define-xml-builder
+      - /define-xml-validator
+      - /esub-assembler
+      - /esub-validator
+      - /submission-checklist
+    typical_duration: "1-2 weeks"
+
+# =============================================================================
+# LAYER TRANSITION RULES
+# =============================================================================
+
+transition_rules:
+  # Backward edges (reviewing earlier work)
+  backward_allowed:
+    - from: 2
+      to: 1
+      reason: "Return to raw data if SDTM mapping reveals data issues"
+    - from: 3
+      to: 2
+      reason: "Fix SDTM datasets if P21 validation fails"
+    - from: 4
+      to: 3
+      reason: "Return to SDTM QC if ADaM derivation reveals issues"
+    - from: 5
+      to: 4
+      reason: "Fix ADaM if TFL generation fails"
+    - from: 6
+      to: 5
+      reason: "Regenerate TFLs if submission validation fails"
+
+  # Skip allowed (for experienced teams or special cases)
+  skip_allowed: []
+
+  # Parallel execution allowed
+  parallel_allowed:
+    - layers: [2, 2]
+      description: "Multiple SDTM domains can be mapped in parallel"
+    - layers: [4, 4]
+      description: "Multiple ADaM datasets can be derived in parallel"
+    - layers: [5, 5]
+      description: "Tables, listings, figures can be generated in parallel"
+
+# =============================================================================
+# QUALITY GATES BETWEEN LAYERS
+# =============================================================================
+
+quality_gates:
+  - id: gate-0-to-1
+    name: "Planning Complete"
+    from_layer: 0
+    to_layer: 1
+    criteria:
+      - "SAP reviewed and parsed"
+      - "Study configuration complete"
+      - "SDTM mapping spec created"
+    blocking: true
+
+  - id: gate-1-to-2
+    name: "Raw Data Validated"
+    from_layer: 1
+    to_layer: 2
+    criteria:
+      - "Raw data quality report clean"
+      - "Reconciliation complete"
+      - "All CRF forms extracted"
+    blocking: true
+
+  - id: gate-2-to-3
+    name: "SDTM Domains Ready"
+    from_layer: 2
+    to_layer: 3
+    criteria:
+      - "All required SDTM domains created"
+      - "DM domain complete (required for all others)"
+    blocking: true
+
+  - id: gate-3-to-4
+    name: "SDTM Validated"
+    from_layer: 3
+    to_layer: 4
+    criteria:
+      - "P21 validation: 0 errors"
+      - "Cross-domain consistency passed"
+      - "Reviewer's guide written"
+    blocking: true
+
+  - id: gate-4-to-5
+    name: "ADaM Ready for TFL"
+    from_layer: 4
+    to_layer: 5
+    criteria:
+      - "ADSL complete"
+      - "Traceability verified"
+      - "All SAP-required ADaM datasets created"
+    blocking: true
+
+  - id: gate-5-to-6
+    name: "TFL Complete"
+    from_layer: 5
+    to_layer: 6
+    criteria:
+      - "All SAP-mandated TFLs produced"
+      - "QC validation passed"
+      - "Double programming comparison clean"
+    blocking: true
+
+# =============================================================================
+# STATISTICS
+# =============================================================================
+
+statistics:
+  total_layers: 7
+  total_nodes: 45
+  nodes_per_layer:
+    0: 3   # sap-review, protocol-setup, spec-creation
+    1: 4   # edc-extract, crf-validation, raw-data-validation, data-reconciliation
+    2: 13  # SDTM domain mappings (DM,AE,LB,VS,CM,MH,EX,DS,SV) + trial-design + suppqual + custom-domain + relrec
+    3: 5   # p21-sdtm-validation, sdtm-crossdomain-check, sdtm-define-draft, sdtm-annotated-crf, sdtm-reviewer-guide
+    4: 9   # ADaM datasets + traceability-check + p21-adam-validation + adam-reviewer-guide
+    5: 6   # TFL generation + QC + double-programming
+    6: 5   # define-xml + submission
+  total_edges: 98
+  edges_by_type:
+    requires: 80
+    enables: 15
+    validates: 3
+  estimated_total_duration: "12-27 weeks"

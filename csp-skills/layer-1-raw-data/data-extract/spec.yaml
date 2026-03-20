@@ -1,0 +1,33 @@
+skill_id: "data-extract"
+graph_node: "edc-extract"
+layer: 1
+
+inputs:
+  - id: edc_source
+    type: directory
+    required: true
+    formats: [csv, sas7bdat, xpt]
+
+  - id: study_config
+    type: specification
+    required: true
+    format: yaml
+    path_pattern: specs/study-config.yaml
+
+outputs:
+  - id: raw_datasets
+    type: dataset
+    format: csv|sas7bdat
+    path_pattern: data/raw/
+
+  - id: extraction_manifest
+    type: metadata
+    format: yaml
+    path_pattern: data/raw/extraction-manifest.yaml
+
+extraction_config:
+  formats:
+    - csv
+    - sas7bdat
+  include_audit: false
+  validate_counts: true

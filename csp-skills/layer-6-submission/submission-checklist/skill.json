@@ -1,0 +1,40 @@
+{
+  "name": "csp-submission-checklist",
+  "description": "Generate submission readiness checklist",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-6",
+    "submission"
+  ],
+  "entry": "SKILL.md",
+  "layer": 6,
+  "graph_node": "esub-final-validation",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "final validation",
+    "submission validation",
+    "FDA validation",
+    "ESG gateway",
+    "submission readiness",
+    "pre-submission check",
+    "readiness checklist",
+    "final check"
+  ],
+  "dependencies": [
+    "esub-package-assembly"
+  ],
+  "produces": [
+    "reports/submission-readiness-report.html",
+    "ops/submission-checklist.yaml"
+  ],
+  "consumes": [
+    "eCTD Module 5 submission package"
+  ]
+}

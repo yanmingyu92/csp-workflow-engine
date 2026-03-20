@@ -1,0 +1,38 @@
+{
+  "name": "csp-sdrg-writer",
+  "description": "Write SDTM Reviewers Guide (SDRG)",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-3"
+  ],
+  "entry": "SKILL.md",
+  "layer": 3,
+  "graph_node": "sdtm-reviewer-guide",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "SDRG",
+    "reviewer guide",
+    "SDTM reviewer",
+    "reviewer's guide",
+    "PhUSE",
+    "study data reviewer",
+    "non-standard justification"
+  ],
+  "dependencies": [
+    "p21-sdtm-validation"
+  ],
+  "produces": [
+    "docs/sdrg.pdf"
+  ],
+  "consumes": [
+    "All SDTM domain datasets",
+    "P21 SDTM validation report"
+  ]
+}

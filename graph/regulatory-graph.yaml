@@ -1,0 +1,2320 @@
+schema_version: 1
+graph_id: csp-regulatory-pipeline
+name: Clinical Trial Statistical Programming Pipeline
+description: >
+  Full regulatory workflow from protocol/SAP review through eCTD submission. Nodes are organized into
+  7 layers with typed dependency edges.
+global_skills:
+- /workflow
+- /workflow-status
+- /data-quality
+nodes:
+- id: sap-review
+  name: SAP Review & Interpretation
+  layer: 0
+  description: >
+    Review the Statistical Analysis Plan. Extract endpoint definitions, analysis populations, statistical
+    methods, and TFL shell specifications.
+  skills_bound:
+  - /sap-parser
+  mcps_bound: []
+  inputs_required:
+  - type: document
+    name: Statistical Analysis Plan (SAP)
+    format: pdf|docx
+  outputs_produced:
+  - type: specification
+    name: Parsed SAP specifications
+    format: yaml
+    description: Machine-readable endpoints, populations, methods
+    path_pattern: specs/sap-parsed.yaml
+  regulatory_refs:
+  - 'ICH E9: Statistical Principles for Clinical Trials'
+  - 'ICH E3: Structure and Content of Clinical Study Reports'
+  dependencies: []
+  evaluation_criteria:
+    mandatory:
+    - All primary and secondary endpoints extracted
+    - Analysis populations defined (ITT, mITT, PP, Safety)
+    - Statistical methods catalogued per endpoint
+    recommended:
+    - Subgroup analyses identified
+    - Multiplicity adjustment strategy documented
+  triggers:
+  - SAP
+  - statistical analysis plan
+  - endpoints
+  - analysis populations
+  - ITT
+  - mITT
+  - safety population
+  - primary endpoint
+  - secondary endpoint
+  - statistical methods
+  - TFL shells
+  - multiplicity
+  context_prompt: 'Parse SAP to extract endpoints, populations (ITT/mITT/PP/Safety), statistical methods,
+    and TFL shell specs. Output: machine-readable SAP YAML.'
+- id: protocol-setup
+  name: Protocol & Study Setup
+  layer: 0
+  description: >
+    Configure study-level metadata: study ID, therapeutic area, phases, treatment arms, visit schedule,
+    randomization scheme.
+  skills_bound:
+  - /study-setup
+  mcps_bound: []
+  inputs_required:
+  - type: document
+    name: Study protocol
+    format: pdf|docx
+  outputs_produced:
+  - type: specification
+    name: Study configuration
+    format: yaml
+    description: Study-level metadata and visit/treatment structure
+    path_pattern: specs/study-config.yaml
+  regulatory_refs:
+  - 'ICH E6(R2): Good Clinical Practice'
+  dependencies: []
+  evaluation_criteria:
+    mandatory:
+    - Study ID and phase correctly set
+    - Treatment arms and visit schedule defined
+    recommended:
+    - Randomization scheme documented
+  triggers:
+  - protocol
+  - study setup
+  - study ID
+  - therapeutic area
+  - phase
+  - treatment arms
+  - visit schedule
+  - randomization
+  - study design
+  - study configuration
+  - CRF
+  context_prompt: 'Configure study metadata: ID, phase, arms, visit schedule, randomization scheme. Output:
+    study configuration YAML.'
+- id: spec-creation
+  name: Specification Creation
+  layer: 0
+  description: >
+    Create or review mapping specifications: SDTM mapping spec, ADaM derivation spec, TFL shell specs.
+    These drive all downstream work.
+  skills_bound:
+  - /spec-builder
+  - /spec-reviewer
+  mcps_bound:
+  - cdisc-library
+  inputs_required:
+  - type: specification
+    name: Parsed SAP specifications
+    format: yaml
+  - type: specification
+    name: Study configuration
+    format: yaml
+  outputs_produced:
+  - type: specification
+    name: SDTM mapping specification
+    format: xlsx|yaml
+    path_pattern: specs/sdtm-mapping-spec.xlsx
+  - type: specification
+    name: ADaM derivation specification
+    format: xlsx|yaml
+    path_pattern: specs/adam-derivation-spec.xlsx
+  - type: specification
+    name: TFL shell specifications
+    format: xlsx|docx
+    path_pattern: specs/tfl-shells.xlsx
+  regulatory_refs:
+  - CDISC SDTM IG v3.4
+  - CDISC ADaM IG v1.3
+  dependencies:
+  - node: sap-review
+    edge_type: requires
+  - node: protocol-setup
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - SDTM mapping spec covers all collected CRF variables
+    - ADaM spec covers all SAP endpoints
+    - TFL shells match SAP appendix
+    recommended:
+    - Specs reviewed and signed off
+  triggers:
+  - mapping specification
+  - SDTM spec
+  - ADaM spec
+  - TFL spec
+  - derivation spec
+  - specification
+  - mapping spec
+  - spec creation
+  - mapping document
+  - programming spec
+  - spec review
+  context_prompt: Create SDTM mapping spec, ADaM derivation spec, and TFL shell specs from SAP and study
+    config. Drives all downstream programming.
+- id: edc-extract
+  name: EDC Data Extraction
+  layer: 1
+  description: >
+    Extract raw clinical data from the Electronic Data Capture system. Convert to working format (CSV/SAS7BDAT).
+    Document extraction date and data cut criteria.
+  skills_bound:
+  - /data-extract
+  mcps_bound: []
+  inputs_required:
+  - type: specification
+    name: Study configuration
+    format: yaml
+  outputs_produced:
+  - type: dataset
+    name: Raw EDC datasets
+    format: csv|sas7bdat
+    description: One file per CRF form/domain
+    path_pattern: data/raw/
+  - type: metadata
+    name: Extraction manifest
+    format: yaml
+    description: Extraction timestamp, data cut date, row counts
+    path_pattern: data/raw/extraction-manifest.yaml
+  regulatory_refs:
+  - '21 CFR Part 11: Electronic Records'
+  dependencies:
+  - node: protocol-setup
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - All CRF forms extracted
+    - Extraction manifest documents data cut date
+    - Row counts verified against EDC
+    recommended:
+    - Data exported in both CSV and SAS7BDAT formats
+  triggers:
+  - EDC
+  - data extraction
+  - extract data
+  - raw data
+  - data cut
+  - CRF data
+  - clinical data
+  - Rave
+  - Medidata
+  - InForm
+  - data export
+  - SAS7BDAT
+  context_prompt: 'Extract raw clinical data from EDC system. Output: CSV/SAS7BDAT files per CRF form
+    + extraction manifest with data cut date.'
+- id: crf-validation
+  name: CRF Annotation & Validation
+  layer: 1
+  description: >
+    Validate that CRF fields align with CDASH standards and SDTM mapping specifications. Create annotated
+    CRF linking each field to its target SDTM variable.
+  skills_bound:
+  - /crf-annotator
+  - /crf-validator
+  mcps_bound:
+  - cdisc-library
+  inputs_required:
+  - type: document
+    name: Blank CRF
+    format: pdf
+  - type: specification
+    name: SDTM mapping specification
+    format: xlsx|yaml
+  outputs_produced:
+  - type: document
+    name: Annotated CRF
+    format: pdf
+    description: CRF with SDTM variable annotations
+    path_pattern: docs/acrf-draft.pdf
+  regulatory_refs:
+  - CDISC CDASH v2.2
+  - FDA Study Data Technical Conformance Guide
+  dependencies:
+  - node: spec-creation
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - Every CRF field annotated with target SDTM domain.variable
+    - No unmapped fields without documented justification
+    recommended:
+    - CDASH compliance verified for field naming
+  triggers:
+  - CRF
+  - case report form
+  - annotated CRF
+  - aCRF
+  - CRF annotation
+  - CDASH
+  - CRF validation
+  - CRF fields
+  - CRF mapping
+  context_prompt: 'Annotate blank CRF with SDTM variable targets per CDASH. Output: annotated CRF (draft)
+    linking each field to SDTM domain.variable.'
+- id: raw-data-validation
+  name: Raw Data Quality Checks
+  layer: 1
+  description: >
+    Validate raw data integrity: variable types, missing values, range checks, cross-form consistency,
+    duplicate detection.
+  skills_bound:
+  - /data-validator
+  - /quality-report
+  mcps_bound:
+  - data-quality
+  inputs_required:
+  - type: dataset
+    name: Raw EDC datasets
+    format: csv|sas7bdat
+  - type: metadata
+    name: Extraction manifest
+    format: yaml
+  outputs_produced:
+  - type: report
+    name: Data quality report
+    format: html|pdf
+    path_pattern: reports/data-quality-report.html
+  - type: dataset
+    name: Validated raw datasets
+    format: csv|sas7bdat
+    path_pattern: data/validated/
+  regulatory_refs:
+  - 'ICH E6(R2): Data Management'
+  dependencies:
+  - node: edc-extract
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - All datasets pass type/format validation
+    - Duplicate records identified and documented
+    - Quality report generated
+    recommended:
+    - Range checks applied per protocol-defined limits
+  triggers:
+  - data quality
+  - raw data check
+  - data validation
+  - missing values
+  - duplicate records
+  - range check
+  - data integrity
+  - variable types
+  - data cleaning
+  context_prompt: 'Validate raw data: types, missing values, range checks, duplicates, cross-form consistency.
+    Output: quality report + validated datasets.'
+- id: data-reconciliation
+  name: Data Reconciliation
+  layer: 1
+  description: >
+    Reconcile data between sources: EDC vs external labs, SAE vs AE,  randomization vs treatment. Document
+    discrepancies.
+  skills_bound:
+  - /data-reconciler
+  mcps_bound: []
+  inputs_required:
+  - type: dataset
+    name: Validated raw datasets
+    format: csv|sas7bdat
+  outputs_produced:
+  - type: report
+    name: Reconciliation report
+    format: html|pdf
+    path_pattern: reports/reconciliation-report.html
+  regulatory_refs:
+  - 'ICH E6(R2): Data Management'
+  dependencies:
+  - node: raw-data-validation
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - All cross-source discrepancies documented
+    recommended:
+    - Discrepancy resolution tracked
+  triggers:
+  - reconciliation
+  - reconcile
+  - data reconciliation
+  - cross-source
+  - EDC vs lab
+  - SAE reconciliation
+  - lab reconciliation
+  context_prompt: 'Reconcile data across sources: EDC vs external labs, SAE vs AE, randomization vs treatment.
+    Output: discrepancy report.'
+- id: sdtm-dm-mapping
+  name: SDTM DM Domain Mapping
+  layer: 2
+  description: >
+    Map raw demographics data to SDTM DM domain per CDISC SDTM IG v3.4. Derive RFSTDTC, RFENDTC, ARM,
+    ACTARM, ARMCD, ACTARMCD, AGE, AGEU, SEX, RACE, ETHNIC, COUNTRY.
+  skills_bound:
+  - /sdtm-dm-mapper
+  - /sdtm-validator
+  mcps_bound:
+  - p21-validator
+  - cdisc-library
+  inputs_required:
+  - type: specification
+    name: SDTM mapping specification
+    format: xlsx|yaml
+  - type: dataset
+    name: Raw demographics data
+    format: csv|sas7bdat
+  outputs_produced:
+  - type: dataset
+    name: DM domain (dm.xpt)
+    format: xpt
+    validation: p21-compliance
+    path_pattern: output/sdtm/dm.xpt
+  regulatory_refs:
+  - CDISC SDTM IG v3.4 Section 6.1
+  - FDA Study Data Technical Conformance Guide
+  dependencies:
+  - node: raw-data-validation
+    edge_type: requires
+  - node: spec-creation
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - All required DM variables present per SDTM IG
+    - USUBJID uniquely identifies each subject
+    - Controlled terminology matches CDISC CT
+    recommended:
+    - P21 validation returns 0 warnings
+  triggers:
+  - DM
+  - demographics
+  - DM domain
+  - USUBJID
+  - AGE
+  - SEX
+  - RACE
+  - ETHNIC
+  - ARM
+  - ACTARM
+  - RFSTDTC
+  - RFENDTC
+  - COUNTRY
+  - subject demographics
+  - demographic mapping
+  context_prompt: 'Map raw demographics → SDTM DM (dm.xpt). Key vars: USUBJID, AGE, SEX, RACE, ARM, RFSTDTC.
+    Controlled terminology required.'
+- id: sdtm-ae-mapping
+  name: SDTM AE Domain Mapping
+  layer: 2
+  description: >
+    Map adverse event data to SDTM AE domain. Derive AETERM, AEDECOD (MedDRA), AEBODSYS, AESEV, AESER,
+    AEREL, AEOUT, timing variables.
+  skills_bound:
+  - /sdtm-ae-mapper
+  - /sdtm-validator
+  mcps_bound:
+  - p21-validator
+  - cdisc-library
+  inputs_required:
+  - type: specification
+    name: SDTM mapping specification
+    format: xlsx|yaml
+  - type: dataset
+    name: Raw adverse event data
+    format: csv|sas7bdat
+  outputs_produced:
+  - type: dataset
+    name: AE domain (ae.xpt)
+    format: xpt
+    validation: p21-compliance
+    path_pattern: output/sdtm/ae.xpt
+  regulatory_refs:
+  - CDISC SDTM IG v3.4 Section 6.2
+  - MedDRA coding guidelines
+  dependencies:
+  - node: raw-data-validation
+    edge_type: requires
+  - node: spec-creation
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - All AE records coded with MedDRA PT and SOC
+    - Timing variables (AESTDTC, AEENDTC) in ISO 8601
+    - AESER, AEREL populated for all records
+    recommended:
+    - AEGRPID used for grouping related events
+  triggers:
+  - AE
+  - adverse event
+  - adverse events
+  - AE domain
+  - AETERM
+  - AEDECOD
+  - MedDRA
+  - AEBODSYS
+  - AESEV
+  - AESER
+  - AEREL
+  - AEOUT
+  - treatment-emergent
+  - serious adverse event
+  - SAE
+  context_prompt: 'Map adverse events → SDTM AE (ae.xpt). MedDRA coding required. Key vars: AETERM, AEDECOD,
+    AEBODSYS, AESEV, AESER, AEREL.'
+- id: sdtm-lb-mapping
+  name: SDTM LB Domain Mapping
+  layer: 2
+  description: >
+    Map lab data to SDTM LB domain. Handle LBTEST, LBTESTCD, LBORRES, LBORRESU, LBSTRESC, LBSTRESN, LBSTRESU,
+    reference ranges, units.
+  skills_bound:
+  - /sdtm-lb-mapper
+  - /sdtm-validator
+  mcps_bound:
+  - p21-validator
+  - cdisc-library
+  inputs_required:
+  - type: specification
+    name: SDTM mapping specification
+    format: xlsx|yaml
+  - type: dataset
+    name: Raw laboratory data
+    format: csv|sas7bdat
+  outputs_produced:
+  - type: dataset
+    name: LB domain (lb.xpt)
+    format: xpt
+    validation: p21-compliance
+    path_pattern: output/sdtm/lb.xpt
+  regulatory_refs:
+  - CDISC SDTM IG v3.4 Section 6.3
+  dependencies:
+  - node: raw-data-validation
+    edge_type: requires
+  - node: spec-creation
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - Standard units (LBSTRESU) derived with conversion factors
+    - Reference ranges (LBORNRLO, LBORNRHI) populated
+    - LBTESTCD matches CDISC controlled terminology
+    recommended:
+    - LBNRIND derived from reference ranges
+  triggers:
+  - LB
+  - lab
+  - laboratory
+  - lab data
+  - LB domain
+  - LBTEST
+  - LBTESTCD
+  - LBORRES
+  - LBSTRESN
+  - LBSTRESU
+  - reference range
+  - LBNRIND
+  - hematology
+  - chemistry
+  - urinalysis
+  context_prompt: 'Map laboratory data → SDTM LB (lb.xpt). Unit conversion, reference ranges. Key vars:
+    LBTEST, LBSTRESN, LBSTRESU, LBNRIND.'
+- id: sdtm-vs-mapping
+  name: SDTM VS Domain Mapping
+  layer: 2
+  description: >
+    Map vital signs data to SDTM VS domain. Handle VSTEST, VSTESTCD, VSORRES, VSORRESU, VSSTRESC, VSSTRESN,
+    VSSTRESU, positions.
+  skills_bound:
+  - /sdtm-vs-mapper
+  - /sdtm-validator
+  mcps_bound:
+  - p21-validator
+  inputs_required:
+  - type: specification
+    name: SDTM mapping specification
+    format: xlsx|yaml
+  - type: dataset
+    name: Raw vital signs data
+    format: csv|sas7bdat
+  outputs_produced:
+  - type: dataset
+    name: VS domain (vs.xpt)
+    format: xpt
+    validation: p21-compliance
+    path_pattern: output/sdtm/vs.xpt
+  regulatory_refs:
+  - CDISC SDTM IG v3.4 Section 6.3
+  dependencies:
+  - node: raw-data-validation
+    edge_type: requires
+  - node: spec-creation
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - VSTESTCD matches CDISC controlled terminology
+    - Standard units derived
+    recommended:
+    - Position (VSPOS) captured where applicable
+  triggers:
+  - VS
+  - vital signs
+  - vitals
+  - VS domain
+  - blood pressure
+  - heart rate
+  - temperature
+  - weight
+  - height
+  - BMI
+  - VSTEST
+  - VSTESTCD
+  - VSSTRESN
+  context_prompt: 'Map vital signs → SDTM VS (vs.xpt). Key vars: VSTEST, VSTESTCD, VSSTRESN, VSSTRESU,
+    VSPOS. Standard unit conversion.'
+- id: sdtm-cm-mapping
+  name: SDTM CM Domain Mapping
+  layer: 2
+  description: >
+    Map concomitant medication data to SDTM CM domain. Handle CMTRT, CMDECOD (WHODrug), CMCAT, CMINDC,
+    timing, dose variables.
+  skills_bound:
+  - /sdtm-cm-mapper
+  - /sdtm-validator
+  mcps_bound:
+  - p21-validator
+  inputs_required:
+  - type: specification
+    name: SDTM mapping specification
+    format: xlsx|yaml
+  - type: dataset
+    name: Raw concomitant medication data
+    format: csv|sas7bdat
+  outputs_produced:
+  - type: dataset
+    name: CM domain (cm.xpt)
+    format: xpt
+    validation: p21-compliance
+    path_pattern: output/sdtm/cm.xpt
+  regulatory_refs:
+  - CDISC SDTM IG v3.4 Section 6.2
+  dependencies:
+  - node: raw-data-validation
+    edge_type: requires
+  - node: spec-creation
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - WHODrug coding applied (CMDECOD)
+    - ATC classification populated
+    recommended:
+    - Prior vs concomitant flag derived if required
+  triggers:
+  - CM
+  - concomitant medication
+  - conmeds
+  - CM domain
+  - CMTRT
+  - CMDECOD
+  - WHODrug
+  - ATC
+  - medication
+  - drug coding
+  - prior medication
+  - concomitant therapy
+  context_prompt: 'Map concomitant medications → SDTM CM (cm.xpt). WHODrug coding required. Key vars:
+    CMTRT, CMDECOD, ATC class.'
+- id: sdtm-mh-mapping
+  name: SDTM MH Domain Mapping
+  layer: 2
+  description: >
+    Map medical history data to SDTM MH domain. Handle MHTERM, MHDECOD (MedDRA), MHBODSYS, MHCAT, timing
+    variables.
+  skills_bound:
+  - /sdtm-mh-mapper
+  - /sdtm-validator
+  mcps_bound:
+  - p21-validator
+  inputs_required:
+  - type: specification
+    name: SDTM mapping specification
+    format: xlsx|yaml
+  - type: dataset
+    name: Raw medical history data
+    format: csv|sas7bdat
+  outputs_produced:
+  - type: dataset
+    name: MH domain (mh.xpt)
+    format: xpt
+    validation: p21-compliance
+    path_pattern: output/sdtm/mh.xpt
+  regulatory_refs:
+  - CDISC SDTM IG v3.4 Section 6.2
+  dependencies:
+  - node: raw-data-validation
+    edge_type: requires
+  - node: spec-creation
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - MedDRA coding applied
+    recommended:
+    - MHCAT categorization consistent
+  triggers:
+  - MH
+  - medical history
+  - MH domain
+  - MHTERM
+  - MHDECOD
+  - past medical history
+  - pre-existing condition
+  - MHBODSYS
+  context_prompt: 'Map medical history → SDTM MH (mh.xpt). MedDRA coding required. Key vars: MHTERM, MHDECOD,
+    MHBODSYS.'
+- id: sdtm-ex-mapping
+  name: SDTM EX Domain Mapping
+  layer: 2
+  description: >
+    Map exposure/dosing data to SDTM EX domain. Handle EXTRT, EXDOSE, EXDOSU, EXDOSFRM, EXROUTE, timing,
+    dose adjustment variables.
+  skills_bound:
+  - /sdtm-ex-mapper
+  - /sdtm-validator
+  mcps_bound:
+  - p21-validator
+  inputs_required:
+  - type: specification
+    name: SDTM mapping specification
+    format: xlsx|yaml
+  - type: dataset
+    name: Raw exposure data
+    format: csv|sas7bdat
+  outputs_produced:
+  - type: dataset
+    name: EX domain (ex.xpt)
+    format: xpt
+    validation: p21-compliance
+    path_pattern: output/sdtm/ex.xpt
+  regulatory_refs:
+  - CDISC SDTM IG v3.4 Section 6.2
+  dependencies:
+  - node: raw-data-validation
+    edge_type: requires
+  - node: spec-creation
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - EXTRT matches protocol treatment names
+    - Dose and unit variables populated
+    recommended:
+    - Dose adjustment reasons documented
+  triggers:
+  - EX
+  - exposure
+  - dosing
+  - EX domain
+  - EXTRT
+  - EXDOSE
+  - EXDOSU
+  - EXDOSFRM
+  - EXROUTE
+  - study drug
+  - study treatment
+  - dose adjustment
+  - drug exposure
+  context_prompt: 'Map exposure/dosing data → SDTM EX (ex.xpt). Key vars: EXTRT, EXDOSE, EXDOSU, EXDOSFRM,
+    EXROUTE, timing.'
+- id: sdtm-ds-mapping
+  name: SDTM DS Domain Mapping
+  layer: 2
+  description: >
+    Map disposition data to SDTM DS domain. Handle DSTERM, DSDECOD, DSCAT, DSSCAT, EOSSTT (end of study
+    status), DCSREAS (discontinuation reason). Critical for ADSL derivation of completion status.
+  skills_bound:
+  - /sdtm-ds-mapper
+  - /sdtm-validator
+  mcps_bound:
+  - p21-validator
+  inputs_required:
+  - type: specification
+    name: SDTM mapping specification
+    format: xlsx|yaml
+  - type: dataset
+    name: Raw disposition data
+    format: csv|sas7bdat
+  outputs_produced:
+  - type: dataset
+    name: DS domain (ds.xpt)
+    format: xpt
+    validation: p21-compliance
+    path_pattern: output/sdtm/ds.xpt
+  regulatory_refs:
+  - CDISC SDTM IG v3.4 Section 6.2
+  dependencies:
+  - node: raw-data-validation
+    edge_type: requires
+  - node: spec-creation
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - EOSSTT populated for all subjects (COMPLETED, DISCONTINUED, ONGOING)
+    - DCSREAS populated for discontinued subjects
+    - DSCAT categorization consistent (DISPOSITION EVENT, PROTOCOL MILESTONE)
+    recommended:
+    - All protocol-specified milestones captured
+  triggers:
+  - DS
+  - disposition
+  - DS domain
+  - DSTERM
+  - DSDECOD
+  - EOSSTT
+  - end of study
+  - discontinuation
+  - DCSREAS
+  - completed
+  - withdrawn
+  - screen failure
+  - disposition event
+  context_prompt: 'Map disposition data → SDTM DS (ds.xpt). Key vars: DSTERM, DSDECOD, EOSSTT, DCSREAS.
+    Critical for ADSL derivation.'
+- id: sdtm-sv-mapping
+  name: SDTM SV Domain Mapping
+  layer: 2
+  description: >
+    Map subject visits data to SDTM SV domain. Handle VISIT, VISITNUM, SVSTDTC, SVENDTC, SVUPDES (visit
+    description). Essential for visit windowing in ADaM and subject-level analysis.
+  skills_bound:
+  - /sdtm-sv-mapper
+  - /sdtm-validator
+  mcps_bound:
+  - p21-validator
+  inputs_required:
+  - type: specification
+    name: SDTM mapping specification
+    format: xlsx|yaml
+  - type: dataset
+    name: Raw subject visits data
+    format: csv|sas7bdat
+  outputs_produced:
+  - type: dataset
+    name: SV domain (sv.xpt)
+    format: xpt
+    validation: p21-compliance
+    path_pattern: output/sdtm/sv.xpt
+  regulatory_refs:
+  - CDISC SDTM IG v3.4 Section 6.3
+  dependencies:
+  - node: raw-data-validation
+    edge_type: requires
+  - node: spec-creation
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - All protocol visits captured
+    - VISITNUM in ascending order within subject
+    - SVSTDTC in ISO 8601 format
+    recommended:
+    - Unscheduled visits flagged appropriately
+  triggers:
+  - SV
+  - subject visits
+  - visits
+  - SV domain
+  - VISIT
+  - VISITNUM
+  - SVSTDTC
+  - SVENDTC
+  - visit schedule
+  - unscheduled visit
+  - visit windowing
+  context_prompt: 'Map subject visit data → SDTM SV (sv.xpt). Key vars: VISIT, VISITNUM, SVSTDTC, SVENDTC.
+    Essential for ADaM visit windowing.'
+- id: sdtm-trial-design
+  name: SDTM Trial Design Domains
+  layer: 2
+  description: >
+    Create FDA-required Trial Design datasets: TS (Trial Summary), TA (Trial Arms), TI (Trial Inclusion/Exclusion),
+    TV (Trial Visits). These are metadata datasets describing study design, not patient data.
+  skills_bound:
+  - /sdtm-trial-design-builder
+  - /sdtm-validator
+  mcps_bound:
+  - p21-validator
+  - cdisc-library
+  inputs_required:
+  - type: document
+    name: Study protocol
+    format: pdf|docx
+  - type: specification
+    name: Study configuration
+    format: yaml
+  outputs_produced:
+  - type: dataset
+    name: TS domain (ts.xpt)
+    format: xpt
+    validation: p21-compliance
+    path_pattern: output/sdtm/ts.xpt
+  - type: dataset
+    name: TA domain (ta.xpt)
+    format: xpt
+    validation: p21-compliance
+    path_pattern: output/sdtm/ta.xpt
+  - type: dataset
+    name: TI domain (ti.xpt)
+    format: xpt
+    validation: p21-compliance
+    path_pattern: output/sdtm/ti.xpt
+  - type: dataset
+    name: TV domain (tv.xpt)
+    format: xpt
+    validation: p21-compliance
+    path_pattern: output/sdtm/tv.xpt
+  regulatory_refs:
+  - CDISC SDTM IG v3.4 Section 3
+  - FDA Study Data Technical Conformance Guide
+  dependencies:
+  - node: protocol-setup
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - All required TS parameters present (TSPARM, TSVAL)
+    - TA contains all protocol treatment arms
+    - TI contains all protocol eligibility criteria
+    - TV contains all protocol visits
+    recommended:
+    - TS parameters include standard TSPARMDEF definitions
+  triggers:
+  - trial design
+  - TS
+  - TA
+  - TI
+  - TV
+  - trial summary
+  - trial arms
+  - trial inclusion
+  - trial visits
+  - TSPARM
+  - study design datasets
+  - FDA required
+  context_prompt: 'Create FDA-required trial design datasets: TS (summary), TA (arms), TI (inclusion/exclusion),
+    TV (visits). Metadata, not patient data.'
+- id: sdtm-suppqual
+  name: SDTM Supplemental Qualifiers
+  layer: 2
+  description: >
+    Create SUPPXX datasets for non-standard variables that cannot be mapped to standard SDTM domains.
+    Follow CDISC guidelines for SUPP structure (QNAM, QLABEL, QVAL, QORIG, QEVAL).
+  skills_bound:
+  - /sdtm-supp-builder
+  mcps_bound:
+  - p21-validator
+  inputs_required:
+  - type: specification
+    name: SDTM mapping specification
+    format: xlsx|yaml
+  - type: dataset
+    name: All mapped SDTM domains
+    format: xpt
+  outputs_produced:
+  - type: dataset
+    name: SUPPXX domains
+    format: xpt
+    validation: p21-compliance
+    path_pattern: output/sdtm/supp*.xpt
+  regulatory_refs:
+  - CDISC SDTM IG v3.4 Section 8
+  dependencies:
+  - node: sdtm-dm-mapping
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - QNAM values are valid non-standard variable names
+    - IDVAR/IDVARVAL correctly link to parent domain
+    recommended:
+    - Justified why standard variable was insufficient
+  triggers:
+  - SUPP
+  - supplemental
+  - SUPPXX
+  - supplemental qualifier
+  - QNAM
+  - QLABEL
+  - QVAL
+  - QORIG
+  - QEVAL
+  - non-standard variable
+  - IDVAR
+  - IDVARVAL
+  context_prompt: 'Create SUPPXX datasets for non-standard variables. Structure: QNAM/QLABEL/QVAL/QORIG/QEVAL
+    linked by IDVAR/IDVARVAL.'
+- id: sdtm-custom-domain
+  name: SDTM Custom Domain Creation
+  layer: 2
+  description: >
+    Create custom SDTM domains for data that does not fit standard domains (e.g., biomarker-specific domains,
+    FA, QS sub-domains).
+  skills_bound:
+  - /sdtm-custom-builder
+  mcps_bound:
+  - p21-validator
+  - cdisc-library
+  inputs_required:
+  - type: specification
+    name: SDTM mapping specification
+    format: xlsx|yaml
+  - type: dataset
+    name: Raw data for custom domains
+    format: csv|sas7bdat
+  outputs_produced:
+  - type: dataset
+    name: Custom domain datasets
+    format: xpt
+    validation: p21-compliance
+    path_pattern: output/sdtm/
+  regulatory_refs:
+  - CDISC SDTM IG v3.4 Section 4.1.2
+  dependencies:
+  - node: raw-data-validation
+    edge_type: requires
+  - node: spec-creation
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - Domain code follows CDISC two-character naming convention
+    - Dataset-level metadata documented
+    recommended:
+    - Justification written for custom domain necessity
+  triggers:
+  - custom domain
+  - non-standard domain
+  - FA
+  - QS
+  - biomarker
+  - questionnaire
+  - PRO
+  - patient reported outcome
+  - custom SDTM
+  context_prompt: Create custom SDTM domains for data not fitting standard domains (FA, QS, biomarkers,
+    PRO). Two-char domain code required.
+- id: sdtm-relrec
+  name: SDTM RELREC Dataset
+  layer: 2
+  description: >
+    Create the RELREC (Related Records) dataset that documents relationships between records across SDTM
+    domains.
+  skills_bound:
+  - /sdtm-relrec-builder
+  mcps_bound:
+  - p21-validator
+  inputs_required:
+  - type: dataset
+    name: All SDTM domains
+    format: xpt
+  outputs_produced:
+  - type: dataset
+    name: RELREC dataset (relrec.xpt)
+    format: xpt
+    path_pattern: output/sdtm/relrec.xpt
+  regulatory_refs:
+  - CDISC SDTM IG v3.4 Section 8
+  dependencies:
+  - node: sdtm-dm-mapping
+    edge_type: requires
+  - node: sdtm-ae-mapping
+    edge_type: enables
+  - node: sdtm-cm-mapping
+    edge_type: enables
+  evaluation_criteria:
+    mandatory:
+    - All cross-domain relationships documented
+    recommended:
+    - Relationship types correctly classified
+  triggers:
+  - RELREC
+  - related records
+  - cross-domain relationship
+  - relationship
+  - relrec.xpt
+  - record linkage
+  context_prompt: Create RELREC dataset documenting cross-domain record relationships (e.g., AE-CM link,
+    AE-LB link). Standard SDTM structure.
+- id: p21-sdtm-validation
+  name: Pinnacle 21 SDTM Validation
+  layer: 3
+  description: >
+    Run Pinnacle 21 Community/Enterprise validation on all SDTM datasets. Review and resolve errors, classify
+    warnings. Generate compliance report.
+  skills_bound:
+  - /p21-validator
+  - /p21-report-reviewer
+  mcps_bound:
+  - p21-validator
+  inputs_required:
+  - type: dataset
+    name: All SDTM domain datasets
+    format: xpt
+  outputs_produced:
+  - type: report
+    name: P21 SDTM validation report
+    format: xlsx|html
+    path_pattern: reports/p21-sdtm-report.xlsx
+  - type: metadata
+    name: P21 issue tracker
+    format: yaml
+    description: Categorized issues with resolution status
+    path_pattern: ops/p21-sdtm-issues.yaml
+  regulatory_refs:
+  - FDA Data Standards Catalog
+  - FDA Pre-NDA/BLA Meeting Checklist
+  dependencies:
+  - node: sdtm-dm-mapping
+    edge_type: requires
+  - node: sdtm-ae-mapping
+    edge_type: requires
+  - node: sdtm-lb-mapping
+    edge_type: requires
+  - node: sdtm-vs-mapping
+    edge_type: requires
+  - node: sdtm-cm-mapping
+    edge_type: requires
+  - node: sdtm-mh-mapping
+    edge_type: requires
+  - node: sdtm-ex-mapping
+    edge_type: requires
+  - node: sdtm-ds-mapping
+    edge_type: requires
+  - node: sdtm-sv-mapping
+    edge_type: requires
+  - node: sdtm-trial-design
+    edge_type: enables
+  - node: sdtm-suppqual
+    edge_type: enables
+  - node: sdtm-relrec
+    edge_type: enables
+  - node: sdtm-custom-domain
+    edge_type: enables
+  evaluation_criteria:
+    mandatory:
+    - Zero P21 errors (severity = Error)
+    - All warnings reviewed and justified or resolved
+    recommended:
+    - Zero P21 warnings
+  triggers:
+  - P21
+  - Pinnacle 21
+  - SDTM validation
+  - P21 validation
+  - compliance check
+  - validation report
+  - SDTM errors
+  - SDTM warnings
+  - OpenCST
+  - conformance
+  context_prompt: 'Run Pinnacle 21 validation on all SDTM datasets. Resolve errors, classify warnings.
+    Target: 0 errors. Output: P21 report + issue tracker.'
+- id: sdtm-crossdomain-check
+  name: SDTM Cross-Domain Consistency
+  layer: 3
+  description: >
+    Verify consistency across SDTM domains: USUBJID present in DM for all domains, date consistency, treatment
+    arm alignment EX vs DM.
+  skills_bound:
+  - /sdtm-consistency-checker
+  mcps_bound: []
+  inputs_required:
+  - type: dataset
+    name: All SDTM domain datasets
+    format: xpt
+  outputs_produced:
+  - type: report
+    name: Cross-domain consistency report
+    format: html|pdf
+    path_pattern: reports/sdtm-crossdomain-report.html
+  regulatory_refs:
+  - CDISC SDTM IG v3.4
+  dependencies:
+  - node: p21-sdtm-validation
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - All subjects in non-DM domains exist in DM
+    - No date inconsistencies across domains
+    recommended:
+    - Treatment arm consistent between DM and EX
+  triggers:
+  - cross-domain
+  - consistency check
+  - USUBJID check
+  - date consistency
+  - cross-domain consistency
+  - domain alignment
+  - inter-domain
+  context_prompt: 'Verify cross-domain consistency: USUBJID in DM for all domains, date consistency, EX-DM
+    arm alignment. Output: consistency report.'
+- id: sdtm-define-draft
+  name: SDTM Define.xml Draft
+  layer: 3
+  description: >
+    Generate draft Define.xml metadata for SDTM datasets. This feeds into the final Define.xml generation
+    in Layer 6.
+  skills_bound:
+  - /define-draft-builder
+  mcps_bound: []
+  inputs_required:
+  - type: dataset
+    name: All SDTM domain datasets
+    format: xpt
+  - type: specification
+    name: SDTM mapping specification
+    format: xlsx|yaml
+  outputs_produced:
+  - type: metadata
+    name: SDTM Define.xml draft
+    format: xml
+    path_pattern: output/define/define-sdtm-draft.xml
+  regulatory_refs:
+  - CDISC Define-XML v2.1
+  dependencies:
+  - node: p21-sdtm-validation
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - All datasets and variables described
+    - Controlled terminology references included
+    recommended:
+    - Value-level metadata for key variables
+  triggers:
+  - Define.xml draft
+  - SDTM Define
+  - define draft
+  - dataset metadata
+  - variable metadata
+  - CRT-DD
+  - define-xml
+  - Define-XML draft
+  context_prompt: Generate draft Define.xml metadata for SDTM datasets. All datasets/variables described
+    with CT references. Feeds final Define.xml in Layer 6.
+- id: sdtm-annotated-crf
+  name: SDTM Annotated CRF Finalization
+  layer: 3
+  description: >
+    Finalize the annotated CRF with actual SDTM variable mappings confirmed against the produced datasets.
+  skills_bound:
+  - /acrf-finalizer
+  mcps_bound: []
+  inputs_required:
+  - type: document
+    name: Draft annotated CRF
+    format: pdf
+  - type: dataset
+    name: All SDTM domain datasets
+    format: xpt
+  outputs_produced:
+  - type: document
+    name: Final annotated CRF
+    format: pdf
+    path_pattern: docs/acrf-final.pdf
+  regulatory_refs:
+  - FDA Study Data Technical Conformance Guide
+  dependencies:
+  - node: p21-sdtm-validation
+    edge_type: requires
+  - node: crf-validation
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - Every annotation matches produced dataset variable
+    recommended:
+    - Annotations include origin type
+  triggers:
+  - annotated CRF
+  - aCRF
+  - final aCRF
+  - CRF finalize
+  - CRF annotation finalization
+  - blank CRF
+  context_prompt: 'Finalize annotated CRF: confirm all annotations match produced SDTM datasets. Every
+    CRF field linked to actual domain.variable.'
+- id: sdtm-reviewer-guide
+  name: SDTM Reviewer's Guide
+  layer: 3
+  description: >
+    Write the SDTM Reviewer's Guide (SDRG) document describing study design, data handling, deviations
+    from CDISC standards.
+  skills_bound:
+  - /sdrg-writer
+  mcps_bound: []
+  inputs_required:
+  - type: dataset
+    name: All SDTM domain datasets
+    format: xpt
+  - type: report
+    name: P21 SDTM validation report
+    format: xlsx|html
+  outputs_produced:
+  - type: document
+    name: SDTM Reviewer's Guide (SDRG)
+    format: pdf
+    path_pattern: docs/sdrg.pdf
+  regulatory_refs:
+  - PhUSE Reviewer's Guide Template
+  dependencies:
+  - node: p21-sdtm-validation
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - All P21 issues addressed in guide
+    - Non-standard variables justified
+    recommended:
+    - Follows PhUSE SDRG template structure
+  triggers:
+  - SDRG
+  - reviewer guide
+  - SDTM reviewer
+  - reviewer's guide
+  - PhUSE
+  - study data reviewer
+  - non-standard justification
+  context_prompt: 'Write SDTM Reviewer''s Guide (SDRG): study design, data handling, P21 issue explanation,
+    non-standard variable justification. PhUSE template.'
+- id: adam-adsl
+  name: ADaM ADSL Dataset
+  layer: 4
+  description: >
+    Create the Subject-Level Analysis Dataset (ADSL). Derive population flags (SAFFL, ITTFL, PPROTFL),
+    baseline demographics, treatment variables (TRT01P/A, TRTSDT/TRTEDT), study duration.
+  skills_bound:
+  - /adam-adsl-builder
+  - /adam-validator
+  mcps_bound:
+  - p21-validator
+  inputs_required:
+  - type: dataset
+    name: SDTM DM, EX, DS, SV domains
+    format: xpt
+  - type: specification
+    name: ADaM derivation specification
+    format: xlsx|yaml
+  - type: specification
+    name: Parsed SAP specifications
+    format: yaml
+  outputs_produced:
+  - type: dataset
+    name: ADSL dataset (adsl.xpt)
+    format: xpt
+    validation: adam-compliance
+    path_pattern: output/adam/adsl.xpt
+  regulatory_refs:
+  - CDISC ADaM IG v1.3 Section 3
+  - CDISC ADaM ADSL Supplement
+  dependencies:
+  - node: p21-sdtm-validation
+    edge_type: requires
+  - node: sap-review
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - All SAP-defined population flags derived
+    - TRTSDT/TRTEDT correctly derived per SAP
+    - One record per subject
+    - All subjects from DM represented
+    recommended:
+    - Baseline flag variables aligned with SAP
+  triggers:
+  - ADSL
+  - subject level
+  - population flags
+  - SAFFL
+  - ITTFL
+  - PPROTFL
+  - TRT01P
+  - TRT01A
+  - TRTSDT
+  - TRTEDT
+  - analysis population
+  - baseline
+  - subject-level dataset
+  context_prompt: 'Create ADSL: population flags (SAFFL/ITTFL/PPROTFL), treatment vars (TRT01P/A, TRTSDT/TRTEDT),
+    baseline demographics. One row per subject.'
+- id: adam-adae
+  name: ADaM ADAE Dataset
+  layer: 4
+  description: >
+    Create the Adverse Event Analysis Dataset. Derive TRTEMFL, AOCCFL/AOCCPFL/AOCCSFL, CTC grading, relatedness,
+    action taken. Merge ADSL treatment and population variables.
+  skills_bound:
+  - /adam-adae-builder
+  - /adam-validator
+  mcps_bound:
+  - p21-validator
+  inputs_required:
+  - type: dataset
+    name: SDTM AE domain
+    format: xpt
+  - type: dataset
+    name: ADSL dataset
+    format: xpt
+  - type: specification
+    name: ADaM derivation specification
+    format: xlsx|yaml
+  outputs_produced:
+  - type: dataset
+    name: ADAE dataset (adae.xpt)
+    format: xpt
+    validation: adam-compliance
+    path_pattern: output/adam/adae.xpt
+  regulatory_refs:
+  - CDISC ADaM IG v1.3
+  - CDISC ADaM OCCDS Supplement
+  dependencies:
+  - node: adam-adsl
+    edge_type: requires
+  - node: sdtm-ae-mapping
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - TRTEMFL correctly identifies treatment-emergent AEs
+    - Occurrence flags (AOCCFL, AOCCPFL, AOCCSFL) derived
+    - ADSL variables merged correctly
+    recommended:
+    - Severity grading aligned with CTC AE
+  triggers:
+  - ADAE
+  - adverse event analysis
+  - TRTEMFL
+  - treatment-emergent
+  - AOCCFL
+  - AOCCPFL
+  - AOCCSFL
+  - AE analysis
+  - occurrence flags
+  - CTC grading
+  - safety analysis
+  context_prompt: 'Create ADAE: TRTEMFL (treatment-emergent flag), occurrence flags (AOCCFL/AOCCPFL/AOCCSFL),
+    merged ADSL vars. AE analysis-ready.'
+- id: adam-adlb
+  name: ADaM ADLB Dataset
+  layer: 4
+  description: >
+    Create the Lab Analysis Dataset (BDS structure). Derive AVAL, BASE, CHG, PCHG, ABLFL, ANRIND, shift
+    variables, visit windowing.
+  skills_bound:
+  - /adam-adlb-builder
+  - /adam-validator
+  mcps_bound:
+  - p21-validator
+  inputs_required:
+  - type: dataset
+    name: SDTM LB domain
+    format: xpt
+  - type: dataset
+    name: ADSL dataset
+    format: xpt
+  - type: specification
+    name: ADaM derivation specification
+    format: xlsx|yaml
+  outputs_produced:
+  - type: dataset
+    name: ADLB dataset (adlb.xpt)
+    format: xpt
+    validation: adam-compliance
+    path_pattern: output/adam/adlb.xpt
+  regulatory_refs:
+  - CDISC ADaM IG v1.3
+  - CDISC ADaM BDS Supplement
+  dependencies:
+  - node: adam-adsl
+    edge_type: requires
+  - node: sdtm-lb-mapping
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - AVAL derived from correct source (LBSTRESN or LBORRES)
+    - Baseline (ABLFL) identified per SAP algorithm
+    - CHG = AVAL - BASE derived where applicable
+    recommended:
+    - Visit windowing applied per SAP
+  triggers:
+  - ADLB
+  - lab analysis
+  - BDS
+  - AVAL
+  - BASE
+  - CHG
+  - PCHG
+  - ABLFL
+  - ANRIND
+  - shift
+  - visit windowing
+  - baseline flag
+  - lab analysis dataset
+  context_prompt: 'Create ADLB (BDS structure): AVAL, BASE, CHG, PCHG, ABLFL, ANRIND, shift variables,
+    visit windowing. Lab analysis-ready.'
+- id: adam-adtte
+  name: ADaM ADTTE Dataset
+  layer: 4
+  description: >
+    Create Time-to-Event Analysis Dataset. Derive AVAL (duration), CNSR (censoring), EVNTDESC, STARTDT,
+    ADT, PARAM/PARAMCD.
+  skills_bound:
+  - /adam-adtte-builder
+  - /adam-validator
+  mcps_bound:
+  - p21-validator
+  inputs_required:
+  - type: dataset
+    name: SDTM domains (AE, DS, DM)
+    format: xpt
+  - type: dataset
+    name: ADSL dataset
+    format: xpt
+  - type: specification
+    name: ADaM derivation specification
+    format: xlsx|yaml
+  outputs_produced:
+  - type: dataset
+    name: ADTTE dataset (adtte.xpt)
+    format: xpt
+    validation: adam-compliance
+    path_pattern: output/adam/adtte.xpt
+  regulatory_refs:
+  - CDISC ADaM IG v1.3
+  - CDISC ADaM ADTTE Supplement
+  dependencies:
+  - node: adam-adsl
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - CNSR correctly derived (0=event, 1=censored)
+    - AVAL = ADT - STARTDT + 1 (or per SAP)
+    - All SAP-defined TTE endpoints covered
+    recommended:
+    - Multiple imputation for partial dates documented
+  triggers:
+  - ADTTE
+  - time-to-event
+  - survival
+  - Kaplan-Meier
+  - CNSR
+  - censoring
+  - AVAL
+  - STARTDT
+  - ADT
+  - TTE
+  - event
+  - overall survival
+  - progression-free
+  - PFS
+  - OS
+  context_prompt: 'Create ADTTE: AVAL (duration), CNSR (0=event, 1=censored), STARTDT, ADT, PARAM/PARAMCD.
+    Time-to-event analysis-ready.'
+- id: adam-adeff
+  name: ADaM ADEFF Dataset
+  layer: 4
+  description: >
+    Create Efficacy Analysis Dataset. Study-specific based on primary endpoint structure (BDS or OCCDS).
+    Derive AVAL, BASE, CHG, responder flags, derived parameters.
+  skills_bound:
+  - /adam-adeff-builder
+  - /adam-validator
+  mcps_bound:
+  - p21-validator
+  inputs_required:
+  - type: dataset
+    name: SDTM source domains
+    format: xpt
+  - type: dataset
+    name: ADSL dataset
+    format: xpt
+  - type: specification
+    name: ADaM derivation specification
+    format: xlsx|yaml
+  outputs_produced:
+  - type: dataset
+    name: ADEFF dataset(s)
+    format: xpt
+    validation: adam-compliance
+    path_pattern: output/adam/adeff.xpt
+  regulatory_refs:
+  - CDISC ADaM IG v1.3
+  dependencies:
+  - node: adam-adsl
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - Primary endpoint derivation matches SAP exactly
+    - Responder definition consistent with SAP
+    recommended:
+    - Sensitivity analyses derivations included
+  triggers:
+  - ADEFF
+  - efficacy
+  - primary endpoint
+  - responder
+  - efficacy analysis
+  - response rate
+  - endpoint analysis
+  - efficacy dataset
+  - AVALC
+  context_prompt: 'Create ADEFF: primary endpoint derivation per SAP, responder flags, derived parameters.
+    BDS or OCCDS structure per endpoint type.'
+- id: adam-custom-analysis
+  name: ADaM Custom Analysis Datasets
+  layer: 4
+  description: >
+    Create study-specific or therapeutic-area-specific analysis datasets not covered by standard ADaM
+    structures (e.g., PK, QoL, PRO).
+  skills_bound:
+  - /adam-custom-builder
+  mcps_bound:
+  - p21-validator
+  inputs_required:
+  - type: dataset
+    name: SDTM source domains
+    format: xpt
+  - type: dataset
+    name: ADSL dataset
+    format: xpt
+  - type: specification
+    name: ADaM derivation specification
+    format: xlsx|yaml
+  outputs_produced:
+  - type: dataset
+    name: Custom ADaM datasets
+    format: xpt
+    path_pattern: output/adam/
+  regulatory_refs:
+  - CDISC ADaM IG v1.3
+  dependencies:
+  - node: adam-adsl
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - Dataset follows ADaM fundamental principles
+    - Traceability to SDTM maintained
+    recommended:
+    - Derivation logic documented in metadata
+  triggers:
+  - custom ADaM
+  - PK
+  - pharmacokinetics
+  - QoL
+  - quality of life
+  - PRO
+  - patient reported
+  - ADPC
+  - custom analysis dataset
+  context_prompt: Create custom ADaM datasets for PK, QoL, PRO, or study-specific analyses. Must follow
+    ADaM fundamental principles. SDTM traceability.
+- id: adam-traceability-check
+  name: ADaM Traceability Verification
+  layer: 4
+  description: >
+    Verify end-to-end traceability from ADaM back to SDTM. Every ADaM variable must trace to its SDTM
+    source. Document derivation lineage.
+  skills_bound:
+  - /adam-traceability-checker
+  mcps_bound: []
+  inputs_required:
+  - type: dataset
+    name: All ADaM datasets
+    format: xpt
+  - type: dataset
+    name: All SDTM datasets
+    format: xpt
+  - type: specification
+    name: ADaM derivation specification
+    format: xlsx|yaml
+  outputs_produced:
+  - type: report
+    name: Traceability report
+    format: html|pdf
+    path_pattern: reports/adam-traceability-report.html
+  regulatory_refs:
+  - CDISC ADaM IG v1.3 Section 2
+  - FDA Study Data Technical Conformance Guide
+  dependencies:
+  - node: adam-adsl
+    edge_type: requires
+  - node: adam-adae
+    edge_type: enables
+  - node: adam-adlb
+    edge_type: enables
+  - node: adam-adtte
+    edge_type: enables
+  - node: adam-adeff
+    edge_type: enables
+  evaluation_criteria:
+    mandatory:
+    - Every ADaM variable has documented SDTM source
+    - No orphan variables without traceability
+    recommended:
+    - Visual lineage diagram generated
+  triggers:
+  - traceability
+  - ADaM traceability
+  - SDTM to ADaM
+  - variable lineage
+  - derivation lineage
+  - source variable
+  - traceability report
+  - data lineage
+  context_prompt: 'Verify end-to-end traceability: every ADaM variable traces back to SDTM source. No
+    orphan variables. Output: traceability report.'
+- id: p21-adam-validation
+  name: Pinnacle 21 ADaM Validation
+  layer: 4
+  description: >
+    Run Pinnacle 21 Community/Enterprise validation on all ADaM datasets. Review and resolve errors, classify
+    warnings. Generate compliance report. Mirrors p21-sdtm-validation in Layer 3 for ADaM datasets.
+  skills_bound:
+  - /p21-validator
+  - /p21-report-reviewer
+  mcps_bound:
+  - p21-validator
+  inputs_required:
+  - type: dataset
+    name: All ADaM datasets
+    format: xpt
+  outputs_produced:
+  - type: report
+    name: P21 ADaM validation report
+    format: xlsx|html
+    path_pattern: reports/p21-adam-report.xlsx
+  - type: metadata
+    name: P21 ADaM issue tracker
+    format: yaml
+    description: Categorized issues with resolution status
+    path_pattern: ops/p21-adam-issues.yaml
+  regulatory_refs:
+  - FDA Data Standards Catalog
+  - CDISC ADaM IG v1.3
+  dependencies:
+  - node: adam-traceability-check
+    edge_type: requires
+  - node: adam-adsl
+    edge_type: validates
+  - node: adam-adae
+    edge_type: validates
+  - node: adam-adlb
+    edge_type: validates
+  evaluation_criteria:
+    mandatory:
+    - Zero P21 errors (severity = Error)
+    - All warnings reviewed and justified or resolved
+    recommended:
+    - Zero P21 warnings
+  triggers:
+  - P21 ADaM
+  - ADaM validation
+  - Pinnacle 21 ADaM
+  - ADaM compliance
+  - ADaM P21
+  - ADaM errors
+  - ADaM warnings
+  context_prompt: 'Run Pinnacle 21 validation on all ADaM datasets. Resolve errors, classify warnings.
+    Target: 0 errors. Output: P21 ADaM report.'
+- id: adam-reviewer-guide
+  name: ADaM Reviewer's Guide (ADRG)
+  layer: 4
+  description: >
+    Write the ADaM Reviewer's Guide (ADRG) document describing ADaM dataset derivation logic, analysis
+    datasets, traceability approach, and any deviations from CDISC ADaM standards. Required FDA deliverable.
+  skills_bound:
+  - /adrg-writer
+  mcps_bound: []
+  inputs_required:
+  - type: dataset
+    name: All ADaM datasets
+    format: xpt
+  - type: report
+    name: P21 ADaM validation report
+    format: xlsx|html
+  - type: report
+    name: Traceability report
+    format: html|pdf
+  outputs_produced:
+  - type: document
+    name: ADaM Reviewer's Guide (ADRG)
+    format: pdf
+    path_pattern: docs/adrg.pdf
+  regulatory_refs:
+  - PhUSE ADaM Reviewer's Guide Template
+  - CDISC ADaM IG v1.3
+  dependencies:
+  - node: p21-adam-validation
+    edge_type: requires
+  - node: adam-traceability-check
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - All ADaM datasets described
+    - Derivation logic documented for key variables
+    - Traceability approach explained
+    recommended:
+    - Follows PhUSE ADRG template structure
+  triggers:
+  - ADRG
+  - ADaM reviewer
+  - ADaM reviewer guide
+  - ADaM reviewer's guide
+  - derivation documentation
+  - PhUSE ADRG
+  context_prompt: 'Write ADaM Reviewer''s Guide (ADRG): dataset descriptions, derivation logic, traceability
+    approach, CDISC deviations. PhUSE template.'
+- id: tfl-shell-review
+  name: TFL Shell Review & Setup
+  layer: 5
+  description: >
+    Review TFL shells/mock-ups from the SAP. Set up programming templates with headers, footnotes, page
+    layout specifications.
+  skills_bound:
+  - /tfl-shell-reviewer
+  - /tfl-template-builder
+  mcps_bound: []
+  inputs_required:
+  - type: specification
+    name: TFL shell specifications
+    format: xlsx|docx
+  - type: specification
+    name: Parsed SAP specifications
+    format: yaml
+  outputs_produced:
+  - type: specification
+    name: TFL programming templates
+    format: yaml
+    description: Templates with header/footnote/layout config
+    path_pattern: specs/tfl-templates.yaml
+  regulatory_refs:
+  - ICH E3 Section 11, 12, 14
+  dependencies:
+  - node: sap-review
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - All SAP-specified TFLs have shells
+    - Headers/footnotes match SAP specifications
+    recommended:
+    - Pagination strategy defined
+  triggers:
+  - TFL shell
+  - mock-up
+  - table shell
+  - listing shell
+  - figure shell
+  - TFL template
+  - headers
+  - footnotes
+  - page layout
+  - output shell
+  context_prompt: 'Review TFL shells from SAP. Set up programming templates: headers, footnotes, page
+    layout, pagination. Output: TFL templates YAML.'
+- id: tfl-table-generation
+  name: Table Generation
+  layer: 5
+  description: >
+    Generate analysis tables from ADaM datasets. Handle demographics summaries, efficacy tables, safety
+    tables, disposition tables. Apply proper statistical formatting.
+  skills_bound:
+  - /tfl-table-generator
+  - /tfl-formatter
+  mcps_bound: []
+  inputs_required:
+  - type: dataset
+    name: ADaM datasets
+    format: xpt
+  - type: specification
+    name: TFL programming templates
+    format: yaml
+  outputs_produced:
+  - type: report
+    name: Analysis tables
+    format: rtf|pdf
+    path_pattern: output/tfl/tables/
+  regulatory_refs:
+  - ICH E3 Section 11
+  dependencies:
+  - node: adam-adsl
+    edge_type: requires
+  - node: adam-adae
+    edge_type: enables
+  - node: adam-adlb
+    edge_type: enables
+  - node: adam-adeff
+    edge_type: enables
+  - node: tfl-shell-review
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - All SAP-mandated tables produced
+    - Statistical results match independent QC
+    - Formatting matches shell specifications
+    recommended:
+    - Consistent decimal precision across tables
+  triggers:
+  - table
+  - analysis table
+  - demographics table
+  - safety table
+  - efficacy table
+  - disposition table
+  - summary table
+  - Table 14
+  - Table 1
+  - statistical table
+  context_prompt: 'Generate analysis tables from ADaM: demographics, efficacy, safety, disposition summaries.
+    Proper statistical formatting per shells.'
+- id: tfl-listing-generation
+  name: Listing Generation
+  layer: 5
+  description: >
+    Generate patient data listings from SDTM and ADaM datasets. Handle AE listings, lab abnormality listings,
+    protocol deviation listings.
+  skills_bound:
+  - /tfl-listing-generator
+  - /tfl-formatter
+  mcps_bound: []
+  inputs_required:
+  - type: dataset
+    name: SDTM and ADaM datasets
+    format: xpt
+  - type: specification
+    name: TFL programming templates
+    format: yaml
+  outputs_produced:
+  - type: report
+    name: Patient data listings
+    format: rtf|pdf
+    path_pattern: output/tfl/listings/
+  regulatory_refs:
+  - ICH E3 Section 14
+  dependencies:
+  - node: adam-adsl
+    edge_type: requires
+  - node: tfl-shell-review
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - All SAP-mandated listings produced
+    - Subject-level data accurate
+    recommended:
+    - Listings sorted per protocol
+  triggers:
+  - listing
+  - data listing
+  - patient listing
+  - AE listing
+  - lab listing
+  - protocol deviation listing
+  - subject listing
+  - Listing 16
+  context_prompt: 'Generate patient data listings from SDTM/ADaM: AE listings, lab abnormality listings,
+    protocol deviation listings. Subject-level detail.'
+- id: tfl-figure-generation
+  name: Figure Generation
+  layer: 5
+  description: >
+    Generate analysis figures from ADaM datasets. Handle Kaplan-Meier curves, forest plots, waterfall
+    plots, spaghetti plots, bar charts.
+  skills_bound:
+  - /tfl-figure-generator
+  mcps_bound: []
+  inputs_required:
+  - type: dataset
+    name: ADaM datasets
+    format: xpt
+  - type: specification
+    name: TFL programming templates
+    format: yaml
+  outputs_produced:
+  - type: report
+    name: Analysis figures
+    format: png|pdf
+    path_pattern: output/tfl/figures/
+  regulatory_refs:
+  - ICH E3 Section 12
+  dependencies:
+  - node: adam-adsl
+    edge_type: requires
+  - node: adam-adtte
+    edge_type: enables
+  - node: adam-adeff
+    edge_type: enables
+  - node: tfl-shell-review
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - All SAP-mandated figures produced
+    - Axis labels and legends correct
+    recommended:
+    - Publication-quality resolution (300+ DPI)
+  triggers:
+  - figure
+  - plot
+  - Kaplan-Meier
+  - forest plot
+  - waterfall
+  - spaghetti plot
+  - bar chart
+  - KM curve
+  - swimmer plot
+  - Figure 1
+  - graph
+  - visualization
+  context_prompt: 'Generate analysis figures from ADaM: KM curves, forest plots, waterfall plots, spaghetti
+    plots, bar charts. 300+ DPI resolution.'
+- id: tfl-qc-validation
+  name: TFL Quality Control
+  layer: 5
+  description: >
+    Independent QC of all TFLs. Verify statistical results by comparing production output against QC programs.
+    Document discrepancies.
+  skills_bound:
+  - /tfl-qc-validator
+  - /tfl-comparator
+  mcps_bound: []
+  inputs_required:
+  - type: report
+    name: All produced TFLs
+    format: rtf|pdf
+  - type: dataset
+    name: ADaM datasets
+    format: xpt
+  outputs_produced:
+  - type: report
+    name: TFL QC report
+    format: html|pdf
+    path_pattern: reports/tfl-qc-report.html
+  regulatory_refs:
+  - ICH E3
+  - 'Company SOP: Double Programming'
+  dependencies:
+  - node: tfl-table-generation
+    edge_type: requires
+  - node: tfl-listing-generation
+    edge_type: requires
+  - node: tfl-figure-generation
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - All TFLs independently QC'd
+    - Zero unresolved discrepancies
+    recommended:
+    - QC programs archived
+  triggers:
+  - TFL QC
+  - QC
+  - quality control
+  - TFL validation
+  - independent QC
+  - output verification
+  - TFL review
+  - compare outputs
+  context_prompt: 'Independent QC of all TFLs: compare production vs QC programs, document discrepancies.
+    Target: 0 unresolved discrepancies.'
+- id: tfl-double-programming
+  name: TFL Double Programming
+  layer: 5
+  description: >
+    Perform independent double programming for key tables. Generate comparison reports showing production
+    vs QC results.
+  skills_bound:
+  - /tfl-double-programmer
+  - /tfl-comparator
+  mcps_bound: []
+  inputs_required:
+  - type: report
+    name: Production TFLs
+    format: rtf|pdf
+  - type: dataset
+    name: ADaM datasets
+    format: xpt
+  outputs_produced:
+  - type: report
+    name: Double programming comparison report
+    format: html|pdf
+    path_pattern: reports/tfl-double-programming-report.html
+  regulatory_refs:
+  - 'Company SOP: Independent Verification'
+  dependencies:
+  - node: tfl-table-generation
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - Key efficacy and safety tables double-programmed
+    - All discrepancies resolved with documentation
+    recommended:
+    - Automated comparison tools used
+  triggers:
+  - double programming
+  - independent programming
+  - production vs QC
+  - dual programming
+  - verification programming
+  - independent verification
+  context_prompt: Double-program key efficacy/safety tables independently. Compare production vs QC results.
+    Resolve all discrepancies with documentation.
+- id: define-xml-sdtm
+  name: Define.xml for SDTM
+  layer: 6
+  description: >
+    Generate the final Define.xml for SDTM datasets. Include all dataset/variable metadata, controlled
+    terminology, value-level metadata, computational methods.
+  skills_bound:
+  - /define-xml-builder
+  - /define-xml-validator
+  mcps_bound:
+  - p21-validator
+  inputs_required:
+  - type: dataset
+    name: All SDTM datasets
+    format: xpt
+  - type: metadata
+    name: SDTM Define.xml draft
+    format: xml
+  - type: specification
+    name: SDTM mapping specification
+    format: xlsx|yaml
+  outputs_produced:
+  - type: metadata
+    name: Define.xml for SDTM (define-sdtm.xml)
+    format: xml
+    validation: define-xml-schema
+    path_pattern: output/define/define-sdtm.xml
+  regulatory_refs:
+  - CDISC Define-XML v2.1
+  - FDA Study Data Technical Conformance Guide
+  dependencies:
+  - node: p21-sdtm-validation
+    edge_type: requires
+  - node: sdtm-define-draft
+    edge_type: requires
+  - node: tfl-qc-validation
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - Schema-valid against Define-XML v2.1 schema
+    - All datasets and variables documented
+    - Controlled terminology references valid
+    recommended:
+    - Renders correctly in stylesheet
+  triggers:
+  - Define.xml SDTM
+  - SDTM Define
+  - define-xml SDTM
+  - SDTM metadata
+  - CRT-DD
+  - final Define SDTM
+  context_prompt: 'Generate final Define.xml for SDTM: all dataset/variable metadata, controlled terminology
+    refs, value-level metadata, computational methods.'
+- id: define-xml-adam
+  name: Define.xml for ADaM
+  layer: 6
+  description: >
+    Generate the final Define.xml for ADaM datasets. Include derivation methods, analysis flags, parameter
+    descriptions, traceability to SDTM.
+  skills_bound:
+  - /define-xml-builder
+  - /define-xml-validator
+  mcps_bound:
+  - p21-validator
+  inputs_required:
+  - type: dataset
+    name: All ADaM datasets
+    format: xpt
+  - type: specification
+    name: ADaM derivation specification
+    format: xlsx|yaml
+  outputs_produced:
+  - type: metadata
+    name: Define.xml for ADaM (define-adam.xml)
+    format: xml
+    validation: define-xml-schema
+    path_pattern: output/define/define-adam.xml
+  regulatory_refs:
+  - CDISC Define-XML v2.1
+  - FDA Study Data Technical Conformance Guide
+  dependencies:
+  - node: adam-traceability-check
+    edge_type: requires
+  - node: tfl-qc-validation
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - Schema-valid against Define-XML v2.1 schema
+    - Derivation methods documented for all derived variables
+    recommended:
+    - SDTM-to-ADaM traceability links included
+  triggers:
+  - Define.xml ADaM
+  - ADaM Define
+  - define-xml ADaM
+  - ADaM metadata
+  - final Define ADaM
+  - derivation methods
+  context_prompt: 'Generate final Define.xml for ADaM: derivation methods, analysis flags, parameter descriptions,
+    SDTM traceability links.'
+- id: define-xml-validation
+  name: Define.xml Validation
+  layer: 6
+  description: >
+    Validate both Define.xml files using P21 and schema validators. Verify rendering with CDISC stylesheet.
+    Check all cross-references.
+  skills_bound:
+  - /define-xml-validator
+  mcps_bound:
+  - p21-validator
+  inputs_required:
+  - type: metadata
+    name: Define.xml for SDTM
+    format: xml
+  - type: metadata
+    name: Define.xml for ADaM
+    format: xml
+  outputs_produced:
+  - type: report
+    name: Define.xml validation report
+    format: html|pdf
+    path_pattern: reports/define-xml-validation-report.html
+  regulatory_refs:
+  - CDISC Define-XML v2.1
+  dependencies:
+  - node: define-xml-sdtm
+    edge_type: requires
+  - node: define-xml-adam
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - Zero P21 Define.xml validation errors
+    - Stylesheet renders without issues
+    recommended:
+    - All hyperlinks functional
+  triggers:
+  - Define.xml validation
+  - Define validation
+  - schema validation
+  - stylesheet
+  - Define.xml check
+  - define-xml validate
+  context_prompt: 'Validate both Define.xml files: P21 checks, schema validation, stylesheet rendering,
+    cross-reference verification. Target: 0 errors.'
+- id: esub-package-assembly
+  name: eCTD Submission Package Assembly
+  layer: 6
+  description: >
+    Assemble the final eCTD Module 5 submission package. Include SDTM datasets, ADaM datasets, Define.xml
+    files, TFLs, annotated CRF, reviewer's guide. Organize per eCTD structure.
+  skills_bound:
+  - /esub-assembler
+  - /esub-validator
+  mcps_bound: []
+  inputs_required:
+  - type: dataset
+    name: All SDTM and ADaM datasets
+    format: xpt
+  - type: metadata
+    name: Define.xml files
+    format: xml
+  - type: report
+    name: All TFLs
+    format: rtf|pdf
+  - type: document
+    name: Annotated CRF, Reviewer's Guide
+    format: pdf
+  outputs_produced:
+  - type: package
+    name: eCTD Module 5 submission package
+    format: directory
+    description: eCTD-structured directory with all study data
+    path_pattern: output/esub/
+  regulatory_refs:
+  - ICH M8 eCTD v4.0
+  - FDA eCTD Guidance
+  dependencies:
+  - node: define-xml-validation
+    edge_type: requires
+  - node: tfl-qc-validation
+    edge_type: requires
+  - node: sdtm-reviewer-guide
+    edge_type: requires
+  - node: sdtm-annotated-crf
+    edge_type: requires
+  - node: adam-reviewer-guide
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - All required components present
+    - eCTD directory structure correct
+    - File naming conventions followed
+    recommended:
+    - Package size within FDA limits
+  triggers:
+  - eCTD
+  - submission package
+  - eSub
+  - Module 5
+  - electronic submission
+  - submission assembly
+  - eCTD structure
+  - regulatory submission
+  - NDA
+  - BLA
+  context_prompt: 'Assemble eCTD Module 5: SDTM + ADaM datasets, Define.xml files, TFLs, aCRF, SDRG, ADRG.
+    eCTD directory structure per FDA guidance.'
+- id: esub-final-validation
+  name: Final Submission Validation
+  layer: 6
+  description: >
+    Final end-to-end validation of the complete submission package. Run FDA eCTD validation tools. Generate
+    final readiness checklist.
+  skills_bound:
+  - /esub-validator
+  - /submission-checklist
+  mcps_bound:
+  - p21-validator
+  inputs_required:
+  - type: package
+    name: eCTD Module 5 submission package
+    format: directory
+  outputs_produced:
+  - type: report
+    name: Submission readiness report
+    format: html|pdf
+    path_pattern: reports/submission-readiness-report.html
+  - type: specification
+    name: Final submission checklist
+    format: yaml
+    path_pattern: ops/submission-checklist.yaml
+  regulatory_refs:
+  - FDA Pre-NDA/BLA Meeting Checklist
+  - FDA Study Data Validation Rules
+  dependencies:
+  - node: esub-package-assembly
+    edge_type: requires
+  evaluation_criteria:
+    mandatory:
+    - All FDA validation checks pass
+    - Readiness checklist 100% complete
+    recommended:
+    - Test submission to FDA ESG gateway (if available)
+  triggers:
+  - final validation
+  - submission validation
+  - FDA validation
+  - ESG gateway
+  - submission readiness
+  - pre-submission check
+  - readiness checklist
+  - final check
+  context_prompt: 'Final end-to-end validation of eCTD submission package. FDA eCTD validation tools.
+    Generate readiness checklist. Target: 100% complete.'
+edge_types:
+  requires:
+    description: Blocking dependency — node cannot start until predecessor completes
+    enforcement: block
+  enables:
+    description: Non-blocking — predecessor output is used if available, but node can start without it
+    enforcement: warn
+  validates:
+    description: Quality gate — checkpoint that must pass before downstream nodes
+    enforcement: block

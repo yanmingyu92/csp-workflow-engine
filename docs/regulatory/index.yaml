@@ -1,0 +1,284 @@
+# =============================================================================
+# Regulatory Documentation Index
+#
+# Maps each regulatory document to its graph node(s). Used by context-loader.py
+# to inject relevant regulatory context alongside skill content.
+#
+# Token estimates use ~0.75 words/token approximation.
+# =============================================================================
+
+# Metadata
+version: "1.0"
+standard_refs:
+  - "CDISC SDTM IG v3.4"
+  - "CDISC ADaM IG v1.3"
+  - "CDISC Define-XML v2.1"
+  - "ICH E3, E6(R2), E9"
+  - "FDA Study Data Technical Conformance Guide"
+  - "ICH M8 eCTD v4.0"
+
+# Document registry
+documents:
+
+  # -------------------------------------------------------------------------
+  # Layer 0: Planning
+  # -------------------------------------------------------------------------
+  - path: "docs/regulatory/planning/sap-review-guide.md"
+    title: "SAP Review Guide"
+    description: "Statistical Analysis Plan review — endpoints, populations, methods"
+    estimated_tokens: 650
+    layer_range: [0, 0]
+    anchored_nodes:
+      - sap-review
+    regulatory_refs:
+      - "ICH E9: Statistical Principles for Clinical Trials"
+      - "ICH E3: Structure and Content of Clinical Study Reports"
+
+  - path: "docs/regulatory/planning/study-setup-guide.md"
+    title: "Study Setup & Protocol Guide"
+    description: "Protocol parameter extraction, directory setup, spec creation"
+    estimated_tokens: 500
+    layer_range: [0, 0]
+    anchored_nodes:
+      - protocol-setup
+      - spec-creation
+    regulatory_refs:
+      - "ICH E6(R2): Good Clinical Practice"
+      - "FDA Study Data Technical Conformance Guide"
+
+  # -------------------------------------------------------------------------
+  # Layer 1: Data Management
+  # -------------------------------------------------------------------------
+  - path: "docs/regulatory/data-management/raw-data-guide.md"
+    title: "Raw Data Management Guide"
+    description: "EDC extraction, CRF validation, quality checks, reconciliation"
+    estimated_tokens: 600
+    layer_range: [1, 1]
+    anchored_nodes:
+      - edc-extract
+      - crf-validation
+      - raw-data-validation
+      - data-reconciliation
+    regulatory_refs:
+      - "ICH E6(R2): Data Management"
+      - "21 CFR Part 11: Electronic Records"
+      - "CDISC CDASH v2.2"
+
+  # -------------------------------------------------------------------------
+  # Layer 2: SDTM Mapping
+  # -------------------------------------------------------------------------
+  - path: "docs/regulatory/sdtm/dm-domain-guide.md"
+    title: "SDTM DM Domain Guide"
+    description: "Demographics domain — variables, derivations, controlled terminology"
+    estimated_tokens: 800
+    layer_range: [2, 2]
+    anchored_nodes:
+      - sdtm-dm-mapping
+    regulatory_refs:
+      - "CDISC SDTM IG v3.4 Section 6.1"
+      - "FDA Study Data Technical Conformance Guide"
+
+  - path: "docs/regulatory/sdtm/events-interventions-guide.md"
+    title: "SDTM Events & Interventions Guide"
+    description: "AE, CM, MH, EX, DS domains — variables, MedDRA coding, study day"
+    estimated_tokens: 900
+    layer_range: [2, 2]
+    anchored_nodes:
+      - sdtm-ae-mapping
+      - sdtm-cm-mapping
+      - sdtm-mh-mapping
+      - sdtm-ex-mapping
+      - sdtm-ds-mapping
+    regulatory_refs:
+      - "CDISC SDTM IG v3.4 Section 6.2"
+      - "MedDRA coding guidelines"
+
+  - path: "docs/regulatory/sdtm/findings-domain-guide.md"
+    title: "SDTM Findings Domain Guide"
+    description: "LB, VS, SV domains — baseline flags, unit standardization, visits"
+    estimated_tokens: 700
+    layer_range: [2, 2]
+    anchored_nodes:
+      - sdtm-lb-mapping
+      - sdtm-vs-mapping
+      - sdtm-sv-mapping
+    regulatory_refs:
+      - "CDISC SDTM IG v3.4 Section 6.3"
+
+  - path: "docs/regulatory/sdtm/supplemental-qualifiers-guide.md"
+    title: "SDTM SUPP/RELREC/Custom/Trial Design Guide"
+    description: "Supplemental qualifiers, related records, custom domains, trial design"
+    estimated_tokens: 650
+    layer_range: [2, 2]
+    anchored_nodes:
+      - sdtm-suppqual
+      - sdtm-relrec
+      - sdtm-custom-domain
+      - sdtm-trial-design
+    regulatory_refs:
+      - "CDISC SDTM IG v3.4 Section 8"
+      - "CDISC SDTM IG v3.4 Section 3"
+      - "CDISC SDTM IG v3.4 Section 4.1.2"
+
+  - path: "docs/regulatory/sdtm/controlled-terminology.md"
+    title: "SDTM Controlled Terminology Guide"
+    description: "Essential codelists, CT version management, non-standard terms"
+    estimated_tokens: 600
+    layer_range: [2, 2]
+    anchored_nodes:
+      - sdtm-dm-mapping
+      - sdtm-ae-mapping
+      - sdtm-cm-mapping
+      - sdtm-lb-mapping
+      - sdtm-vs-mapping
+      - sdtm-ex-mapping
+      - sdtm-mh-mapping
+      - sdtm-ds-mapping
+      - sdtm-sv-mapping
+      - sdtm-suppqual
+      - sdtm-trial-design
+      - sdtm-custom-domain
+      - sdtm-relrec
+    regulatory_refs:
+      - "CDISC SDTM IG v3.4"
+      - "FDA Study Data Technical Conformance Guide"
+
+  # -------------------------------------------------------------------------
+  # Layer 3: SDTM QC & Supporting
+  # -------------------------------------------------------------------------
+  - path: "docs/regulatory/sdtm/p21-validation-guide.md"
+    title: "Pinnacle 21 Validation Guide"
+    description: "P21 rule categories, validation workflow, cross-domain checks, aCRF"
+    estimated_tokens: 750
+    layer_range: [3, 4]
+    anchored_nodes:
+      - p21-sdtm-validation
+      - sdtm-crossdomain-check
+      - sdtm-annotated-crf
+      - sdtm-reviewer-guide
+      - p21-adam-validation
+    regulatory_refs:
+      - "FDA Data Standards Catalog"
+      - "CDISC SDTM IG v3.4"
+      - "PhUSE Reviewer's Guide Template"
+
+  # -------------------------------------------------------------------------
+  # Layer 4: ADaM
+  # -------------------------------------------------------------------------
+  - path: "docs/regulatory/adam/adsl-derivation-guide.md"
+    title: "ADaM ADSL Derivation Guide"
+    description: "ADSL variables — treatment, populations, demographics, dates"
+    estimated_tokens: 900
+    layer_range: [4, 4]
+    anchored_nodes:
+      - adam-adsl
+    regulatory_refs:
+      - "CDISC ADaM IG v1.3 Section 3"
+      - "CDISC ADaM ADSL Supplement"
+
+  - path: "docs/regulatory/adam/bds-structure-guide.md"
+    title: "ADaM BDS & Analysis Dataset Guide"
+    description: "BDS, OCCDS, ADTTE structures — ADAE, ADLB, ADTTE, ADEFF derivations"
+    estimated_tokens: 1000
+    layer_range: [4, 4]
+    anchored_nodes:
+      - adam-adae
+      - adam-adlb
+      - adam-adtte
+      - adam-adeff
+      - adam-custom-analysis
+    regulatory_refs:
+      - "CDISC ADaM IG v1.3"
+      - "CDISC ADaM BDS Supplement"
+      - "CDISC ADaM OCCDS Supplement"
+      - "CDISC ADaM ADTTE Supplement"
+
+  - path: "docs/regulatory/adam/traceability-guide.md"
+    title: "ADaM Traceability Guide"
+    description: "Traceability principle, variables, levels, reviewer's guide structure"
+    estimated_tokens: 500
+    layer_range: [4, 4]
+    anchored_nodes:
+      - adam-traceability-check
+      - adam-reviewer-guide
+    regulatory_refs:
+      - "CDISC ADaM IG v1.3 Section 2"
+      - "FDA Study Data Technical Conformance Guide"
+      - "PhUSE ADaM Reviewer's Guide Template"
+
+  # -------------------------------------------------------------------------
+  # Layer 5: TFL
+  # -------------------------------------------------------------------------
+  - path: "docs/regulatory/tfl/tfl-programming-guide.md"
+    title: "TFL Programming Guide"
+    description: "Tables, figures, listings — ICH E3 structure, formatting, QC"
+    estimated_tokens: 800
+    layer_range: [5, 5]
+    anchored_nodes:
+      - tfl-shell-review
+      - tfl-table-generation
+      - tfl-listing-generation
+      - tfl-figure-generation
+      - tfl-qc-validation
+    regulatory_refs:
+      - "ICH E3 Section 11"
+      - "ICH E3 Section 12"
+      - "ICH E3 Section 14"
+
+  - path: "docs/regulatory/tfl/double-programming-sop.md"
+    title: "Double Programming SOP"
+    description: "Independent verification workflow — comparison, resolution, sign-off"
+    estimated_tokens: 400
+    layer_range: [5, 5]
+    anchored_nodes:
+      - tfl-double-programming
+      - tfl-qc-validation
+    regulatory_refs:
+      - "Company SOP: Double Programming"
+      - "Company SOP: Independent Verification"
+
+  # -------------------------------------------------------------------------
+  # Layer 6: Submission
+  # -------------------------------------------------------------------------
+  - path: "docs/regulatory/submission/define-xml-guide.md"
+    title: "Define.xml Guide"
+    description: "Define-XML v2.1 structure, dataset/variable metadata, validation"
+    estimated_tokens: 850
+    layer_range: [3, 6]
+    anchored_nodes:
+      - sdtm-define-draft
+      - define-xml-sdtm
+      - define-xml-adam
+      - define-xml-validation
+    regulatory_refs:
+      - "CDISC Define-XML v2.1"
+      - "FDA Study Data Technical Conformance Guide"
+
+  - path: "docs/regulatory/submission/ectd-packaging-guide.md"
+    title: "eCTD Submission Packaging Guide"
+    description: "Module 5 structure, components, P21 final validation, reviewer's guides"
+    estimated_tokens: 900
+    layer_range: [6, 6]
+    anchored_nodes:
+      - esub-package-assembly
+      - esub-final-validation
+    regulatory_refs:
+      - "ICH M8 eCTD v4.0"
+      - "FDA eCTD Guidance"
+      - "FDA Study Data Validation Rules"
+      - "FDA Pre-NDA/BLA Meeting Checklist"
+
+# =============================================================================
+# Coverage Summary
+# =============================================================================
+# Layer 0: sap-review, protocol-setup, spec-creation        → 2 docs
+# Layer 1: edc-extract, crf-validation, raw-data-validation,
+#           data-reconciliation                               → 1 doc
+# Layer 2: All 13 SDTM mapping nodes                         → 5 docs
+# Layer 3: p21-sdtm-validation, sdtm-crossdomain-check,
+#           sdtm-define-draft, sdtm-annotated-crf,
+#           sdtm-reviewer-guide                               → 2 docs (shared)
+# Layer 4: All 9 ADaM nodes                                  → 4 docs (shared)
+# Layer 5: All 6 TFL nodes                                   → 2 docs
+# Layer 6: All 5 submission nodes                             → 2 docs (shared)
+# Total: 16 documents covering all 45 graph nodes

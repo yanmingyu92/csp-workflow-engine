@@ -1,5 +1,5 @@
 {
-  "description": "Ars Contexta plugin hooks — session orientation, note validation, auto-commit",
+  "description": "Ars Contexta plugin hooks — session orientation, note validation, auto-commit, workflow enforcement (graph-router integration)",
   "hooks": {
     "SessionStart": [
       {
@@ -10,24 +10,25 @@
             "timeout": 10
           }
         ]
-      }
-    ],
-    "PostToolUse": [
+      },
       {
-        "matcher": "Write",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/scripts/write-validate.sh",
-            "timeout": 5
-          },
-          {
-            "type": "command",
-            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/scripts/auto-commit.sh",
-            "timeout": 5,
-            "async": true
-          }
-        ]
+        "PostToolUse": [
+        {
+          "matcher": "Write",
+          "hooks": [
+            {
+              "type": "command",
+              "command": "${CLAUDE_PLUGIN_ROOT}/hooks/scripts/write-validate.sh",
+              "timeout": 5
+            },
+            {
+              "type": "command",
+              "command": "${CLAUDE_PLUGIN_ROOT}/hooks/scripts/auto-commit.sh",
+              "timeout": 5,
+              "async": true
+            }
+          ]
+        }
       }
     ]
   }

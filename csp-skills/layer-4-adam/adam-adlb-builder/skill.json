@@ -1,0 +1,42 @@
+{
+  "name": "csp-adam-adlb-builder",
+  "description": "Build ADLB laboratory analysis dataset (BDS)",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-4",
+    "adam"
+  ],
+  "entry": "SKILL.md",
+  "layer": 4,
+  "graph_node": "adam-adlb",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "ADLB",
+    "lab analysis",
+    "BDS",
+    "AVAL",
+    "BASE",
+    "CHG",
+    "PCHG",
+    "ABLFL"
+  ],
+  "dependencies": [
+    "adam-adsl",
+    "sdtm-lb-mapping"
+  ],
+  "produces": [
+    "output/adam/adlb.xpt"
+  ],
+  "consumes": [
+    "SDTM LB domain",
+    "ADSL dataset",
+    "ADaM derivation specification"
+  ]
+}

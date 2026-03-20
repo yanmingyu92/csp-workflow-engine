@@ -1,0 +1,42 @@
+{
+  "name": "csp-sdtm-vs-mapper",
+  "description": "Map vital signs to SDTM VS domain",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-2",
+    "sdtm",
+    "vs"
+  ],
+  "entry": "SKILL.md",
+  "layer": 2,
+  "graph_node": "sdtm-vs-mapping",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "VS",
+    "vital signs",
+    "vitals",
+    "VS domain",
+    "blood pressure",
+    "heart rate",
+    "temperature",
+    "weight"
+  ],
+  "dependencies": [
+    "raw-data-validation",
+    "spec-creation"
+  ],
+  "produces": [
+    "output/sdtm/vs.xpt"
+  ],
+  "consumes": [
+    "SDTM mapping specification",
+    "Raw vital signs data"
+  ]
+}

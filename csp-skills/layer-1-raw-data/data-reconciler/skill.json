@@ -1,0 +1,37 @@
+{
+  "name": "csp-data-reconciler",
+  "description": "Reconcile data across sources (EDC vs labs, SAE vs AE)",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-1"
+  ],
+  "entry": "SKILL.md",
+  "layer": 1,
+  "graph_node": "data-reconciliation",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "reconciliation",
+    "reconcile",
+    "data reconciliation",
+    "cross-source",
+    "EDC vs lab",
+    "SAE reconciliation",
+    "lab reconciliation"
+  ],
+  "dependencies": [
+    "raw-data-validation"
+  ],
+  "produces": [
+    "reports/reconciliation-report.html"
+  ],
+  "consumes": [
+    "Validated raw datasets"
+  ]
+}

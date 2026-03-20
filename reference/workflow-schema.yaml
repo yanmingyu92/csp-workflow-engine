@@ -1,0 +1,813 @@
+# Workflow Schema Definition
+# Version: 2.0
+# Purpose: Define the structure of workflow definitions, state, and regulatory task graphs
+#
+# v2.0 Changes:
+# - Added regulatory graph node schema with layer, skills_bound, mcps_bound
+# - Added inputs_required and outputs_produced with typed artifact definitions
+# - Added regulatory_refs for traceability
+# - Added evaluation_criteria block (mandatory + recommended checks)
+# - Added adjacency_context for token-efficient skill routing
+
+schema_version: 2
+
+# =============================================================================
+# WORKFLOW DEFINITION SCHEMA
+# =============================================================================
+
+workflow:
+  type: object
+  required: [id, name, stages]
+  additionalProperties: false
+  properties:
+    id:
+      type: string
+      pattern: "^[a-z0-9-]+$"
+      description: "Unique workflow identifier (kebab-case)"
+      examples:
+        - sdtm-to-submission
+        - feature-development
+        - research-synthesis
+
+    name:
+      type: string
+      maxLength: 100
+      description: "Human-readable workflow name"
+      examples:
+        - "SDTM to Submission Package"
+        - "Feature Development Pipeline"
+
+    description:
+      type: string
+      maxLength: 500
+      description: "What this workflow accomplishes"
+
+    version:
+      type: string
+      pattern: "^\\d+\\.\\d+$"
+      default: "1.0"
+      description: "Workflow definition version"
+
+    metadata:
+      type: object
+      properties:
+        domain:
+          type: string
+          description: "Domain this workflow applies to"
+        created:
+          type: string
+          format: date-time
+        author:
+          type: string
+        tags:
+          type: array
+          items:
+            type: string
+
+    stages:
+      type: array
+      minItems: 1
+      items:
+        $ref: "#/stage"
+      description: "Ordered list of workflow stages"
+
+    global_skills_allowed:
+      type: array
+      items:
+        type: string
+      description: "Skills allowed in ALL stages"
+
+    global_skills_blocked:
+      type: array
+      items:
+        type: string
+      description: "Skills blocked in ALL stages"
+
+# =============================================================================
+# STAGE SCHEMA
+# =============================================================================
+
+stage:
+  type: object
+  required: [id, name, skills_allowed]
+  additionalProperties: false
+  properties:
+    id:
+      type: string
+      pattern: "^[a-z0-9-]+$"
+      description: "Unique stage identifier"
+
+    name:
+      type: string
+      maxLength: 80
+      description: "Human-readable stage name"
+
+    sequence:
+      type: integer
+      minimum: 0
+      description: "Order in workflow (0-indexed, auto-assigned if omitted)"
+
+    description:
+      type: string
+      maxLength: 300
+      description: "What happens in this stage"
+
+    skills_allowed:
+      type: array
+      minItems: 1
+      items:
+        type: string
+        pattern: "^/[a-z0-9-]+$"
+      description: "Skills that CAN be used in this stage (e.g., /sdtm-mapper)"
+
+    skills_blocked:
+      type: array
+      items:
+        type: string
+        pattern: "^/[a-z0-9-]+$"
+      description: "Skills explicitly BLOCKED in this stage"
+
+    dependencies:
+      type: array
+      items:
+        type: string
+      description: "Stage IDs that must COMPLETE before this stage can start"
+
+    validation_gates:
+      type: array
+      items:
+        $ref: "#/validation_gate"
+      description: "Quality gates that must pass before stage can advance"
+
+    outputs:
+      type: array
+      items:
+        $ref: "#/output"
+      description: "Artifacts this stage produces"
+
+    exit_conditions:
+      type: array
+      items:
+        type: object
+        required: [condition, action]
+        properties:
+          condition:
+            type: string
+            description: "Expression that triggers this condition"
+          action:
+            type: string
+            enum: [advance, block, escalate, warn]
+            description: "What to do when condition is met"
+          message:
+            type: string
+            description: "Human-readable explanation"
+      description: "Conditions that control stage exit"
+
+    timeout:
+      type: object
+      properties:
+        duration:
+          type: string
+          pattern: "^\\d+[hdm]$"
+          description: "Maximum stage duration (e.g., 24h, 7d)"
+        action:
+          type: string
+          enum: [warn, escalate, abort]
+          default: warn
+
+# =============================================================================
+# VALIDATION GATE SCHEMA
+# =============================================================================
+
+validation_gate:
+  type: object
+  required: [id, skill, pass_condition]
+  additionalProperties: false
+  properties:
+    id:
+      type: string
+      pattern: "^[a-z0-9-]+$"
+      description: "Unique gate identifier"
+
+    name:
+      type: string
+      maxLength: 60
+      description: "Human-readable gate name"
+
+    skill:
+      type: string
+      pattern: "^/[a-z0-9-]+$"
+      description: "Skill to invoke for validation (e.g., /p21-validator)"
+
+    pass_condition:
+      type: string
+      description: "Expression that must evaluate to true for gate to pass"
+      examples:
+        - "p21_errors == 0"
+        - "all_domains_present && schema_valid"
+        - "validation_status == 'PASS'"
+
+    failure_action:
+      type: string
+      enum: [block, warn, escalate]
+      default: block
+      description: |
+        What happens when gate fails:
+        - block: Cannot advance to next stage
+        - warn: Can advance but warning is logged
+        - escalate: Requires human approval to proceed
+
+    auto_run:
+      type: boolean
+      default: false
+      description: "Run automatically when stage outputs change"
+
+    watch_outputs:
+      type: array
+      items:
+        type: string
+      description: "Glob patterns for outputs that trigger auto-run"
+
+    retry:
+      type: object
+      properties:
+        max_attempts:
+          type: integer
+          default: 3
+        delay:
+          type: string
+          pattern: "^\\d+[smh]$"
+          default: "5m"
+
+# =============================================================================
+# OUTPUT SCHEMA
+# =============================================================================
+
+output:
+  type: object
+  required: [artifact_type, format]
+  additionalProperties: false
+  properties:
+    artifact_type:
+      type: string
+      enum: [dataset, report, metadata, specification, code, package, other]
+      description: "Type of artifact produced"
+
+    format:
+      type: string
+      description: "File format (e.g., sas7bdat, xpt, pdf, xml)"
+      examples:
+        - xpt
+        - sas7bdat
+        - pdf
+        - xml
+
+    path_pattern:
+      type: string
+      description: "Glob pattern for output files"
+      examples:
+        - "data/sdtm/*.xpt"
+        - "reports/tfl/*.pdf"
+
+    required_for:
+      type: array
+      items:
+        type: string
+      description: "Stage IDs that require this output"
+
+    validation:
+      type: object
+      properties:
+        required:
+          type: boolean
+          default: true
+        min_count:
+          type: integer
+        max_count:
+          type: integer
+
+# =============================================================================
+# WORKFLOW STATE SCHEMA
+# =============================================================================
+
+workflow_state:
+  type: object
+  required: [schema_version, workflow, stages]
+  additionalProperties: false
+  properties:
+    schema_version:
+      type: integer
+      const: 1
+
+    workflow:
+      type: object
+      required: [id, name, current_stage, started]
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        current_stage:
+          type: string
+          description: "ID of currently active stage"
+        started:
+          type: string
+          format: date-time
+        estimated_completion:
+          type: string
+          format: date-time
+
+    stages:
+      type: array
+      items:
+        type: object
+        required: [id, status]
+        properties:
+          id:
+            type: string
+          status:
+            type: string
+            enum: [pending, in_progress, blocked, completed, failed]
+          started_at:
+            type: string
+            format: date-time
+          completed_at:
+            type: string
+            format: date-time
+          blocked_by:
+            type: array
+            items:
+              type: string
+          validation_results:
+            type: array
+            items:
+              type: object
+              properties:
+                gate_id:
+                  type: string
+                status:
+                  type: string
+                  enum: [pending, passed, failed, warning]
+                last_run:
+                  type: string
+                  format: date-time
+                message:
+                  type: string
+          outputs:
+            type: array
+            items:
+              type: object
+              properties:
+                path:
+                  type: string
+                artifact_type:
+                  type: string
+                generated_at:
+                  type: string
+                  format: date-time
+
+    metrics:
+      type: object
+      properties:
+        total_stages:
+          type: integer
+        completed_stages:
+          type: integer
+        blocked_stages:
+          type: integer
+        pending_gates:
+          type: integer
+        duration_seconds:
+          type: integer
+
+    checkpoints:
+      type: array
+      items:
+        type: object
+        properties:
+          stage_id:
+            type: string
+          timestamp:
+            type: string
+            format: date-time
+          message:
+            type: string
+
+# =============================================================================
+# EDGE TYPE DEFINITIONS (for wiki link semantic typing)
+# =============================================================================
+
+edge_types:
+  requires:
+    syntax: "[[node]](requires)"
+    meaning: "Blocking dependency - cannot proceed until this is complete"
+    traversal: "Backward edges for prerequisite checking"
+
+  produces:
+    syntax: "[[node]](produces)"
+    meaning: "Output artifact - this stage generates this artifact"
+    traversal: "Forward edges for impact analysis"
+
+  validates:
+    syntax: "[[node]](validates)"
+    meaning: "Quality gate - this validates the stage output"
+    traversal: "Cross edges for gate triggering"
+
+  enables:
+    syntax: "[[node]](enables)"
+    meaning: "Non-blocking dependency - recommended but not required"
+    traversal: "Soft edges for suggestions"
+
+  blocks:
+    syntax: "[[node]](blocks)"
+    meaning: "Negative dependency - this must NOT be active"
+    traversal: "Conflict detection"
+
+# =============================================================================
+# REGULATORY GRAPH NODE SCHEMA (v2.0)
+# =============================================================================
+# Used by graph/regulatory-graph.yaml for clinical trial statistical programming
+
+regulatory_graph:
+  type: object
+  required: [schema_version, graph_id, name, nodes]
+  additionalProperties: false
+  properties:
+    schema_version:
+      type: integer
+      const: 1
+    graph_id:
+      type: string
+      pattern: "^[a-z0-9-]+$"
+      description: "Unique graph identifier"
+    name:
+      type: string
+      maxLength: 100
+      description: "Human-readable graph name"
+    description:
+      type: string
+      maxLength: 1000
+      description: "What this graph accomplishes"
+    global_skills:
+      type: array
+      items:
+        type: string
+        pattern: "^/[a-z0-9-]+$"
+      description: "Skills available at EVERY node"
+    nodes:
+      type: array
+      minItems: 1
+      items:
+        $ref: "#/regulatory_node"
+      description: "Graph nodes (tasks)"
+    edge_types:
+      type: object
+      additionalProperties:
+        type: object
+        properties:
+          description:
+            type: string
+          enforcement:
+            type: string
+            enum: [block, warn]
+
+# =============================================================================
+# REGULATORY NODE SCHEMA
+# =============================================================================
+
+regulatory_node:
+  type: object
+  required: [id, name, layer, description]
+  additionalProperties: false
+  properties:
+    id:
+      type: string
+      pattern: "^[a-z0-9-]+$"
+      description: "Unique node identifier (kebab-case)"
+
+    name:
+      type: string
+      maxLength: 80
+      description: "Human-readable node name"
+
+    layer:
+      type: integer
+      minimum: 0
+      maximum: 6
+      description: |
+        Regulatory phase layer:
+        0 = Protocol & Planning
+        1 = Raw Data Management
+        2 = SDTM Creation
+        3 = SDTM Quality Control
+        4 = ADaM Creation
+        5 = TFL Generation
+        6 = Define.xml & Submission
+
+    description:
+      type: string
+      maxLength: 500
+      description: "What this node accomplishes"
+
+    skills_bound:
+      type: array
+      items:
+        type: string
+        pattern: "^/[a-z0-9-]+$"
+      description: "Skills exclusively bound to this node (loaded when node is active)"
+      examples:
+        - /sdtm-dm-mapper
+        - /sdtm-validator
+
+    mcps_bound:
+      type: array
+      items:
+        type: string
+        pattern: "^[a-z0-9-]+$"
+      description: "MCP servers bound to this node"
+      examples:
+        - p21-validator
+        - cdisc-library
+
+    inputs_required:
+      type: array
+      items:
+        $ref: "#/artifact"
+      description: "Artifacts that must exist before this node can activate"
+
+    outputs_produced:
+      type: array
+      items:
+        $ref: "#/artifact"
+      description: "Artifacts this node creates"
+
+    regulatory_refs:
+      type: array
+      items:
+        type: string
+      description: "ICH/CDISC guideline references for this node"
+      examples:
+        - "CDISC SDTM IG v3.4 Section 6.1"
+        - "ICH E9: Statistical Principles for Clinical Trials"
+
+    dependencies:
+      type: array
+      items:
+        type: object
+        required: [node, edge_type]
+        properties:
+          node:
+            type: string
+            description: "ID of predecessor node"
+          edge_type:
+            type: string
+            enum: [requires, enables, validates, blocks]
+            description: |
+              Type of dependency:
+              - requires: Blocking dependency (cannot start until complete)
+              - enables: Non-blocking (recommended but not required)
+              - validates: Quality gate checkpoint
+              - blocks: Negative dependency (must NOT be active)
+      description: "Predecessor node dependencies with typed edges"
+
+    evaluation_criteria:
+      type: object
+      properties:
+        mandatory:
+          type: array
+          items:
+            type: string
+          description: "Criteria that MUST pass for node completion"
+        recommended:
+          type: array
+          items:
+            type: string
+          description: "Criteria that SHOULD pass (best practice)"
+      description: "How to judge node completion"
+
+    adjacency_context:
+      type: object
+      properties:
+        load_predecessor_skills:
+          type: boolean
+          default: true
+          description: "Load skills from predecessor nodes"
+        load_successor_skills:
+          type: boolean
+          default: true
+          description: "Load skills from successor nodes"
+        max_depth:
+          type: integer
+          default: 1
+          minimum: 0
+          maximum: 3
+          description: "How many layers of neighbors to load"
+      description: "Controls which neighbors' skills are loaded for token efficiency"
+
+# =============================================================================
+# ARTIFACT SCHEMA (Typed Inputs/Outputs)
+# =============================================================================
+
+artifact:
+  type: object
+  required: [type, name, format]
+  additionalProperties: false
+  properties:
+    type:
+      type: string
+      enum: [dataset, report, document, specification, metadata, code, package, other]
+      description: |
+        Type of artifact:
+        - dataset: Data file (SDTM, ADaM, raw)
+        - report: Generated output (tables, figures, listings)
+        - document: Text document (PDF, DOCX)
+        - specification: Mapping or derivation spec
+        - metadata: Define.xml, manifests
+        - code: Scripts and programs
+        - package: Submission package
+        - other: Unclassified
+
+    name:
+      type: string
+      maxLength: 100
+      description: "Human-readable artifact name"
+
+    format:
+      type: string
+      description: "File format(s) accepted/produced"
+      examples:
+        - "xpt"
+        - "csv|sas7bdat"
+        - "pdf|docx"
+        - "xlsx|yaml"
+
+    description:
+      type: string
+      maxLength: 200
+      description: "Additional context about this artifact"
+
+    validation:
+      type: string
+      description: "Validation method for this artifact"
+      examples:
+        - "p21-compliance"
+        - "adam-compliance"
+        - "define-xml-schema"
+
+    path_pattern:
+      type: string
+      description: "Glob pattern for artifact location"
+      examples:
+        - "data/sdtm/dm.xpt"
+        - "data/adam/*.xpt"
+        - "reports/tfl/*.pdf"
+
+# =============================================================================
+# GRAPH LAYER SCHEMA
+# =============================================================================
+
+graph_layer:
+  type: object
+  required: [id, name, description, nodes]
+  additionalProperties: false
+  properties:
+    id:
+      type: integer
+      minimum: 0
+      description: "Layer number (0-indexed)"
+
+    name:
+      type: string
+      maxLength: 50
+      description: "Human-readable layer name"
+
+    description:
+      type: string
+      maxLength: 300
+      description: "What happens in this layer"
+
+    nodes:
+      type: array
+      items:
+        type: string
+      description: "Node IDs belonging to this layer"
+
+    entry_node:
+      type: string
+      description: "First node in this layer (optional, for guidance)"
+
+    exit_nodes:
+      type: array
+      items:
+        type: string
+      description: "Nodes that complete this layer (optional)"
+
+    deliverables:
+      type: array
+      items:
+        type: string
+      description: "Key outputs from this layer"
+
+    regulatory_context:
+      type: array
+      items:
+        type: string
+      description: "Regulatory guidelines relevant to this layer"
+
+    skills_typical:
+      type: array
+      items:
+        type: string
+        pattern: "^/[a-z0-9-]+$"
+      description: "Skills typically used in this layer"
+
+    typical_duration:
+      type: string
+      description: "Estimated time to complete this layer"
+      examples:
+        - "1-2 weeks"
+        - "4-8 weeks"
+
+# =============================================================================
+# QUALITY GATE SCHEMA (Between Layers)
+# =============================================================================
+
+layer_quality_gate:
+  type: object
+  required: [id, name, from_layer, to_layer, criteria, blocking]
+  additionalProperties: false
+  properties:
+    id:
+      type: string
+      pattern: "^gate-[0-9]-to-[0-9]$"
+      description: "Gate identifier"
+
+    name:
+      type: string
+      maxLength: 60
+      description: "Human-readable gate name"
+
+    from_layer:
+      type: integer
+      description: "Source layer"
+
+    to_layer:
+      type: integer
+      description: "Target layer"
+
+    criteria:
+      type: array
+      items:
+        type: string
+      description: "Criteria that must pass for gate to open"
+
+    blocking:
+      type: boolean
+      default: true
+      description: "If true, cannot proceed until gate passes"
+
+# =============================================================================
+# TRANSITION RULES SCHEMA
+# =============================================================================
+
+transition_rules:
+  type: object
+  properties:
+    backward_allowed:
+      type: array
+      items:
+        type: object
+        properties:
+          from:
+            type: integer
+          to:
+            type: integer
+          reason:
+            type: string
+      description: "Allowed backward transitions between layers"
+
+    skip_allowed:
+      type: array
+      items:
+        type: object
+        properties:
+          from:
+            type: integer
+          to:
+            type: integer
+          reason:
+            type: string
+      description: "Allowed layer skips"
+
+    parallel_allowed:
+      type: array
+      items:
+        type: object
+        properties:
+          layers:
+            type: array
+            items:
+              type: integer
+          description:
+            type: string
+      description: "Layers that can execute in parallel"

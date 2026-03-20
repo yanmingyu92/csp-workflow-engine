@@ -1,0 +1,42 @@
+{
+  "name": "csp-sdtm-custom-builder",
+  "description": "Build custom SDTM domains (FA, QS, biomarkers)",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-2",
+    "sdtm",
+    "custom"
+  ],
+  "entry": "SKILL.md",
+  "layer": 2,
+  "graph_node": "sdtm-custom-domain",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "custom domain",
+    "non-standard domain",
+    "FA",
+    "QS",
+    "biomarker",
+    "questionnaire",
+    "PRO",
+    "patient reported outcome"
+  ],
+  "dependencies": [
+    "raw-data-validation",
+    "spec-creation"
+  ],
+  "produces": [
+    "output/sdtm/"
+  ],
+  "consumes": [
+    "SDTM mapping specification",
+    "Raw data for custom domains"
+  ]
+}

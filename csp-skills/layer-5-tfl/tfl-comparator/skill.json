@@ -1,0 +1,42 @@
+{
+  "name": "csp-tfl-comparator",
+  "description": "Compare TFL production vs QC outputs",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-5",
+    "tfl"
+  ],
+  "entry": "SKILL.md",
+  "layer": 5,
+  "graph_node": "tfl-qc-validation",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "TFL QC",
+    "QC",
+    "quality control",
+    "TFL validation",
+    "independent QC",
+    "output verification",
+    "TFL review",
+    "compare outputs"
+  ],
+  "dependencies": [
+    "tfl-table-generation",
+    "tfl-listing-generation",
+    "tfl-figure-generation"
+  ],
+  "produces": [
+    "reports/tfl-qc-report.html"
+  ],
+  "consumes": [
+    "All produced TFLs",
+    "ADaM datasets"
+  ]
+}

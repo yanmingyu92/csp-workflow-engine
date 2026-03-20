@@ -1,0 +1,41 @@
+{
+  "name": "csp-tfl-listing-generator",
+  "description": "Generate patient data listings",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-5",
+    "tfl"
+  ],
+  "entry": "SKILL.md",
+  "layer": 5,
+  "graph_node": "tfl-listing-generation",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "listing",
+    "data listing",
+    "patient listing",
+    "AE listing",
+    "lab listing",
+    "protocol deviation listing",
+    "subject listing",
+    "Listing 16"
+  ],
+  "dependencies": [
+    "adam-adsl",
+    "tfl-shell-review"
+  ],
+  "produces": [
+    "output/tfl/listings/"
+  ],
+  "consumes": [
+    "SDTM and ADaM datasets",
+    "TFL programming templates"
+  ]
+}

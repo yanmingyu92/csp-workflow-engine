@@ -1,0 +1,15 @@
+{
+  "name": "csp-sdtm-trial-design-builder",
+  "description": "Create FDA-required trial design datasets (TS, TA, TI, TV)",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": ["csp", "layer-2", "sdtm", "trial-design", "ts", "ta", "ti", "tv"],
+  "entry": "SKILL.md",
+  "layer": 2,
+  "graph_node": "sdtm-trial-design",
+  "platform_hints": {"claude-code": {"context": "fork", "model": "sonnet"}},
+  "triggers": ["trial design", "TS", "TA", "TI", "TV", "trial summary", "trial arms"],
+  "dependencies": ["protocol-setup"],
+  "produces": ["output/sdtm/ts.xpt", "output/sdtm/ta.xpt", "output/sdtm/ti.xpt", "output/sdtm/tv.xpt"],
+  "consumes": ["docs/protocol.pdf", "specs/study-config.yaml"]
+}

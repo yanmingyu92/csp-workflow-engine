@@ -1,0 +1,41 @@
+{
+  "name": "csp-adam-custom-builder",
+  "description": "Build custom ADaM datasets (PK, QoL, PRO)",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-4",
+    "adam"
+  ],
+  "entry": "SKILL.md",
+  "layer": 4,
+  "graph_node": "adam-custom-analysis",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "custom ADaM",
+    "PK",
+    "pharmacokinetics",
+    "QoL",
+    "quality of life",
+    "PRO",
+    "patient reported",
+    "ADPC"
+  ],
+  "dependencies": [
+    "adam-adsl"
+  ],
+  "produces": [
+    "output/adam/"
+  ],
+  "consumes": [
+    "SDTM source domains",
+    "ADSL dataset",
+    "ADaM derivation specification"
+  ]
+}

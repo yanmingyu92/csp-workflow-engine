@@ -1,0 +1,44 @@
+{
+  "name": "csp-tfl-table-generator",
+  "description": "Generate analysis tables from ADaM datasets",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-5",
+    "tfl"
+  ],
+  "entry": "SKILL.md",
+  "layer": 5,
+  "graph_node": "tfl-table-generation",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "table",
+    "analysis table",
+    "demographics table",
+    "safety table",
+    "efficacy table",
+    "disposition table",
+    "summary table",
+    "Table 14"
+  ],
+  "dependencies": [
+    "adam-adsl",
+    "adam-adae",
+    "adam-adlb",
+    "adam-adeff",
+    "tfl-shell-review"
+  ],
+  "produces": [
+    "output/tfl/tables/"
+  ],
+  "consumes": [
+    "ADaM datasets",
+    "TFL programming templates"
+  ]
+}

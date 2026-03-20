@@ -1,0 +1,42 @@
+{
+  "name": "csp-sdtm-cm-mapper",
+  "description": "Map concomitant medication data to SDTM CM domain",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-2",
+    "sdtm",
+    "cm"
+  ],
+  "entry": "SKILL.md",
+  "layer": 2,
+  "graph_node": "sdtm-cm-mapping",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "CM",
+    "concomitant medication",
+    "conmeds",
+    "CM domain",
+    "CMTRT",
+    "CMDECOD",
+    "WHODrug",
+    "ATC"
+  ],
+  "dependencies": [
+    "raw-data-validation",
+    "spec-creation"
+  ],
+  "produces": [
+    "output/sdtm/cm.xpt"
+  ],
+  "consumes": [
+    "SDTM mapping specification",
+    "Raw concomitant medication data"
+  ]
+}

@@ -1,0 +1,149 @@
+{
+  "name": "cdisc-library",
+  "description": "CDISC Library MCP server for controlled terminology and standard lookups",
+  "version": "1.0.0",
+  "author": "arscontexta-csp",
+  "type": "mock",
+  "tools": [
+    {
+      "name": "lookup_ct",
+      "description": "Lookup CDISC controlled terminology codelist",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "codelist_id": {
+            "type": "string",
+            "description": "CDISC CT codelist ID (e.g., C66731 for Sex)"
+          },
+          "ct_version": {
+            "type": "string",
+            "description": "CT version (e.g., '2024-09-27'). Default: latest"
+          }
+        },
+        "required": ["codelist_id"]
+      }
+    },
+    {
+      "name": "validate_ct_value",
+      "description": "Validate a value against CDISC controlled terminology",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string",
+            "description": "Value to validate"
+          },
+          "codelist_id": {
+            "type": "string",
+            "description": "CDISC CT codelist ID"
+          },
+          "ct_version": {
+            "type": "string",
+            "description": "CT version (default: latest)"
+          }
+        },
+        "required": ["value", "codelist_id"]
+      }
+    },
+    {
+      "name": "get_domain_structure",
+      "description": "Get SDTM/ADaM domain structure and required variables",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Domain code (e.g., DM, AE, ADSL)"
+          },
+          "standard": {
+            "type": "string",
+            "enum": ["sdtm", "adam"],
+            "default": "sdtm"
+          },
+          "version": {
+            "type": "string",
+            "description": "Standard version (e.g., '3.4' for SDTM)"
+          }
+        },
+        "required": ["domain"]
+      }
+    },
+    {
+      "name": "search_ct",
+      "description": "Search controlled terminology by keyword",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "keyword": {
+            "type": "string",
+            "description": "Search keyword"
+          },
+          "standard": {
+            "type": "string",
+            "enum": ["sdtm", "adam", "qs", "send"],
+            "default": "sdtm"
+          }
+        },
+        "required": ["keyword"]
+      }
+    },
+    {
+      "name": "get_variable_metadata",
+      "description": "Get metadata for a specific variable",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "domain": {
+            "type": "string",
+            "description": "Domain code"
+          },
+          "variable": {
+            "type": "string",
+            "description": "Variable name"
+          }
+        },
+        "required": ["domain", "variable"]
+      }
+    }
+  ],
+  "bound_to_nodes": [
+    "spec-creation",
+    "crf-validation",
+    "sdtm-dm-mapping",
+    "sdtm-ae-mapping",
+    "sdtm-lb-mapping",
+    "sdtm-trial-design"
+  ],
+  "configuration": {
+    "api_key": "${CDISC_LIBRARY_API_KEY:-}",
+    "api_base_url": "https://library.cdisc.org/api",
+    "cache_enabled": true,
+    "cache_ttl_seconds": 86400
+  },
+  "mock_responses": {
+    "lookup_ct": {
+      "codelist_id": "C66731",
+      "name": "Sex",
+      "extensible": false,
+      "terms": [
+        {"code": "C16576", "synonyms": ["Male"], "preferred_term": "M"},
+        {"code": "C16577", "synonyms": ["Female"], "preferred_term": "F"},
+        {"code": "C17998", "synonyms": ["Unknown"], "preferred_term": "U"},
+        {"code": "C45908", "synonyms": ["Undifferentiated"], "preferred_term": "UNDIFFERENTIATED"}
+      ]
+    },
+    "validate_ct_value": {
+      "is_valid": true,
+      "matched_term": "M",
+      "term_code": "C16576"
+    },
+    "get_domain_structure": {
+      "domain": "DM",
+      "class": "Special Purpose",
+      "structure": "One record per subject",
+      "key_variables": ["STUDYID", "DOMAIN", "USUBJID"],
+      "required_variables": ["STUDYID", "DOMAIN", "USUBJID", "SUBJID", "SITEID", "ARM", "ARMCD"],
+      "expected_variables": ["AGE", "AGEU", "SEX", "RACE", "ETHNIC", "COUNTRY"]
+    }
+  }
+}

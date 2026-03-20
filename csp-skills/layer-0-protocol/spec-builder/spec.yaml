@@ -1,0 +1,36 @@
+skill_id: "spec-builder"
+graph_node: "spec-creation"
+layer: 0
+
+inputs:
+  - id: sap_parsed
+    type: specification
+    format: yaml
+    required: true
+    path_pattern: specs/sap-parsed.yaml
+  - id: study_config
+    type: specification
+    format: yaml
+    required: true
+    path_pattern: specs/study-config.yaml
+
+outputs:
+  - id: sdtm_mapping_spec
+    type: specification
+    format: yaml
+    path_pattern: specs/sdtm-mapping-spec.yaml
+  - id: adam_derivation_spec
+    type: specification
+    format: yaml
+    path_pattern: specs/adam-derivation-spec.yaml
+  - id: tfl_shells
+    type: specification
+    format: yaml
+    path_pattern: specs/tfl-shells.yaml
+
+parameters:
+  - id: spec_type
+    type: string
+    required: true
+    enum: [sdtm, adam, tfl, all]
+    description: Type of specification to build

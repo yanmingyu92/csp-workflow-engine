@@ -1,0 +1,17 @@
+{
+  "name": "csp-spec-builder",
+  "description": "Create mapping specifications for SDTM, ADaM, and TFL from SAP and study configuration",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": ["csp", "layer-0", "specification", "mapping", "sdtm", "adam"],
+  "entry": "SKILL.md",
+  "layer": 0,
+  "graph_node": "spec-creation",
+  "platform_hints": {
+    "claude-code": {"context": "fork", "model": "sonnet"}
+  },
+  "triggers": ["mapping specification", "SDTM spec", "ADaM spec", "TFL spec", "derivation spec", "mapping document"],
+  "dependencies": ["sap-review", "protocol-setup"],
+  "produces": ["specs/sdtm-mapping-spec.yaml", "specs/adam-derivation-spec.yaml", "specs/tfl-shells.yaml"],
+  "consumes": ["specs/sap-parsed.yaml", "specs/study-config.yaml"]
+}

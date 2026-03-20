@@ -1,0 +1,42 @@
+{
+  "name": "csp-sdtm-mh-mapper",
+  "description": "Map medical history to SDTM MH domain",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-2",
+    "sdtm",
+    "mh"
+  ],
+  "entry": "SKILL.md",
+  "layer": 2,
+  "graph_node": "sdtm-mh-mapping",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "MH",
+    "medical history",
+    "MH domain",
+    "MHTERM",
+    "MHDECOD",
+    "past medical history",
+    "pre-existing condition",
+    "MHBODSYS"
+  ],
+  "dependencies": [
+    "raw-data-validation",
+    "spec-creation"
+  ],
+  "produces": [
+    "output/sdtm/mh.xpt"
+  ],
+  "consumes": [
+    "SDTM mapping specification",
+    "Raw medical history data"
+  ]
+}
