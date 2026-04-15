@@ -110,7 +110,7 @@ class ContextResult:
     skills_truncated: int = 0
     skills_dropped: int = 0
     skills_missing: int = 0
-    budget: int = 5000
+    budget: int = 8000
     budget_used: int = 0
     budget_strategy: str = ""
 
@@ -206,7 +206,7 @@ class AdaptivePriorityScheduler:
     # Maximum fraction any single skill can consume
     MAX_SINGLE_SKILL_FRACTION = 0.25
 
-    def __init__(self, budget: int = 5000):
+    def __init__(self, budget: int = 8000):
         self.budget = budget
 
     def classify_skills(
@@ -396,7 +396,7 @@ class AdaptivePriorityScheduler:
 class ContextBuilder:
     """Build minimal context for graph position using Adaptive Priority Scheduling."""
 
-    def __init__(self, project_root: Path, budget: int = 5000, principle_store: 'PrincipleStore' = None):
+    def __init__(self, project_root: Path, budget: int = 8000, principle_store: 'PrincipleStore' = None):
         self.project_root = project_root
         self.skill_locator = SkillLocator(project_root)
         self.scheduler = AdaptivePriorityScheduler(budget)
@@ -952,7 +952,7 @@ Examples:
         help="Use current node from workflow state",
     )
     parser.add_argument(
-        "--budget", "-b", type=int, default=5000, help="Token budget (default: 5000)"
+        "--budget", "-b", type=int, default=8000, help="Token budget (default: 8000)"
     )
     parser.add_argument(
         "--estimate",
