@@ -1,0 +1,38 @@
+{
+  "name": "csp-acrf-finalizer",
+  "description": "Finalize annotated CRF with verified annotations",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-3"
+  ],
+  "entry": "SKILL.md",
+  "layer": 3,
+  "graph_node": "sdtm-annotated-crf",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "annotated CRF",
+    "aCRF",
+    "final aCRF",
+    "CRF finalize",
+    "CRF annotation finalization",
+    "blank CRF"
+  ],
+  "dependencies": [
+    "p21-sdtm-validation",
+    "crf-validation"
+  ],
+  "produces": [
+    "docs/acrf-final.pdf"
+  ],
+  "consumes": [
+    "Draft annotated CRF",
+    "All SDTM domain datasets"
+  ]
+}

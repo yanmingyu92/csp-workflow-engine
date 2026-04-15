@@ -1,0 +1,46 @@
+{
+  "name": "csp-esub-validator",
+  "description": "Validate eCTD submission package",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-6",
+    "submission"
+  ],
+  "entry": "SKILL.md",
+  "layer": 6,
+  "graph_node": "esub-package-assembly",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "eCTD",
+    "submission package",
+    "eSub",
+    "Module 5",
+    "electronic submission",
+    "submission assembly",
+    "eCTD structure",
+    "regulatory submission"
+  ],
+  "dependencies": [
+    "define-xml-validation",
+    "tfl-qc-validation",
+    "sdtm-reviewer-guide",
+    "sdtm-annotated-crf",
+    "adam-reviewer-guide"
+  ],
+  "produces": [
+    "output/esub/"
+  ],
+  "consumes": [
+    "All SDTM and ADaM datasets",
+    "Define.xml files",
+    "All TFLs",
+    "Annotated CRF, Reviewer's Guide"
+  ]
+}

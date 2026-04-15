@@ -1,0 +1,47 @@
+skill_id: "sdtm-validator"
+graph_node: "sdtm-dm-mapping"
+layer: 2
+
+inputs:
+  - id: sdtm_datasets
+    type: dataset
+    required: true
+    formats: [xpt, csv]
+    path_pattern: output/sdtm/*.xpt
+
+  - id: mapping_spec
+    type: specification
+    required: false
+    format: yaml
+    path_pattern: specs/sdtm-mapping-spec.yaml
+
+outputs:
+  - id: validation_report
+    type: report
+    format: yaml
+    path_pattern: reports/sdtm-validation.yaml
+
+validation_rules:
+  structure:
+    - id: SDTM-001
+      description: "Required variables present"
+      severity: error
+    - id: SDTM-002
+      description: "USUBJID unique"
+      severity: error
+    - id: SDTM-003
+      description: "DOMAIN variable populated"
+      severity: error
+
+  terminology:
+    - id: SDTM-CT-001
+      description: "Controlled terminology valid"
+      severity: error
+
+  consistency:
+    - id: SDTM-CON-001
+      description: "All USUBJIDs exist in DM"
+      severity: error
+    - id: SDTM-CON-002
+      description: "Study ID consistent across domains"
+      severity: error

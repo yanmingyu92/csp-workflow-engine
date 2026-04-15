@@ -1,0 +1,39 @@
+{
+  "name": "csp-sap-parser",
+  "description": "Parse Statistical Analysis Plan (SAP) to extract endpoints, populations, statistical methods, and TFL specifications",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": ["csp", "layer-0", "protocol", "sap", "planning"],
+  "entry": "SKILL.md",
+  "layer": 0,
+  "graph_node": "sap-review",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "SAP",
+    "statistical analysis plan",
+    "endpoints",
+    "analysis populations",
+    "ITT",
+    "mITT",
+    "safety population",
+    "primary endpoint",
+    "secondary endpoint",
+    "statistical methods",
+    "TFL shells",
+    "multiplicity"
+  ],
+  "dependencies": [],
+  "produces": [
+    "specs/sap-parsed.yaml"
+  ],
+  "consumes": [
+    "docs/sap.pdf",
+    "docs/sap.docx",
+    "specs/study-config.yaml"
+  ]
+}

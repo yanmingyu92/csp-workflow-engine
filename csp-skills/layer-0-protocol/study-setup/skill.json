@@ -1,0 +1,29 @@
+{
+  "name": "csp-study-setup",
+  "description": "Configure study-level metadata including study ID, phase, treatment arms, visit schedule, and randomization scheme",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": ["csp", "layer-0", "protocol", "study", "configuration"],
+  "entry": "SKILL.md",
+  "layer": 0,
+  "graph_node": "protocol-setup",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "protocol",
+    "study setup",
+    "study ID",
+    "therapeutic area",
+    "phase",
+    "treatment arms",
+    "visit schedule",
+    "randomization"
+  ],
+  "dependencies": [],
+  "produces": ["specs/study-config.yaml"],
+  "consumes": ["docs/protocol.pdf", "docs/protocol.docx"]
+}

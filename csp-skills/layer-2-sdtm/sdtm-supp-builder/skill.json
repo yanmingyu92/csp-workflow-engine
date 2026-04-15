@@ -1,0 +1,15 @@
+{
+  "name": "csp-sdtm-supp-builder",
+  "description": "Create SUPPXX datasets for non-standard variables",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": ["csp", "layer-2", "sdtm", "supp", "supplemental", "qualifiers"],
+  "entry": "SKILL.md",
+  "layer": 2,
+  "graph_node": "sdtm-suppqual",
+  "platform_hints": {"claude-code": {"context": "fork", "model": "sonnet"}},
+  "triggers": ["SUPP", "supplemental", "SUPPXX", "QNAM", "QLABEL", "non-standard variable"],
+  "dependencies": ["sdtm-dm-mapping"],
+  "produces": ["output/sdtm/supp*.xpt"],
+  "consumes": ["output/sdtm/*.xpt", "specs/sdtm-mapping-spec.yaml"]
+}

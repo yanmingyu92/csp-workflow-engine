@@ -1,0 +1,51 @@
+{
+  "name": "csp-p21-report-reviewer",
+  "description": "Review and categorize P21 validation issues",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-3"
+  ],
+  "entry": "SKILL.md",
+  "layer": 3,
+  "graph_node": "p21-sdtm-validation",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "P21",
+    "Pinnacle 21",
+    "SDTM validation",
+    "P21 validation",
+    "compliance check",
+    "validation report",
+    "SDTM errors",
+    "SDTM warnings"
+  ],
+  "dependencies": [
+    "sdtm-dm-mapping",
+    "sdtm-ae-mapping",
+    "sdtm-lb-mapping",
+    "sdtm-vs-mapping",
+    "sdtm-cm-mapping",
+    "sdtm-mh-mapping",
+    "sdtm-ex-mapping",
+    "sdtm-ds-mapping",
+    "sdtm-sv-mapping",
+    "sdtm-trial-design",
+    "sdtm-suppqual",
+    "sdtm-relrec",
+    "sdtm-custom-domain"
+  ],
+  "produces": [
+    "reports/p21-sdtm-report.xlsx",
+    "ops/p21-sdtm-issues.yaml"
+  ],
+  "consumes": [
+    "All SDTM domain datasets"
+  ]
+}

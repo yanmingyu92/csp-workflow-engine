@@ -1,0 +1,17 @@
+{
+  "name": "csp-sdtm-dm-mapper",
+  "description": "Map raw demographics data to SDTM DM domain",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": ["csp", "layer-2", "sdtm", "dm", "demographics", "mapping"],
+  "entry": "SKILL.md",
+  "layer": 2,
+  "graph_node": "sdtm-dm-mapping",
+  "platform_hints": {
+    "claude-code": {"context": "fork", "model": "sonnet"}
+  },
+  "triggers": ["DM", "demographics", "USUBJID", "AGE", "SEX", "RACE", "ARM", "subject demographics"],
+  "dependencies": ["raw-data-validation", "spec-creation"],
+  "produces": ["output/sdtm/dm.xpt"],
+  "consumes": ["data/raw/dm.csv", "specs/sdtm-mapping-spec.yaml"]
+}

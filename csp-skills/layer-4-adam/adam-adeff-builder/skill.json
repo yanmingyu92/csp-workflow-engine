@@ -1,0 +1,41 @@
+{
+  "name": "csp-adam-adeff-builder",
+  "description": "Build ADEFF efficacy analysis dataset",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-4",
+    "adam"
+  ],
+  "entry": "SKILL.md",
+  "layer": 4,
+  "graph_node": "adam-adeff",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "ADEFF",
+    "efficacy",
+    "primary endpoint",
+    "responder",
+    "efficacy analysis",
+    "response rate",
+    "endpoint analysis",
+    "efficacy dataset"
+  ],
+  "dependencies": [
+    "adam-adsl"
+  ],
+  "produces": [
+    "output/adam/adeff.xpt"
+  ],
+  "consumes": [
+    "SDTM source domains",
+    "ADSL dataset",
+    "ADaM derivation specification"
+  ]
+}

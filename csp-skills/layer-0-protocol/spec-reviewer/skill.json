@@ -1,0 +1,42 @@
+{
+  "name": "csp-spec-reviewer",
+  "description": "Review and validate mapping specifications",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-0"
+  ],
+  "entry": "SKILL.md",
+  "layer": 0,
+  "graph_node": "spec-creation",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "mapping specification",
+    "SDTM spec",
+    "ADaM spec",
+    "TFL spec",
+    "derivation spec",
+    "specification",
+    "mapping spec",
+    "spec creation"
+  ],
+  "dependencies": [
+    "sap-review",
+    "protocol-setup"
+  ],
+  "produces": [
+    "specs/sdtm-mapping-spec.xlsx",
+    "specs/adam-derivation-spec.xlsx",
+    "specs/tfl-shells.xlsx"
+  ],
+  "consumes": [
+    "Parsed SAP specifications",
+    "Study configuration"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "csp-sdtm-ex-mapper",
+  "description": "Map exposure/dosing data to SDTM EX domain",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": ["csp", "layer-2", "sdtm", "ex", "exposure", "mapping"],
+  "entry": "SKILL.md",
+  "layer": 2,
+  "graph_node": "sdtm-ex-mapping",
+  "platform_hints": {"claude-code": {"context": "fork", "model": "sonnet"}},
+  "triggers": ["EX", "exposure", "dosing", "EX domain", "EXTRT", "EXDOSE", "study drug"],
+  "dependencies": ["raw-data-validation", "spec-creation"],
+  "produces": ["output/sdtm/ex.xpt"],
+  "consumes": ["data/raw/ex.csv", "specs/sdtm-mapping-spec.yaml"]
+}

@@ -1,0 +1,42 @@
+{
+  "name": "csp-adam-validator",
+  "description": "Validate ADaM dataset compliance",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-4",
+    "adam"
+  ],
+  "entry": "SKILL.md",
+  "layer": 4,
+  "graph_node": "adam-adsl",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "ADSL",
+    "subject level",
+    "population flags",
+    "SAFFL",
+    "ITTFL",
+    "PPROTFL",
+    "TRT01P",
+    "TRT01A"
+  ],
+  "dependencies": [
+    "p21-sdtm-validation",
+    "sap-review"
+  ],
+  "produces": [
+    "output/adam/adsl.xpt"
+  ],
+  "consumes": [
+    "SDTM DM, EX, DS, SV domains",
+    "ADaM derivation specification",
+    "Parsed SAP specifications"
+  ]
+}

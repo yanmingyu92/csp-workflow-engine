@@ -1,0 +1,38 @@
+{
+  "name": "csp-tfl-double-programmer",
+  "description": "Independent double programming for key outputs",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-5",
+    "tfl"
+  ],
+  "entry": "SKILL.md",
+  "layer": 5,
+  "graph_node": "tfl-double-programming",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "double programming",
+    "independent programming",
+    "production vs QC",
+    "dual programming",
+    "verification programming",
+    "independent verification"
+  ],
+  "dependencies": [
+    "tfl-table-generation"
+  ],
+  "produces": [
+    "reports/tfl-double-programming-report.html"
+  ],
+  "consumes": [
+    "Production TFLs",
+    "ADaM datasets"
+  ]
+}

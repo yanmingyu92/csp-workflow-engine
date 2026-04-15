@@ -1,0 +1,15 @@
+{
+  "name": "csp-adam-adtte-builder",
+  "description": "Build ADTTE time-to-event analysis dataset",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": ["csp", "layer-4", "adam", "adtte", "time-to-event", "survival"],
+  "entry": "SKILL.md",
+  "layer": 4,
+  "graph_node": "adam-adtte",
+  "platform_hints": {"claude-code": {"context": "fork", "model": "sonnet"}},
+  "triggers": ["ADTTE", "time-to-event", "survival", "Kaplan-Meier", "CNSR", "AVAL"],
+  "dependencies": ["adam-adsl-builder"],
+  "produces": ["output/adam/adtte.xpt"],
+  "consumes": ["output/adam/adsl.xpt", "output/sdtm/ae.xpt", "output/sdtm/ds.xpt"]
+}

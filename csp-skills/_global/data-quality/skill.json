@@ -1,0 +1,16 @@
+{
+  "name": "csp-data-quality",
+  "description": "Universal data quality checking â€?completeness, consistency, conformance",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": ["csp", "global", "data-quality", "validation", "completeness"],
+  "entry": "SKILL.md",
+  "layer": -1,
+  "graph_node": "_global",
+  "scope": "global",
+  "platform_hints": {"claude-code": {"context": "fork", "model": "sonnet"}},
+  "triggers": ["data quality", "check data", "validate data", "completeness", "consistency", "missing values"],
+  "dependencies": [],
+  "produces": ["output/quality-report.json"],
+  "consumes": ["input dataset"]
+}

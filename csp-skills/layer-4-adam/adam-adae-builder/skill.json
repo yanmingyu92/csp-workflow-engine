@@ -1,0 +1,15 @@
+{
+  "name": "csp-adam-adae-builder",
+  "description": "Build ADAE adverse events analysis dataset from SDTM AE",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": ["csp", "layer-4", "adam", "adae", "adverse-events", "safety"],
+  "entry": "SKILL.md",
+  "layer": 4,
+  "graph_node": "adam-adae",
+  "platform_hints": {"claude-code": {"context": "fork", "model": "sonnet"}},
+  "triggers": ["ADAE", "adverse events analysis", "safety analysis", "treatment-emergent AE"],
+  "dependencies": ["adam-adsl-builder", "sdtm-ae-mapper"],
+  "produces": ["output/adam/adae.xpt"],
+  "consumes": ["output/adam/adsl.xpt", "output/sdtm/ae.xpt"]
+}

@@ -1,0 +1,145 @@
+skill_id: "sap-parser"
+graph_node: "sap-review"
+layer: 0
+
+description: |
+  Parse Statistical Analysis Plan (SAP) to extract machine-readable specifications
+  for endpoints, analysis populations, statistical methods, and TFL shells.
+
+inputs:
+  - id: sap_document
+    type: document
+    required: true
+    formats:
+      - pdf
+      - docx
+    description: Statistical Analysis Plan document
+    path_pattern: "docs/sap.{pdf,docx}"
+
+  - id: study_config
+    type: specification
+    required: false
+    formats:
+      - yaml
+    description: Study configuration with study ID, phase, etc.
+    path_pattern: "specs/study-config.yaml"
+
+outputs:
+  - id: parsed_sap
+    type: specification
+    format: yaml
+    description: Machine-readable SAP specifications
+    path_pattern: "specs/sap-parsed.yaml"
+    validation:
+      required_sections:
+        - endpoints
+        - populations
+        - methods
+
+  - id: tfl_shell_list
+    type: specification
+    format: yaml
+    description: List of all TFL shells from SAP appendix
+    path_pattern: "specs/tfl-shells.yaml"
+
+parameters:
+  - id: extraction_mode
+    type: string
+    default: "full"
+    enum:
+      - full
+      - endpoints_only
+      - tfl_only
+    description: What to extract from SAP
+
+  - id: output_format
+    type: string
+    default: "yaml"
+    enum:
+      - yaml
+      - json
+    description: Output format for parsed specifications
+
+extraction_schema:
+  endpoints:
+    required_fields:
+      - id
+      - name
+      - method
+      - population
+    optional_fields:
+      - description
+      - hypothesis
+      - dataset
+      - multiplicity
+      - subgroups
+      - sensitivity_analyses
+
+  populations:
+    required_fields:
+      - id
+      - name
+      - description
+    optional_fields:
+      - derivation
+      - criteria
+      - page_ref
+
+  methods:
+    required_fields:
+      - id
+      - name
+    optional_fields:
+      - description
+      - parameters
+      - assumptions
+      - page_ref
+
+  tfl_shells:
+    required_fields:
+      - id
+      - title
+      - type
+    optional_fields:
+      - population
+      - purpose
+      - page_ref
+
+validation:
+  mandatory:
+    - at_least_one_primary_endpoint
+    - itt_population_defined
+    - safety_population_defined
+    - primary_endpoint_method_specified
+
+  recommended:
+    - secondary_endpoints_extracted
+    - multiplicity_strategy_documented
+    - subgroup_analyses_identified
+    - all_tfl_shells_listed
+
+error_handling:
+  missing_sap:
+    severity: error
+    message: "SAP document not found at {path}"
+    action: "Prompt user for SAP path"
+
+  unparseable_format:
+    severity: error
+    message: "Cannot parse SAP format: {format}"
+    action: "Convert to PDF or DOCX first"
+
+  missing_primary_endpoint:
+    severity: error
+    message: "Primary endpoint not found in SAP"
+    action: "Manual review required"
+
+  ambiguous_method:
+    severity: warning
+    message: "Statistical method ambiguous: {text}"
+    action: "Flag for manual review"
+
+regulatory_refs:
+  - "ICH E9: Statistical Principles for Clinical Trials"
+  - "ICH E3: Structure and Content of Clinical Study Reports"
+  - "ICH E9(R1): Estimands and Sensitivity Analysis"

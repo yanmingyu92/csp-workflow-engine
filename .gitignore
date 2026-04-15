@@ -1,0 +1,65 @@
+.DS_Store
+*.local.md
+__pycache__/
+.env
+*.env.*
+
+# Claude Code directories (local config, not for repo)
+.claude/
+.claude-plugin/
+nul
+
+# LaTeX build artifacts
+*.aux
+*.log
+*.out
+*.blg
+*.synctex.gz
+
+# Sensitive files
+*.key
+*.pem
+*.secret
+credentials.json
+
+# Paper files (separate submission)
+paper/
+
+# Plan and intermediate documentation
+docs/
+
+# Claude Code agent configurations
+.agents/
+
+# Operational state and reports
+ops/
+reports/
+
+# Experiment scripts and results (available upon request)
+experiments/
+
+# Generated output
+output/
+
+# Local experience data
+data/
+
+# External sub-repos
+eSubmission-Benchmark/
+Usersyanmicsp-workflow-engineexperimentsEvolveR/
+
+# Malformed directories
+python experiments/
+
+# Intermediate/utility scripts
+scripts/data/
+scripts/distillation.py
+scripts/experience_logger.py
+scripts/manage_principles.py
+scripts/principle_store.py
+scripts/principle_validator.py
+scripts/test_deepseek_api.py
+scripts/ws2_insert_principles.py
+
+# Test files for intermediate modules
+tests/

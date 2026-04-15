@@ -1,0 +1,39 @@
+{
+  "name": "csp-sdtm-consistency-checker",
+  "description": "Check cross-domain consistency for SDTM",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-3",
+    "sdtm",
+    "consistency-checker"
+  ],
+  "entry": "SKILL.md",
+  "layer": 3,
+  "graph_node": "sdtm-crossdomain-check",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "cross-domain",
+    "consistency check",
+    "USUBJID check",
+    "date consistency",
+    "cross-domain consistency",
+    "domain alignment",
+    "inter-domain"
+  ],
+  "dependencies": [
+    "p21-sdtm-validation"
+  ],
+  "produces": [
+    "reports/sdtm-crossdomain-report.html"
+  ],
+  "consumes": [
+    "All SDTM domain datasets"
+  ]
+}

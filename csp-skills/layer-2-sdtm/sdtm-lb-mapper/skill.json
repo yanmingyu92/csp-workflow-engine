@@ -1,0 +1,42 @@
+{
+  "name": "csp-sdtm-lb-mapper",
+  "description": "Map laboratory data to SDTM LB domain",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-2",
+    "sdtm",
+    "lb"
+  ],
+  "entry": "SKILL.md",
+  "layer": 2,
+  "graph_node": "sdtm-lb-mapping",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "LB",
+    "lab",
+    "laboratory",
+    "lab data",
+    "LB domain",
+    "LBTEST",
+    "LBTESTCD",
+    "LBORRES"
+  ],
+  "dependencies": [
+    "raw-data-validation",
+    "spec-creation"
+  ],
+  "produces": [
+    "output/sdtm/lb.xpt"
+  ],
+  "consumes": [
+    "SDTM mapping specification",
+    "Raw laboratory data"
+  ]
+}

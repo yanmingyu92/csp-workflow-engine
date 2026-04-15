@@ -1,0 +1,15 @@
+{
+  "name": "csp-sdtm-ds-mapper",
+  "description": "Map disposition data to SDTM DS domain",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": ["csp", "layer-2", "sdtm", "ds", "disposition", "mapping"],
+  "entry": "SKILL.md",
+  "layer": 2,
+  "graph_node": "sdtm-ds-mapping",
+  "platform_hints": {"claude-code": {"context": "fork", "model": "sonnet"}},
+  "triggers": ["DS", "disposition", "DS domain", "DSTERM", "EOSSTT", "discontinuation"],
+  "dependencies": ["raw-data-validation", "spec-creation"],
+  "produces": ["output/sdtm/ds.xpt"],
+  "consumes": ["data/raw/ds.csv", "specs/sdtm-mapping-spec.yaml"]
+}

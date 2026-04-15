@@ -1,0 +1,17 @@
+{
+  "name": "csp-principle-review",
+  "description": "Review and manage principles in the review queue for the self-learning module",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": ["csp", "meta", "self-learning", "principles", "review"],
+  "entry": "SKILL.md",
+  "layer": -1,
+  "graph_node": "principle-review",
+  "platform_hints": {
+    "claude-code": {"context": "fork", "model": "sonnet"}
+  },
+  "triggers": ["principle review", "review queue", "approve principle", "reject principle", "quality gates"],
+  "dependencies": ["principle_store.py", "principle_validator.py"],
+  "produces": ["data/experiences/review_queue/approved/*.json"],
+  "consumes": ["data/experiences/review_queue/*.json"]
+}

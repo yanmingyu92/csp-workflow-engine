@@ -1,0 +1,39 @@
+{
+  "name": "csp-crf-validator",
+  "description": "Validate CRF annotations against CDASH",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-1"
+  ],
+  "entry": "SKILL.md",
+  "layer": 1,
+  "graph_node": "crf-validation",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "CRF",
+    "case report form",
+    "annotated CRF",
+    "aCRF",
+    "CRF annotation",
+    "CDASH",
+    "CRF validation",
+    "CRF fields"
+  ],
+  "dependencies": [
+    "spec-creation"
+  ],
+  "produces": [
+    "docs/acrf-draft.pdf"
+  ],
+  "consumes": [
+    "Blank CRF",
+    "SDTM mapping specification"
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "csp-adam-validation",
+  "description": "Validate ADaM datasets against ADaM IG and analysis specifications",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": ["csp", "layer-4", "adam", "validation", "qc"],
+  "entry": "SKILL.md",
+  "layer": 4,
+  "graph_node": "p21-adam-validation",
+  "platform_hints": {"claude-code": {"context": "fork", "model": "sonnet"}},
+  "triggers": ["ADaM validation", "ADaM QC", "ADaM check", "ADaM IG compliance"],
+  "dependencies": ["adam-adsl-builder"],
+  "produces": ["reports/adam-validation-report.html"],
+  "consumes": ["output/adam/*.xpt", "specs/adam-specs.yaml"]
+}

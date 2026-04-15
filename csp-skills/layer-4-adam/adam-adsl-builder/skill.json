@@ -1,0 +1,15 @@
+{
+  "name": "csp-adam-adsl-builder",
+  "description": "Build ADSL subject-level dataset with derived flags and populations",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": ["csp", "layer-4", "adam", "adsl", "subject-level"],
+  "entry": "SKILL.md",
+  "layer": 4,
+  "graph_node": "adam-adsl",
+  "platform_hints": {"claude-code": {"context": "fork", "model": "sonnet"}},
+  "triggers": ["ADSL", "subject level", "population flags", "SAFFL", "ITTFL", "PPROTFL"],
+  "dependencies": ["sdtm-dm-mapping", "sdtm-ds-mapping", "sdtm-ex-mapping"],
+  "produces": ["output/adam/adsl.xpt"],
+  "consumes": ["output/sdtm/dm.xpt", "output/sdtm/ds.xpt", "output/sdtm/ex.xpt"]
+}

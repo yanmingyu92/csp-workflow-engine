@@ -1,0 +1,16 @@
+{
+  "name": "csp-workflow-status",
+  "description": "Quick read-only workflow status dashboard with progress tracking",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": ["csp", "global", "workflow", "status", "dashboard"],
+  "entry": "SKILL.md",
+  "layer": -1,
+  "graph_node": "_global",
+  "scope": "global",
+  "platform_hints": {"claude-code": {"context": "fork", "model": "haiku"}},
+  "triggers": ["status", "where am I", "progress", "how far", "dashboard", "overview"],
+  "dependencies": [],
+  "produces": [],
+  "consumes": ["graph/regulatory-graph.yaml", "ops/workflow-state.yaml"]
+}

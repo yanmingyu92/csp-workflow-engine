@@ -1,0 +1,41 @@
+{
+  "name": "csp-define-xml-builder",
+  "description": "Generate final Define.xml for datasets",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-6",
+    "submission"
+  ],
+  "entry": "SKILL.md",
+  "layer": 6,
+  "graph_node": "define-xml-sdtm",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "Define.xml SDTM",
+    "SDTM Define",
+    "define-xml SDTM",
+    "SDTM metadata",
+    "CRT-DD",
+    "final Define SDTM"
+  ],
+  "dependencies": [
+    "p21-sdtm-validation",
+    "sdtm-define-draft",
+    "tfl-qc-validation"
+  ],
+  "produces": [
+    "output/define/define-sdtm.xml"
+  ],
+  "consumes": [
+    "All SDTM datasets",
+    "SDTM Define.xml draft",
+    "SDTM mapping specification"
+  ]
+}

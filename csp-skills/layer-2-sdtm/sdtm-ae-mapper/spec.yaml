@@ -1,0 +1,34 @@
+skill_id: "sdtm-ae-mapper"
+graph_node: "sdtm-ae-mapping"
+layer: 2
+
+inputs:
+  - id: raw_ae
+    type: dataset
+    required: true
+    formats: [csv, sas7bdat, xpt]
+    path_pattern: data/raw/ae.*
+
+outputs:
+  - id: ae_domain
+    type: dataset
+    format: xpt
+    path_pattern: output/sdtm/ae.xpt
+    validation: p21-compliance
+
+key_variables:
+  - STUDYID
+  - DOMAIN
+  - USUBJID
+  - AESEQ
+
+coding:
+  terminology: MedDRA
+  version: "26.0"
+  variables:
+    - source: AETERM
+      target: AEDECOD
+      level: PT
+    - source: AETERM
+      target: AEBODSYS
+      level: SOC

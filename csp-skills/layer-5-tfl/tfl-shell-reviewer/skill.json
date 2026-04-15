@@ -1,0 +1,40 @@
+{
+  "name": "csp-tfl-shell-reviewer",
+  "description": "Review TFL shells from SAP and set up templates",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-5",
+    "tfl"
+  ],
+  "entry": "SKILL.md",
+  "layer": 5,
+  "graph_node": "tfl-shell-review",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "TFL shell",
+    "mock-up",
+    "table shell",
+    "listing shell",
+    "figure shell",
+    "TFL template",
+    "headers",
+    "footnotes"
+  ],
+  "dependencies": [
+    "sap-review"
+  ],
+  "produces": [
+    "specs/tfl-templates.yaml"
+  ],
+  "consumes": [
+    "TFL shell specifications",
+    "Parsed SAP specifications"
+  ]
+}

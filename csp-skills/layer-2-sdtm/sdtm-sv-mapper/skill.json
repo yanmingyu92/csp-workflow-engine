@@ -1,0 +1,42 @@
+{
+  "name": "csp-sdtm-sv-mapper",
+  "description": "Map subject visits to SDTM SV domain",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-2",
+    "sdtm",
+    "sv"
+  ],
+  "entry": "SKILL.md",
+  "layer": 2,
+  "graph_node": "sdtm-sv-mapping",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "SV",
+    "subject visits",
+    "visits",
+    "SV domain",
+    "VISIT",
+    "VISITNUM",
+    "SVSTDTC",
+    "SVENDTC"
+  ],
+  "dependencies": [
+    "raw-data-validation",
+    "spec-creation"
+  ],
+  "produces": [
+    "output/sdtm/sv.xpt"
+  ],
+  "consumes": [
+    "SDTM mapping specification",
+    "Raw subject visits data"
+  ]
+}

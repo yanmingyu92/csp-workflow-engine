@@ -1,0 +1,40 @@
+{
+  "name": "csp-data-validator",
+  "description": "Validate raw data quality (types, ranges, duplicates)",
+  "version": "1.0.0",
+  "author": "csp-workflow-engine",
+  "tags": [
+    "csp",
+    "layer-1"
+  ],
+  "entry": "SKILL.md",
+  "layer": 1,
+  "graph_node": "raw-data-validation",
+  "platform_hints": {
+    "claude-code": {
+      "context": "fork",
+      "model": "sonnet"
+    }
+  },
+  "triggers": [
+    "data quality",
+    "raw data check",
+    "data validation",
+    "missing values",
+    "duplicate records",
+    "range check",
+    "data integrity",
+    "variable types"
+  ],
+  "dependencies": [
+    "edc-extract"
+  ],
+  "produces": [
+    "reports/data-quality-report.html",
+    "data/validated/"
+  ],
+  "consumes": [
+    "Raw EDC datasets",
+    "Extraction manifest"
+  ]
+}
