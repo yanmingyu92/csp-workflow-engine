@@ -151,7 +151,7 @@ If you use this framework in your research, please cite:
   journal={Therapeutic Innovation \& Regulatory Science},
   year={2026},
   note={Submitted},
-  doi={10.5281/zenodo.19616524}
+  doi={}
 }
 ```
 
