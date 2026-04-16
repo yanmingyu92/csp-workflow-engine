@@ -1,5 +1,7 @@
 # CSP Workflow Engine
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19616524.svg)](https://doi.org/10.5281/zenodo.19616524)
+
 **Graph-based regulatory workflow engine for clinical trial statistical programming.**
 
 A workflow orchestration system that enforces regulatory compliance through typed skill binding, validation gates, and token-efficient context loading for AI-assisted clinical trial programming.
@@ -140,7 +142,7 @@ python scripts/graph-validator.py graph/regulatory-graph.yaml
 
 If you use this framework in your research, please cite:
 
-> Yan, J. (2026). Graph-Constrained Skill Loading for Domain-Specific Agentic AI: A Regulatory Clinical Trial Programming Framework. *Therapeutic Innovation & Regulatory Science* (Submitted).
+> Yan, J. (2026). Graph-Constrained Skill Loading for Domain-Specific Agentic AI: A Regulatory Clinical Trial Programming Framework. *Therapeutic Innovation & Regulatory Science* (Submitted). DOI: https://doi.org/10.5281/zenodo.19616524
 
 ```bibtex
 @article{yan2026csp,
@@ -148,7 +150,8 @@ If you use this framework in your research, please cite:
   author={Yan, Jaime},
   journal={Therapeutic Innovation \& Regulatory Science},
   year={2026},
-  note={Submitted}
+  note={Submitted},
+  doi={10.5281/zenodo.19616524}
 }
 ```
 
