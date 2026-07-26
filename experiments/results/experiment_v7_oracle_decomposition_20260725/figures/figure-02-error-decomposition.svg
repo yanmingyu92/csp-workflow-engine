@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1040" height="557" viewBox="0 0 1040 557" role="img" aria-labelledby="title desc">
+<title id="title">Criterion-level error decomposition</title>
+<desc id="desc">Graph plus BM25 and BM25-only failure counts under the mutually exclusive deterministic error taxonomy.</desc>
+<style>
+text{font-family:Arial,sans-serif;fill:#222}.title{font-size:20px;font-weight:700}.label{font-size:12px}.tick{font-size:10px;fill:#555}.grid{stroke:#ddd;stroke-width:1}.axis{stroke:#333;stroke-width:1.2}
+</style>
+<text x="30" y="34" class="title">Criterion-level error decomposition</text>
+<text x="288" y="89" text-anchor="end" class="label">retrieval_miss</text>
+<rect x="300" y="72" width="85.25" height="15" fill="#0072B2"/>
+<rect x="300" y="91" width="85.25" height="15" fill="#E69F00"/>
+<text x="390.25" y="84" class="tick">8</text>
+<text x="390.25" y="103" class="tick">8</text>
+<text x="288" y="137" text-anchor="end" class="label">wrong_or_stale_evidence</text>
+<rect x="300" y="120" width="0.00" height="15" fill="#0072B2"/>
+<rect x="300" y="139" width="0.00" height="15" fill="#E69F00"/>
+<text x="305.00" y="132" class="tick">0</text>
+<text x="305.00" y="151" class="tick">0</text>
+<text x="288" y="185" text-anchor="end" class="label">evidence_present_generator_omission</text>
+<rect x="300" y="168" width="351.64" height="15" fill="#0072B2"/>
+<rect x="300" y="187" width="351.64" height="15" fill="#E69F00"/>
+<text x="656.64" y="180" class="tick">33</text>
+<text x="656.64" y="199" class="tick">33</text>
+<text x="288" y="233" text-anchor="end" class="label">derivation_error</text>
+<rect x="300" y="216" width="618.03" height="15" fill="#0072B2"/>
+<rect x="300" y="235" width="650.00" height="15" fill="#E69F00"/>
+<text x="923.03" y="228" class="tick">58</text>
+<text x="955.00" y="247" class="tick">61</text>
+<text x="288" y="281" text-anchor="end" class="label">schema_or_serialization_error</text>
+<rect x="300" y="264" width="127.87" height="15" fill="#0072B2"/>
+<rect x="300" y="283" width="127.87" height="15" fill="#E69F00"/>
+<text x="432.87" y="276" class="tick">12</text>
+<text x="432.87" y="295" class="tick">12</text>
+<text x="288" y="329" text-anchor="end" class="label">forbidden_hallucination</text>
+<rect x="300" y="312" width="53.28" height="15" fill="#0072B2"/>
+<rect x="300" y="331" width="74.59" height="15" fill="#E69F00"/>
+<text x="358.28" y="324" class="tick">5</text>
+<text x="379.59" y="343" class="tick">7</text>
+<text x="288" y="377" text-anchor="end" class="label">citation_mismatch</text>
+<rect x="300" y="360" width="10.66" height="15" fill="#0072B2"/>
+<rect x="300" y="379" width="31.97" height="15" fill="#E69F00"/>
+<text x="315.66" y="372" class="tick">1</text>
+<text x="336.97" y="391" class="tick">3</text>
+<text x="288" y="425" text-anchor="end" class="label">judge_only_disagreement</text>
+<rect x="300" y="408" width="10.66" height="15" fill="#0072B2"/>
+<rect x="300" y="427" width="31.97" height="15" fill="#E69F00"/>
+<text x="315.66" y="420" class="tick">1</text>
+<text x="336.97" y="439" class="tick">3</text>
+<text x="288" y="473" text-anchor="end" class="label">unresolved_insufficient_artifact_evidence</text>
+<rect x="300" y="456" width="0.00" height="15" fill="#0072B2"/>
+<rect x="300" y="475" width="0.00" height="15" fill="#E69F00"/>
+<text x="305.00" y="468" class="tick">0</text>
+<text x="305.00" y="487" class="tick">0</text>
+</svg>

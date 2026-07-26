@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520">
+<title>Complete-response quality (1–5) by arm</title>
+<desc>Bars show task-level means, whiskers show SD across tasks, and points show individual task means.</desc>
+<rect width="100%" height="100%" fill="white"/>
+<line x1="90" y1="415.00" x2="870" y2="415.00" stroke="#D9D9D9" stroke-width="1"/>
+<text x="78" y="419.00" text-anchor="end" font-family="Arial" font-size="12" fill="#222">1.0</text>
+<line x1="90" y1="339.00" x2="870" y2="339.00" stroke="#D9D9D9" stroke-width="1"/>
+<text x="78" y="343.00" text-anchor="end" font-family="Arial" font-size="12" fill="#222">1.8</text>
+<line x1="90" y1="263.00" x2="870" y2="263.00" stroke="#D9D9D9" stroke-width="1"/>
+<text x="78" y="267.00" text-anchor="end" font-family="Arial" font-size="12" fill="#222">2.6</text>
+<line x1="90" y1="187.00" x2="870" y2="187.00" stroke="#D9D9D9" stroke-width="1"/>
+<text x="78" y="191.00" text-anchor="end" font-family="Arial" font-size="12" fill="#222">3.4</text>
+<line x1="90" y1="111.00" x2="870" y2="111.00" stroke="#D9D9D9" stroke-width="1"/>
+<text x="78" y="115.00" text-anchor="end" font-family="Arial" font-size="12" fill="#222">4.2</text>
+<line x1="90" y1="35.00" x2="870" y2="35.00" stroke="#D9D9D9" stroke-width="1"/>
+<text x="78" y="39.00" text-anchor="end" font-family="Arial" font-size="12" fill="#222">5.0</text>
+<line x1="90" y1="35" x2="90" y2="415" stroke="#222" stroke-width="1.5"/>
+<line x1="90" y1="415" x2="870" y2="415" stroke="#222" stroke-width="1.5"/>
+<text x="22" y="225.00" transform="rotate(-90 22 225.00)" text-anchor="middle" font-family="Arial" font-size="14" fill="#222">Complete-response quality (1–5)</text>
+<rect x="140.70" y="107.83" width="93.60" height="307.17" fill="#0072B2" fill-opacity="0.72" stroke="#222" stroke-width="1"/>
+<line x1="187.50" y1="58.21" x2="187.50" y2="157.46" stroke="#222" stroke-width="2"/>
+<line x1="179.50" y1="58.21" x2="195.50" y2="58.21" stroke="#222" stroke-width="2"/>
+<line x1="179.50" y1="157.46" x2="195.50" y2="157.46" stroke="#222" stroke-width="2"/>
+<circle cx="165.00" cy="98.33" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="170.00" cy="108.89" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="175.00" cy="45.56" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="180.00" cy="87.78" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="185.00" cy="203.89" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="190.00" cy="77.22" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="195.00" cy="119.44" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="200.00" cy="77.22" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="205.00" cy="77.22" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="210.00" cy="182.78" r="3" fill="#222" fill-opacity="0.72"/>
+<text x="187.50" y="443" text-anchor="middle" font-family="Arial" font-size="12" fill="#222">Frozen v5</text>
+<rect x="335.70" y="106.78" width="93.60" height="308.22" fill="#E69F00" fill-opacity="0.72" stroke="#222" stroke-width="1"/>
+<line x1="382.50" y1="64.91" x2="382.50" y2="148.65" stroke="#222" stroke-width="2"/>
+<line x1="374.50" y1="64.91" x2="390.50" y2="64.91" stroke="#222" stroke-width="2"/>
+<line x1="374.50" y1="148.65" x2="390.50" y2="148.65" stroke="#222" stroke-width="2"/>
+<circle cx="360.00" cy="130.00" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="365.00" cy="161.67" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="370.00" cy="140.56" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="375.00" cy="87.78" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="380.00" cy="56.11" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="385.00" cy="119.44" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="390.00" cy="87.78" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="395.00" cy="45.56" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="400.00" cy="161.67" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="405.00" cy="77.22" r="3" fill="#222" fill-opacity="0.72"/>
+<text x="382.50" y="443" text-anchor="middle" font-family="Arial" font-size="12" fill="#222">Optimized</text>
+<rect x="530.70" y="123.67" width="93.60" height="291.33" fill="#009E73" fill-opacity="0.72" stroke="#222" stroke-width="1"/>
+<line x1="577.50" y1="66.67" x2="577.50" y2="180.66" stroke="#222" stroke-width="2"/>
+<line x1="569.50" y1="66.67" x2="585.50" y2="66.67" stroke="#222" stroke-width="2"/>
+<line x1="569.50" y1="180.66" x2="585.50" y2="180.66" stroke="#222" stroke-width="2"/>
+<circle cx="555.00" cy="45.56" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="560.00" cy="151.11" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="565.00" cy="77.22" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="570.00" cy="98.33" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="575.00" cy="87.78" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="580.00" cy="203.89" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="585.00" cy="161.67" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="590.00" cy="214.44" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="595.00" cy="77.22" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="600.00" cy="119.44" r="3" fill="#222" fill-opacity="0.72"/>
+<text x="577.50" y="443" text-anchor="middle" font-family="Arial" font-size="12" fill="#222">Flat 8000</text>
+<rect x="725.70" y="126.83" width="93.60" height="288.17" fill="#CC79A7" fill-opacity="0.72" stroke="#222" stroke-width="1"/>
+<line x1="772.50" y1="79.61" x2="772.50" y2="174.05" stroke="#222" stroke-width="2"/>
+<line x1="764.50" y1="79.61" x2="780.50" y2="79.61" stroke="#222" stroke-width="2"/>
+<line x1="764.50" y1="174.05" x2="780.50" y2="174.05" stroke="#222" stroke-width="2"/>
+<circle cx="750.00" cy="225.00" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="755.00" cy="151.11" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="760.00" cy="119.44" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="765.00" cy="87.78" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="770.00" cy="98.33" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="775.00" cy="182.78" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="780.00" cy="66.67" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="785.00" cy="119.44" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="790.00" cy="108.89" r="3" fill="#222" fill-opacity="0.72"/>
+<circle cx="795.00" cy="108.89" r="3" fill="#222" fill-opacity="0.72"/>
+<text x="772.50" y="443" text-anchor="middle" font-family="Arial" font-size="12" fill="#222">Random matched</text>
+</svg>

@@ -1,7 +1,7 @@
 ---
 name: tfl-qc-validator
 description: Independent QC validation of all TFL outputs. Triggers on "TFL QC", "QC", "quality control", "TFL validation", "independent QC", "output verification".
-version: "2.0"
+version: "3.0"
 user-invocable: true
 context: fork
 model: sonnet
@@ -105,14 +105,22 @@ comparison_method:
 ### Figure Comparison
 ```yaml
 figure_comparison:
-  method: "pixel_comparison"
-  tolerance: "5% pixel difference"
+  primary_method: "structured_content_and_source_data_comparison"
+  visual_regression_method: "optional_pixel_or_rendering_diff"
+  visual_regression_role: "presentation-only; never evidence of numeric equality"
   also_check:
     - "Title matches specification"
     - "Axis labels correct"
     - "Legend matches treatment groups"
     - "Statistical annotations present"
 ```
+
+Numeric QC is performed from independently programmed source data and structured
+table cells, not from rendered pixels. Compare analysis populations,
+denominators, record or subject counting rules, statistics, rounding, confidence
+intervals, and footnotes against the frozen SAP and shell. A rendering diff may
+detect layout changes, but it cannot establish data, statistical, or
+traceability equivalence.
 
 ---
 
@@ -212,6 +220,20 @@ qc_result:
 - Classify all discrepancies by severity
 - Document root cause for each discrepancy
 - Resolve all critical issues before finalization
+
+## Audited QC and Provenance Rules (V7-RS-TFL-QC-2026-07)
+
+- Primary equality is established from independently programmed source data and
+  structured output cells. Rendered-pixel comparison is secondary presentation
+  regression only.
+- Compare population membership, treatment assignment, denominators, distinct
+  subject versus event counting, statistics, sort order, rounding, confidence
+  intervals, footnotes, and shell-defined display rules.
+- Record production and QC program hashes, input hashes, SAP and shell versions,
+  execution environment, structured comparison artifact, and reviewer
+  disposition for every discrepancy.
+- A changed source or specification invalidates only outputs whose deterministic
+  manifests reference it; the impact set must be reproducible from provenance.
 
 ---
 

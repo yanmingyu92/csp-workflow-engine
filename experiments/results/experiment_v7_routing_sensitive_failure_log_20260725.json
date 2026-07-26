@@ -1,0 +1,50 @@
+{
+  "schema_version": "v7-failure-log-1",
+  "created_at": "2026-07-25T22:25:57.409512+00:00",
+  "generation_checkpoint_sha256": "f53150fb9bf6a46817dbb1fd0ba2f53f8f78ed73e84ac3aa1ae61148f8a3f6d2",
+  "evaluated_checkpoint_sha256": "98c452dbf72eca1c917de093fccaedcd664aa2a2aef6f99dc95c6ca6424e3837",
+  "generation_attempt_failures": [
+    {
+      "run_key": "v7h14-define-method-crossref::flat_8000::2",
+      "attempt": 1,
+      "attempted_at": "2026-07-25T19:58:22.576507+00:00",
+      "status": "transport_error",
+      "response_sha256": null,
+      "duration_ms": 300000,
+      "error": "generation transport timeout"
+    },
+    {
+      "run_key": "v7h21-tfl-population-change::flat_8000::0",
+      "attempt": 1,
+      "attempted_at": "2026-07-25T20:23:46.988051+00:00",
+      "status": "transport_error",
+      "response_sha256": null,
+      "duration_ms": 300000,
+      "error": "generation transport timeout"
+    },
+    {
+      "run_key": "v7h01-adsl-never-dosed::graph_bm25_chunk_optimized::2",
+      "attempt": 1,
+      "attempted_at": "2026-07-25T21:24:32.411108+00:00",
+      "status": "transport_error",
+      "response_sha256": null,
+      "return_code": 1,
+      "duration_ms": 593,
+      "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stderr_sha256": "a7708ac4f74be7cbf66cf1141a1c869c57db4740b032ec8ce49250aaef916bba",
+      "stderr_tail": "The process tried to write to a nonexistent pipe.\n",
+      "error": "nonzero return code or empty stdout"
+    },
+    {
+      "run_key": "v7h11-p21-run-identity::random_token_matched::2",
+      "attempt": 1,
+      "attempted_at": "2026-07-25T21:32:20.072237+00:00",
+      "status": "transport_error",
+      "response_sha256": null,
+      "duration_ms": 300000,
+      "error": "generation transport timeout"
+    }
+  ],
+  "judge_attempt_failures": [],
+  "silent_score_substitutions": 0
+}

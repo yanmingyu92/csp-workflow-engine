@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="820" height="620" viewBox="0 0 820 620" role="img" aria-labelledby="title desc">
+<title id="title">Evidence delta versus output delta</title>
+<desc id="desc">Task-level graph-minus-BM25 required-evidence recall differences against deterministic output-score differences.</desc>
+<style>
+text{font-family:Arial,sans-serif;fill:#222}.title{font-size:20px;font-weight:700}.label{font-size:12px}.tick{font-size:10px;fill:#555}.grid{stroke:#ddd;stroke-width:1}.axis{stroke:#333;stroke-width:1.2}
+</style>
+<text x="30" y="34" class="title">Evidence delta versus output delta</text>
+<line x1="105" y1="295.00" x2="725" y2="295.00" class="axis"/>
+<line x1="415.00" y1="70" x2="415.00" y2="520" class="axis"/>
+<circle cx="389.00" cy="295.00" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="393.00" cy="295.00" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="413.00" cy="343.43" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="397.00" cy="295.00" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="415.00" cy="488.73" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="415.00" cy="246.57" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="401.00" cy="295.00" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="415.00" cy="149.70" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="417.00" cy="343.43" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="415.00" cy="236.88" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="405.00" cy="295.00" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="409.00" cy="295.00" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="413.00" cy="295.00" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="417.00" cy="295.00" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="415.00" cy="87.44" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="421.00" cy="295.00" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="425.00" cy="295.00" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="415.00" cy="461.05" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="429.00" cy="295.00" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="433.00" cy="295.00" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="437.00" cy="295.00" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="415.00" cy="198.14" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="441.00" cy="295.00" r="5" fill="#009E73" fill-opacity="0.78"/>
+<circle cx="415.00" cy="211.97" r="5" fill="#009E73" fill-opacity="0.78"/>
+<text x="415.0" y="575" text-anchor="middle" class="label">Graph minus BM25 required-section recall</text>
+<text x="24" y="295.0" text-anchor="middle" class="label" transform="rotate(-90 24 295.0)">Graph minus BM25 deterministic score</text>
+<text x="105" y="602" class="tick">Each point is one held-out task mean across three repetitions. Horizontal jitter reveals exact overlaps.</text>
+</svg>

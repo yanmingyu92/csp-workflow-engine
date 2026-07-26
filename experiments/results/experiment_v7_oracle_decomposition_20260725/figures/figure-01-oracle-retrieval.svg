@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="440" viewBox="0 0 920 440" role="img" aria-labelledby="title desc">
+<title id="title">Held-out oracle retrieval diagnostics</title>
+<desc id="desc">Grouped bars compare graph plus BM25 with BM25 only on required evidence recall, precision, irrelevant tokens, and redundancy.</desc>
+<style>
+text{font-family:Arial,sans-serif;fill:#222}.title{font-size:20px;font-weight:700}.label{font-size:12px}.tick{font-size:10px;fill:#555}.grid{stroke:#ddd;stroke-width:1}.axis{stroke:#333;stroke-width:1.2}
+</style>
+<text x="30" y="34" class="title">Held-out oracle retrieval diagnostics</text>
+<line x1="225.0" y1="57" x2="225.0" y2="362" class="grid"/>
+<text x="225.0" y="50" text-anchor="middle" class="tick">0.0</text>
+<line x1="349.0" y1="57" x2="349.0" y2="362" class="grid"/>
+<text x="349.0" y="50" text-anchor="middle" class="tick">0.2</text>
+<line x1="473.0" y1="57" x2="473.0" y2="362" class="grid"/>
+<text x="473.0" y="50" text-anchor="middle" class="tick">0.4</text>
+<line x1="597.0" y1="57" x2="597.0" y2="362" class="grid"/>
+<text x="597.0" y="50" text-anchor="middle" class="tick">0.6</text>
+<line x1="721.0" y1="57" x2="721.0" y2="362" class="grid"/>
+<text x="721.0" y="50" text-anchor="middle" class="tick">0.8</text>
+<line x1="845.0" y1="57" x2="845.0" y2="362" class="grid"/>
+<text x="845.0" y="50" text-anchor="middle" class="tick">1.0</text>
+<text x="213" y="91" text-anchor="end" class="label">Required-section recall</text>
+<rect x="225" y="72" width="594.17" height="16" fill="#0072B2"/>
+<rect x="225" y="93" width="594.17" height="16" fill="#E69F00"/>
+<text x="824.17" y="84" class="tick">0.958</text>
+<text x="824.17" y="105" class="tick">0.958</text>
+<text x="213" y="149" text-anchor="end" class="label">Required-section precision</text>
+<rect x="225" y="130" width="134.98" height="16" fill="#0072B2"/>
+<rect x="225" y="151" width="136.15" height="16" fill="#E69F00"/>
+<text x="364.98" y="142" class="tick">0.218</text>
+<text x="366.15" y="163" class="tick">0.220</text>
+<text x="213" y="207" text-anchor="end" class="label">Required-token precision</text>
+<rect x="225" y="188" width="156.96" height="16" fill="#0072B2"/>
+<rect x="225" y="209" width="159.34" height="16" fill="#E69F00"/>
+<text x="386.96" y="200" class="tick">0.253</text>
+<text x="389.34" y="221" class="tick">0.257</text>
+<text x="213" y="265" text-anchor="end" class="label">Irrelevant-token ratio</text>
+<rect x="225" y="246" width="463.04" height="16" fill="#0072B2"/>
+<rect x="225" y="267" width="460.66" height="16" fill="#E69F00"/>
+<text x="693.04" y="258" class="tick">0.747</text>
+<text x="690.66" y="279" class="tick">0.743</text>
+<text x="213" y="323" text-anchor="end" class="label">Redundancy</text>
+<rect x="225" y="304" width="73.82" height="16" fill="#0072B2"/>
+<rect x="225" y="325" width="70.14" height="16" fill="#E69F00"/>
+<text x="303.82" y="316" class="tick">0.119</text>
+<text x="300.14" y="337" class="tick">0.113</text>
+<rect x="300" y="397" width="18" height="12" fill="#0072B2"/>
+<text x="325" y="408" class="label">Graph + BM25</text>
+<rect x="505" y="397" width="18" height="12" fill="#E69F00"/>
+<text x="530" y="408" class="label">BM25 only</text>
+</svg>

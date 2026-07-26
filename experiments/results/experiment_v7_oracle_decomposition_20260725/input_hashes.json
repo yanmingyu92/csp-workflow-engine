@@ -1,0 +1,82 @@
+{
+  "final_freeze": {
+    "bytes": 29331,
+    "path": "experiments/config/experiment_v7_routing_sensitive_freeze_final_audit_20260725.json",
+    "sha256": "61a473c695a2c67d50352d727552d4c3c3db4cb44557fd2dd9099d79c5b9b822"
+  },
+  "formal_evaluated": {
+    "bytes": 10005785,
+    "path": "experiments/results/experiment_v7_routing_sensitive_formal_evaluated_20260725.json",
+    "sha256": "98c452dbf72eca1c917de093fccaedcd664aa2a2aef6f99dc95c6ca6424e3837"
+  },
+  "formal_generation": {
+    "bytes": 8367571,
+    "path": "experiments/results/experiment_v7_routing_sensitive_formal_generation_20260725.json",
+    "sha256": "f53150fb9bf6a46817dbb1fd0ba2f53f8f78ed73e84ac3aa1ae61148f8a3f6d2"
+  },
+  "frozen_analysis": {
+    "bytes": 97127,
+    "path": "experiments/results/experiment_v7_routing_sensitive_analysis_20260725.json",
+    "sha256": "87e9d6959fa1c7aa0d1bcce0f4f76ee4f52ccab9a82a7e888c3cebbcfd133127"
+  },
+  "frozen_failure_log": {
+    "bytes": 1935,
+    "path": "experiments/results/experiment_v7_routing_sensitive_failure_log_20260725.json",
+    "sha256": "aa9bfe4cec2edb6db21720beeea38ab704274fdb841a3ff0652a4b544b361972"
+  },
+  "graph": {
+    "bytes": 63010,
+    "path": "graph/regulatory-graph.yaml",
+    "sha256": "6c0b6e45ea47008021cea4cdc10286ee2322211d7551228f17b13247dbdcb4b5"
+  },
+  "stage0_diagnostics": {
+    "bytes": 44049,
+    "path": "experiments/results/experiment_v7_routing_sensitive_stage0_20260725.json",
+    "sha256": "cf106d3319a20efee1755d417905521d5e0e8131502ab718112f24e99e042ecd"
+  },
+  "task_registry": {
+    "bytes": 28308,
+    "path": "experiments/config/experiment_v7_routing_sensitive_tasks_20260725.yaml",
+    "sha256": "48776a35bad2ff77f5a70441066a7e511eaab3d0b1ea35a286a1de604a945368"
+  },
+  "v6_judged_baseline": {
+    "bytes": 5651004,
+    "path": "experiments/results/experiment_v6_aps_gxp_formal_20260724_judged.json",
+    "sha256": "fb9f787a6e95e2bd0813c7f7b90fd986e64adeba09305645572a3875df927aa0"
+  },
+  "v7_analysis_source": {
+    "bytes": 28558,
+    "path": "experiments/analyze_experiment_v7.py",
+    "sha256": "fc0cfe59906e0f0f0cb663dc58086b644b7c48825c34c8eca3bb6920e2267422"
+  },
+  "v7_plan": {
+    "bytes": 12014,
+    "path": "plan/jmir_aps_gxp_v7_routing_sensitive_experiment_20260725.md",
+    "sha256": "a9d6d40fe70ba4208a3191b86cb1b7fa692eaa43ced3dfb7da35371f8f3de581"
+  },
+  "v7_router_source": {
+    "bytes": 40514,
+    "path": "experiments/v7_routing.py",
+    "sha256": "7682a9c122a2a3a064d95f6aaaaae0ed044872b788463a8c4a5d1e98dd5e3727"
+  },
+  "v7_runner_source": {
+    "bytes": 59729,
+    "path": "experiments/run_experiment_v7_routing_sensitive.py",
+    "sha256": "bf484f5e7680551efe72982110a68da30a621a4c1b90afd77ec32c22d3cb313e"
+  },
+  "v7_stage0_source": {
+    "bytes": 19255,
+    "path": "experiments/v7_stage0.py",
+    "sha256": "f0def4ec9aa37bc8a51a4b1e9fc5b76c400ba3706ff1e44317346bb480139792"
+  },
+  "v7_validator_source": {
+    "bytes": 21062,
+    "path": "experiments/v7_deterministic_eval.py",
+    "sha256": "e1b0a9029b746eac5fec8f61a8146f10ba9c363de8f02a31021843d4c6cac45a"
+  },
+  "v7_verifier_source": {
+    "bytes": 10548,
+    "path": "experiments/verify_experiment_v7.py",
+    "sha256": "71abcabd094abbd11ebaadd1ca3824a090976e85176a7f981cea1ed6454b0423"
+  }
+}

@@ -1,7 +1,7 @@
 ---
 name: sdtm-dm-mapper
 description: Map raw demographics data to SDTM DM domain per CDISC SDTM IG v3.4. Triggers on "DM", "demographics", "USUBJID", "AGE", "SEX", "RACE".
-version: "1.0"
+version: "3.0"
 user-invocable: true
 context: fork
 model: sonnet
@@ -59,16 +59,16 @@ Parse $ARGUMENTS: --input, --output, --spec, --study-config, --validate, --dry-r
 |----------|----------|--------|------------|
 | STUDYID | Yes | study config | `{{study_id}}` from study config |
 | DOMAIN | Yes | - | Fixed value: "DM" |
-| USUBJID | Yes | Derived | Format: `{{study_id}}-{SITEID}-{SUBJID}` (max 11 chars) |
+| USUBJID | Yes | Assigned | Sponsor-defined stable identifier, unique within the submission and consistent across all domains |
 | SUBJID | Yes | RAW.DM | Subject identifier within site |
 | SITEID | Yes | RAW.DM | Site identifier |
-| AGE | Yes | Derived | Integer years from BRTHDAT to RFSTDTC |
-| AGEU | Yes | - | Fixed value: "YEARS" |
+| AGE | Conditional | Source/Derived | Age at the protocol-defined reference date, only when sufficient source precision exists |
+| AGEU | Conditional | Source/Assigned | Unit paired with AGE using the pinned CDISC CT package |
 | SEX | Yes | RAW.DM | Map dynamically to CDISC CT C66731 |
 | RACE | Yes | RAW.DM | Map dynamically to CDISC CT C74457 |
 | ETHNIC | No | RAW.DM | Map dynamically to CDISC CT C66790 |
 | ARM | Yes | study config | From `study_config['treatment_arms']` |
-| ARMCD | Yes | Derived | 8-character arm code derived dynamically from ARM |
+| ARMCD | Conditional | study config | Sponsor-defined planned-arm code from the approved trial design; never synthesize by truncating ARM |
 | ACTARM | No | RAW.DM | Actual treatment arm (if different) |
 | ACTARMCD | No | Derived | 8-character actual arm code |
 | RFSTDTC | No | Derived | First exposure date (ISO 8601) |
@@ -89,15 +89,19 @@ STUDYID = study_config['study_id']  # e.g., from ops/workflow-state.yaml
 SITEID = raw_dm['SITE']             # from input data
 SUBJID = raw_dm['SUBJID']           # from input data
 
-USUBJID = f"{STUDYID}-{SITEID}-{SUBJID}"
-# Validate: max 11 characters, pattern ^[A-Z0-9]+-[A-Z0-9]+-[A-Z0-9]+$
+USUBJID = assign_from_approved_subject_id_algorithm(
+    study_id=STUDYID,
+    site_id=SITEID,
+    subject_id=SUBJID,
+)
 ```
 
 **Validation Rules:**
-- Maximum 11 characters (CDISC recommendation: 8-11 chars)
-- Alphanumeric characters, hyphens only as separators
+- Use the sponsor-defined length needed by the delivered metadata; there is no
+  universal 11-character SDTM limit
+- Avoid embedding directly identifying information
 - Must be unique across all subjects
-- Pattern: `^[A-Z0-9]{2,3}-[A-Z0-9]{3,4}-[A-Z0-9]{3,4}$`
+- Must remain byte-for-byte consistent for the subject across all domains
 
 ---
 
@@ -207,8 +211,12 @@ def calculate_age(birth_date, reference_date):
     return age
 
 # Derivation
-AGE = calculate_age(BRTHDAT, RFSTDTC or study_reference_date)
-AGEU = "YEARS"
+AGE, AGEU = derive_age_only_when_source_precision_supports_it(
+    BRTHDAT,
+    protocol_reference_date,
+    source_age,
+    source_age_unit,
+)
 ```
 
 ---
@@ -237,17 +245,16 @@ ARM values are read dynamically from `study_config['treatment_arms']` resolved v
 #       code: "Scrnfail"
 ```
 
-### ARMCD Rules (8-character max)
+### ARMCD Rules (Approved Trial-Design Mapping)
 ```python
 def derive_armcd(arm_text, study_config):
     """
-    Derive 8-character ARMCD from ARM description using study config mapping.
+    Resolve ARMCD from the approved trial-design mapping.
 
     Rules:
-    1. Maximum 8 characters
-    2. Alphanumeric only
-    3. Preserve meaning where possible
-    4. Mapping comes from study_config['treatment_arms'], NOT hardcoded
+    1. Use the exact sponsor-defined code from the approved specification
+    2. Preserve stable meaning across DM, TA, and downstream metadata
+    3. Do not generate a fallback by truncating ARM text
     """
     # Load arm mappings dynamically from study config
     armcd_map = {}
@@ -259,9 +266,7 @@ def derive_armcd(arm_text, study_config):
         if key.lower() in arm_text.lower():
             return code
 
-    # Fallback: truncate to 8 chars, remove spaces/special chars
-    armcd = re.sub(r'[^A-Za-z0-9]', '', arm_text)[:8]
-    return armcd.upper()
+    raise ValueError(f"No approved ARMCD mapping for {arm_text!r}")
 ```
 
 ---
@@ -431,7 +436,7 @@ if multiple_race_values:
 - USUBJID uniquely identifies each subject (no duplicates)
 - Controlled terminology matches CDISC CT exactly
 - AGE is integer in valid range (0-120)
-- ARMCD is 8 characters max, alphanumeric
+- ARMCD matches the approved trial-design specification exactly
 
 **Recommended:**
 - P21 validation returns 0 errors
@@ -461,6 +466,32 @@ if multiple_race_values:
 - Document any mapped values that differ from source
 - Log all mapping decisions and deviations
 - Generate traceable, reproducible results
+
+---
+
+## Audited Derivation and Version Constraints (V7-RS-SDTM-DM-2026-07)
+
+### Edge Cases
+
+- Never truncate `USUBJID` to 11 characters and never regenerate it separately
+  by domain. Assign it once under a sponsor-controlled algorithm and verify exact
+  cross-domain consistency.
+- When a birth date or reference date is partial, do not manufacture a complete
+  date to derive SDTM `AGE`. Use a collected age when appropriate or leave AGE
+  missing and document the limitation. Do not divide day counts by 365.25.
+- Derive study day only from complete dates. The SDTM rule has no day zero:
+  `--DY = date - RFSTDTC + 1` on/after RFSTDTC and
+  `--DY = date - RFSTDTC` before RFSTDTC.
+- `ARMCD`, `ARM`, `ACTARMCD`, and `ACTARM` follow the approved trial design and
+  subject path. Planned and actual arm values are not inferred from free text.
+
+### Validation
+
+1. Verify one DM record per submitted subject and exact `USUBJID` consistency.
+2. Verify `ARMCD`/`ARM` against the pinned TA/TE trial-design metadata.
+3. Verify CT values against the pinned CT package date, not an unversioned list.
+4. Record source-field, mapping-spec version, CT package, and transformation hash
+   for each derived/assigned field.
 
 ---
 

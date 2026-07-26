@@ -15,8 +15,7 @@ Algorithm: Adaptive Priority Scheduler (APS)
    - Band 3 (GLOBAL): Global skills (workflow, etc.)     → weight 0.2
 
 2. RANK within each band by:
-   - Trigger match score (if user query provided)
-   - Dependency edge count (hub influence)
+   - Skill binding-node dependency edge count (hub influence)
    - Alphabetical (tiebreaker)
 
 3. ALLOCATE budget with proportional guarantee:
@@ -73,6 +72,11 @@ class PriorityBand(IntEnum):
     GLOBAL = 3
 
 
+def normalize_skill_name(name: str) -> str:
+    """Return the canonical graph/corpus identifier for a skill."""
+    return str(name).lstrip("/")
+
+
 @dataclass
 class SkillInfo:
     """Information about a loaded skill."""
@@ -85,6 +89,7 @@ class SkillInfo:
     truncated_content: str = ""
     error: Optional[str] = None
     band: PriorityBand = PriorityBand.GLOBAL
+    hub_degree: int = 0
     priority_score: float = 0.0
     status: str = "pending"  # pending | loaded | truncated | dropped
 
@@ -113,6 +118,9 @@ class ContextResult:
     budget: int = 8000
     budget_used: int = 0
     budget_strategy: str = ""
+    current_floor_tokens: int = 0
+    current_tokens_used: int = 0
+    band_summary: Dict[str, Dict[str, int]] = field(default_factory=dict)
 
 
 # ============================================================================
@@ -220,17 +228,23 @@ class AdaptivePriorityScheduler:
         """Classify each skill into its highest-priority band."""
         classification: Dict[str, PriorityBand] = {}
 
+        current = {normalize_skill_name(s) for s in current_node_skills}
+        successor = {normalize_skill_name(s) for s in successor_skills}
+        predecessor = {normalize_skill_name(s) for s in predecessor_skills}
+        global_set = {normalize_skill_name(s) for s in global_skills}
+
         for s in all_skills:
-            if s in current_node_skills:
-                classification[s] = PriorityBand.CURRENT
-            elif s in successor_skills:
-                classification[s] = PriorityBand.SUCCESSOR
-            elif s in predecessor_skills:
-                classification[s] = PriorityBand.PREDECESSOR
-            elif s in global_skills:
-                classification[s] = PriorityBand.GLOBAL
+            clean = normalize_skill_name(s)
+            if clean in current:
+                classification[clean] = PriorityBand.CURRENT
+            elif clean in successor:
+                classification[clean] = PriorityBand.SUCCESSOR
+            elif clean in predecessor:
+                classification[clean] = PriorityBand.PREDECESSOR
+            elif clean in global_set:
+                classification[clean] = PriorityBand.GLOBAL
             else:
-                classification[s] = PriorityBand.GLOBAL
+                classification[clean] = PriorityBand.GLOBAL
 
         return classification
 
@@ -244,18 +258,18 @@ class AdaptivePriorityScheduler:
         """
         Compute composite priority score for a skill.
 
-        Score = band_weight × (1 + hub_bonus + query_bonus)
+        Score = band_weight × (1 + hub_bonus)
 
         Parameters:
             band: Proximity band
             skill_name: Skill identifier (for tiebreaking)
             hub_degree: Number of edges connecting this skill's node
-            query_match: 0.0-1.0 relevance to user query (if available)
+            query_match: Deprecated compatibility argument; ignored in v5
         """
+        del skill_name, query_match
         base = self.BAND_WEIGHTS[band]
         hub_bonus = min(0.3, hub_degree * 0.03)  # Cap at 0.3
-        query_bonus = query_match * 0.5  # Up to 0.5 bonus
-        return base * (1.0 + hub_bonus + query_bonus)
+        return base * (1.0 + hub_bonus)
 
     def schedule(
         self,
@@ -275,80 +289,100 @@ class AdaptivePriorityScheduler:
         Returns:
             Skills list with status set (loaded/truncated/dropped)
         """
-        available_budget = self.budget - ref_tokens
+        available_budget = max(0, self.budget - ref_tokens)
+        self.last_current_floor_tokens = 0
+        self.last_current_tokens_used = 0
 
         if available_budget <= 0:
             for s in skills:
-                s.status = "dropped"
+                s.status = "missing" if not s.exists or s.error else "dropped"
             return skills
 
         # Sort by priority descending, then by name for stability
         ranked = sorted(skills, key=lambda s: (-s.priority_score, s.name))
-
-        # Phase 1: Compute guaranteed allocation for CURRENT band
-        current_skills = [
-            s for s in ranked if s.band == PriorityBand.CURRENT and s.exists
-        ]
-        current_demand = sum(s.token_estimate for s in current_skills)
-        current_floor = int(available_budget * self.CURRENT_BAND_FLOOR)
-        current_allocation = min(current_demand, current_floor)
-
-        # Phase 2: Remaining budget for other bands
-        remaining = available_budget - current_allocation
-        other_skills = [
-            s for s in ranked if s.band != PriorityBand.CURRENT and s.exists
-        ]
-        other_demand = sum(s.token_estimate for s in other_skills)
-
-        # Phase 3: If CURRENT band has surplus, cascade it down
-        if current_demand < current_floor:
-            surplus = current_floor - current_demand
-            remaining += surplus
-            current_allocation = current_demand
-
-        # Phase 4: Greedy allocation
         used = 0
         max_per_skill = int(available_budget * self.MAX_SINGLE_SKILL_FRACTION)
+        processed = set()
 
-        for skill in ranked:
+        def allocate(skill: SkillInfo) -> int:
+            """Allocate one candidate and return the tokens consumed."""
+            nonlocal used
             if not skill.exists or skill.error:
                 skill.status = "missing"
-                continue
+                return 0
 
             tokens = skill.token_estimate
             budget_left = available_budget - used
 
             if budget_left <= 0:
                 skill.status = "dropped"
-                continue
+                return 0
 
-            if tokens <= budget_left:
-                # Can fit full content
-                if tokens > max_per_skill and skill.band != PriorityBand.CURRENT:
-                    # Truncate large non-current skills to cap
-                    skill.truncated_content = self._truncate_content(
-                        skill.content, max_per_skill
-                    )
-                    actual_tokens = TokenEstimator.estimate(skill.truncated_content)
-                    used += actual_tokens
-                    skill.token_estimate = actual_tokens
-                    skill.status = "truncated"
-                else:
-                    # Load full
-                    skill.truncated_content = skill.content
-                    used += tokens
-                    skill.status = "loaded"
-            elif budget_left >= 100:
-                # Partially fit — truncate to remaining budget
-                skill.truncated_content = self._truncate_content(
-                    skill.content, budget_left
-                )
-                actual_tokens = TokenEstimator.estimate(skill.truncated_content)
-                used += actual_tokens
-                skill.token_estimate = actual_tokens
-                skill.status = "truncated"
-            else:
+            target = min(tokens, budget_left)
+            if skill.band != PriorityBand.CURRENT:
+                target = min(target, max_per_skill)
+
+            if target >= tokens:
+                skill.truncated_content = skill.content
+                used += tokens
+                skill.status = "loaded"
+                return tokens
+
+            if target < 100:
                 skill.status = "dropped"
+                return 0
+
+            skill.truncated_content = self._truncate_content(skill.content, target)
+            actual_tokens = TokenEstimator.estimate(skill.truncated_content)
+            if actual_tokens > target:
+                # Defensive hard cap for custom estimators/content encodings.
+                hard_chars = target * TokenEstimator.CHARS_PER_TOKEN
+                skill.truncated_content = skill.truncated_content[:hard_chars]
+                actual_tokens = TokenEstimator.estimate(skill.truncated_content)
+            used += actual_tokens
+            skill.token_estimate = actual_tokens
+            skill.status = "truncated"
+            return actual_tokens
+
+        # Phase 1: explicitly service the CURRENT-band guarantee. This is
+        # independent of composite score so future score changes cannot consume
+        # the reserved floor with lower-priority bands.
+        current_skills = sorted(
+            (
+                s
+                for s in ranked
+                if s.band == PriorityBand.CURRENT and s.exists and not s.error
+            ),
+            key=lambda s: (-s.priority_score, s.name),
+        )
+        current_demand = sum(s.token_estimate for s in current_skills)
+        current_target = min(
+            current_demand,
+            int(available_budget * self.CURRENT_BAND_FLOOR),
+        )
+        self.last_current_floor_tokens = current_target
+
+        current_used = 0
+        for skill in current_skills:
+            if current_used >= current_target:
+                break
+            consumed = allocate(skill)
+            processed.add(id(skill))
+            current_used += consumed
+
+        # Phase 2: cascade unused floor and allocate the shared remainder by
+        # composite priority. Unprocessed CURRENT candidates remain eligible.
+        for skill in ranked:
+            if id(skill) in processed:
+                continue
+            allocate(skill)
+
+        self.last_current_tokens_used = sum(
+            s.token_estimate
+            for s in ranked
+            if s.band == PriorityBand.CURRENT
+            and s.status in ("loaded", "truncated")
+        )
 
         return ranked
 
@@ -376,14 +410,16 @@ class AdaptivePriorityScheduler:
         if TokenEstimator.estimate(content) <= target_tokens:
             return content
 
-        # Step 3: Line-limit truncation
+        # Step 3: Character-limit truncation with marker included in the cap
         target_chars = target_tokens * TokenEstimator.CHARS_PER_TOKEN
         if len(content) > target_chars:
+            marker = "\n\n[...truncated to fit token budget]"
+            prefix_limit = max(0, target_chars - len(marker))
             # Find a clean break point (end of a line near target)
-            break_at = content.rfind("\n", 0, target_chars)
+            break_at = content.rfind("\n", 0, prefix_limit)
             if break_at <= 0:
-                break_at = target_chars
-            content = content[:break_at] + "\n\n[...truncated to fit token budget]"
+                break_at = prefix_limit
+            content = content[:break_at].rstrip() + marker
 
         return content
 
@@ -407,8 +443,9 @@ class ContextBuilder:
 
     def load_skill(self, skill_name: str) -> SkillInfo:
         """Load a single skill file."""
-        info = SkillInfo(name=skill_name)
-        skill_path = self.skill_locator.find_skill(skill_name)
+        clean_name = normalize_skill_name(skill_name)
+        info = SkillInfo(name=clean_name)
+        skill_path = self.skill_locator.find_skill(clean_name)
         if not skill_path:
             info.error = "Skill file not found"
             return info
@@ -423,6 +460,78 @@ class ContextBuilder:
             info.error = str(e)
 
         return info
+
+    @staticmethod
+    def _dependency_ids(node: Dict[str, Any]) -> List[str]:
+        """Extract dependency node IDs from either supported graph syntax."""
+        ids: List[str] = []
+        for dependency in node.get("dependencies", []):
+            if isinstance(dependency, dict):
+                dependency = dependency.get("node", "")
+            if dependency:
+                ids.append(str(dependency))
+        return ids
+
+    def _graph_nodes(self) -> Tuple[Dict[str, Dict[str, Any]], List[str]]:
+        graph = self._load_graph() or {}
+        nodes = {node["id"]: node for node in graph.get("nodes", [])}
+        globals_ = [normalize_skill_name(s) for s in graph.get("global_skills", [])]
+        return nodes, globals_
+
+    def collect_candidate_skills(
+        self,
+        node_id: str,
+        router_result: Dict[str, Any],
+    ) -> List[str]:
+        """Collect the deterministic CURRENT→SUCCESSOR→PREDECESSOR→GLOBAL union."""
+        nodes, global_skills = self._graph_nodes()
+        ordered: List[str] = []
+        ordered.extend(nodes.get(node_id, {}).get("skills_bound", []))
+        for successor in router_result.get("successors", []):
+            ordered.extend(nodes.get(successor, {}).get("skills_bound", []))
+        for predecessor in router_result.get("predecessors", []):
+            ordered.extend(nodes.get(predecessor, {}).get("skills_bound", []))
+        ordered.extend(global_skills)
+        return list(dict.fromkeys(normalize_skill_name(s) for s in ordered))
+
+    def _band_skill_sets(
+        self,
+        node_id: str,
+        router_result: Dict[str, Any],
+    ) -> Tuple[List[str], List[str], List[str], List[str]]:
+        nodes, global_skills = self._graph_nodes()
+        current = [
+            normalize_skill_name(s)
+            for s in nodes.get(node_id, {}).get("skills_bound", [])
+        ]
+        successor = [
+            normalize_skill_name(s)
+            for successor_id in router_result.get("successors", [])
+            for s in nodes.get(successor_id, {}).get("skills_bound", [])
+        ]
+        predecessor = [
+            normalize_skill_name(s)
+            for predecessor_id in router_result.get("predecessors", [])
+            for s in nodes.get(predecessor_id, {}).get("skills_bound", [])
+        ]
+        return current, successor, predecessor, global_skills
+
+    def skill_hub_degree(self, skill_name: str) -> int:
+        """Return the maximum degree of any graph node binding the skill."""
+        clean_name = normalize_skill_name(skill_name)
+        nodes, _ = self._graph_nodes()
+        successors: Dict[str, int] = {node_id: 0 for node_id in nodes}
+        for node in nodes.values():
+            for dependency_id in self._dependency_ids(node):
+                if dependency_id in successors:
+                    successors[dependency_id] += 1
+
+        degrees = []
+        for node_id, node in nodes.items():
+            bound = {normalize_skill_name(s) for s in node.get("skills_bound", [])}
+            if clean_name in bound:
+                degrees.append(len(self._dependency_ids(node)) + successors[node_id])
+        return max(degrees, default=0)
 
     def retrieve_principles(
         self,
@@ -511,7 +620,7 @@ class ContextBuilder:
         self,
         node_id: str,
         router_result: Dict[str, Any],
-        all_skills: List[str],
+        all_skills: Optional[List[str]],
         regulatory_refs: List[str],
         task_description: str = None,
         with_principles: bool = False,
@@ -561,37 +670,30 @@ class ContextBuilder:
             result.principles_tokens = principles_tokens
             result.principles_retrieved_ids = self._principles_used.copy()
 
-        # --- Step 2: Load all skill files ---
+        # --- Step 2: Load the explicit candidate set. When omitted, construct
+        # the graph-proximity union in a deterministic order.
+        if all_skills is None:
+            all_skills = self.collect_candidate_skills(node_id, router_result)
+        else:
+            all_skills = list(
+                dict.fromkeys(normalize_skill_name(name) for name in all_skills)
+            )
         skill_infos = [self.load_skill(name) for name in all_skills]
 
         # --- Step 3: Classify into priority bands ---
         # Get per-node skill sets
-        graph_data = self._load_graph()
-        nodes = {n["id"]: n for n in graph_data.get("nodes", [])} if graph_data else {}
-        global_skills_list = graph_data.get("global_skills", []) if graph_data else []
-
-        current_skills = set()
-        node = nodes.get(node_id, {})
-        for s in node.get("skills_bound", []):
-            current_skills.add(s)
-
-        successor_skills = set()
-        for s_nid in successors:
-            sn = nodes.get(s_nid, {})
-            for s in sn.get("skills_bound", []):
-                successor_skills.add(s)
-
-        predecessor_skills = set()
-        for p_nid in predecessors:
-            pn = nodes.get(p_nid, {})
-            for s in pn.get("skills_bound", []):
-                predecessor_skills.add(s)
+        (
+            current_skills,
+            successor_skills,
+            predecessor_skills,
+            global_skills_list,
+        ) = self._band_skill_sets(node_id, router_result)
 
         classification = self.scheduler.classify_skills(
             all_skills,
-            list(current_skills),
-            list(successor_skills),
-            list(predecessor_skills),
+            current_skills,
+            successor_skills,
+            predecessor_skills,
             global_skills_list,
         )
 
@@ -599,8 +701,10 @@ class ContextBuilder:
         for info in skill_infos:
             info.band = classification.get(info.name, PriorityBand.GLOBAL)
 
-            # Compute hub degree from adjacency
-            hub_degree = len(predecessors) + len(successors)
+            # Use the degree of the node(s) binding this skill, not the active
+            # node's degree copied onto every candidate.
+            hub_degree = self.skill_hub_degree(info.name)
+            info.hub_degree = hub_degree
             info.priority_score = self.scheduler.compute_priority(
                 info.band, info.name, hub_degree
             )
@@ -629,6 +733,26 @@ class ContextBuilder:
 
         result.total_tokens = result.skill_tokens + result.ref_tokens + result.principles_tokens
         result.budget_used = result.total_tokens
+        result.current_floor_tokens = self.scheduler.last_current_floor_tokens
+        result.current_tokens_used = self.scheduler.last_current_tokens_used
+
+        result.band_summary = {}
+        for band in PriorityBand:
+            band_skills = [skill for skill in scheduled if skill.band == band]
+            result.band_summary[band.name] = {
+                "candidates": len(band_skills),
+                "loaded": sum(skill.status == "loaded" for skill in band_skills),
+                "truncated": sum(
+                    skill.status == "truncated" for skill in band_skills
+                ),
+                "dropped": sum(skill.status == "dropped" for skill in band_skills),
+                "missing": sum(skill.status == "missing" for skill in band_skills),
+                "tokens": sum(
+                    skill.token_estimate
+                    for skill in band_skills
+                    if skill.status in ("loaded", "truncated")
+                ),
+            }
 
         # Build strategy string
         strategy_parts = [f"APS: {result.skills_loaded} loaded"]

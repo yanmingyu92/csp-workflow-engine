@@ -1,7 +1,7 @@
 ---
 name: demographics-table
 description: Generate demographics summary table by treatment. Triggers on "demographics", "Table 1".
-version: "2.0"
+version: "3.0"
 user-invocable: true
 context: fork
 model: haiku
@@ -21,7 +21,7 @@ Resolve configuration in order:
 config_resolution:
   study_id: "$ARGUMENTS.study_id || study-config.study_id"
   treatment_arms: "study-config.treatment_arms"
-  population_flag: "$ARGUMENTS.population || 'SAFFL'"
+  population_flag: "$ARGUMENTS.population || table-specs.population_flag"
   age_group_cutoff: "study-config.age_group_cutoff || 65"
   output_format: "$ARGUMENTS.format || 'rtf'"
 ```
@@ -186,17 +186,16 @@ rows:
 ## Edge Cases
 
 ### Missing Values
-- Exclude from n count but include in denominator N
-- Report missing count in footnotes if >5%
+- Follow the frozen SAP and shell for the categorical denominator convention.
+- Distinguish nonmissing `n` from the population column-header `N`.
+- Show a missing category or footnote only when required by the shell.
 
 ### Age Calculation
 ```python
-# From ADSL with BRTHDAT and reference date
-if BRTHDAT is missing:
-    age = ADSL.AGE  # Use pre-calculated age
-else:
-    age = int((reference_date - BRTHDAT).days / 365.25)
-    ageu = "YEARS"
+# Use the validated ADSL AGE/AGEU derivation and its traceability metadata.
+# Do not independently recompute AGE from dates in a reporting program.
+age = ADSL.AGE
+ageu = ADSL.AGEU
 ```
 
 ### Race Grouping
@@ -258,12 +257,28 @@ else:
 
 **Always:**
 - Validate ADSL dataset exists with required variables (AGE, SEX, RACE, TRT01P)
-- Use population flag for filtering (default: SAFFL)
-- Calculate all statistics with proper precision (1 decimal for %, 1 decimal for continuous)
+- Resolve the population flag from the frozen SAP and shell; do not assume SAFFL.
+- Apply the precision and rounding rules from the frozen shell.
 - Format output per table shell specification
 - Include table number and title
 - Add footnotes: protocol ({study_id}), sponsor, analysis population, data cutoff
 - Document any deviations from standard format
+
+## Audited Denominator and Change-Impact Rules (V7-RS-TFL-2026-07)
+
+- Column-header `N` is the number of distinct `USUBJID` values in the
+  SAP-defined analysis population for that treatment group.
+- Continuous-statistic `n` is the number of nonmissing observations for the
+  displayed variable and may be smaller than `N`.
+- Categorical percentages use the exact denominator rule frozen in the shell;
+  the default must never be inferred from the presence of `SAFFL`.
+- Population membership and treatment assignment are read from validated ADSL,
+  with no independent re-derivation in the reporting layer.
+- A change to an upstream population flag requires rerunning population counts,
+  all affected rows and percentages, structured QC, and the context manifest.
+  Layout-only artifacts outside that lineage remain unchanged.
+- Record the ADSL hash, SAP and shell versions, program hash, population flag,
+  treatment variable, denominator convention, and output hash.
 
 ---
 

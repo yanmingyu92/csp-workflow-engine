@@ -1,0 +1,893 @@
+schema_version: v7-routing-sensitive-task-registry-1
+registry_date: "2026-07-25"
+standards_pins:
+  SDTM IG: "3.4"
+  ADaM IG: "1.3"
+  Define-XML: "2.1.0"
+
+development_tasks:
+  - task_id: dev-adsl-flags
+    node_id: adam-adsl
+    prompt: Review subject-level population-flag evidence for unusual exposure histories.
+    required_evidence:
+      - skill_name: adam-adsl-builder
+        heading_contains: Audited Derivation
+  - task_id: dev-adsl-dates
+    node_id: adam-adsl
+    prompt: Locate authoritative treatment-date derivation and partial-date constraints.
+    required_evidence:
+      - skill_name: adam-adsl-builder
+        heading_contains: Audited Derivation
+  - task_id: dev-sdtm-dm
+    node_id: sdtm-dm-mapping
+    prompt: Retrieve subject identifier, study-day, age, and controlled terminology rules for DM.
+    required_evidence:
+      - skill_name: sdtm-dm-mapper
+        heading_contains: Audited Derivation
+  - task_id: dev-sdtm-ae
+    node_id: sdtm-ae-mapping
+    prompt: Retrieve partial-date, study-day, dictionary, and treatment-emergence constraints for AE.
+    required_evidence:
+      - skill_name: sdtm-ae-mapper
+        heading_contains: Audited Derivation
+  - task_id: dev-p21-versioning
+    node_id: p21-sdtm-validation
+    prompt: Find versioned engine-finding identity and provenance requirements.
+    required_evidence:
+      - skill_name: p21-validator
+        heading_contains: Audited Validation
+  - task_id: dev-define-schema
+    node_id: define-xml-sdtm
+    prompt: Retrieve Define-XML namespace, method, item, value-list, and version constraints.
+    required_evidence:
+      - skill_name: define-xml-builder
+        heading_contains: Audited Schema
+  - task_id: dev-define-validation
+    node_id: define-xml-validation
+    prompt: Find cross-reference checks for items and derivation methods in Define-XML.
+    required_evidence:
+      - skill_name: define-xml-validator
+        heading_contains: Cross-Reference
+  - task_id: dev-tfl-counting
+    node_id: tfl-table-generation
+    prompt: Retrieve subject-incidence, event-count, denominator, and rounding rules for tables.
+    required_evidence:
+      - skill_name: tfl-table-generator
+        heading_contains: Audited Counting
+  - task_id: dev-tfl-demographics
+    node_id: tfl-table-generation
+    prompt: Locate demographics denominator and upstream population change-impact rules.
+    required_evidence:
+      - skill_name: tfl-demographics
+        heading_contains: Audited Denominator
+  - task_id: dev-tfl-qc
+    node_id: tfl-qc-validation
+    prompt: Retrieve primary numeric QC, visual regression, and provenance rules.
+    required_evidence:
+      - skill_name: tfl-qc-validator
+        heading_contains: Audited QC
+
+smoke_tasks:
+  - task_id: smoke-v7-parser
+    node_id: adam-adsl
+    prompt: >-
+      Return JSON only with answer.status set to READY and
+      evidence_ids containing at least one context evidence ID.
+    criteria:
+      - id: smoke-status
+        type: json_exact
+        path: answer.status
+        expected: READY
+        weight: 1
+
+heldout_tasks:
+  - task_id: v7h01-adsl-never-dosed
+    node_id: adam-adsl
+    prompt: >-
+      A subject was randomized and included in the prespecified intent-to-treat
+      population but received no qualifying study treatment. Return JSON only:
+      answer.SAFFL, answer.ITTFL, answer.PPROTFL_basis, and evidence_ids.
+    criteria:
+      - id: saffl
+        type: json_exact
+        path: answer.SAFFL
+        expected: N
+        weight: 1
+      - id: ittfl
+        type: json_exact
+        path: answer.ITTFL
+        expected: Y
+        weight: 1
+      - id: pprot-basis
+        type: json_contains_all
+        path: answer.PPROTFL_basis
+        expected: [SAP, evaluability]
+        weight: 1
+      - id: fabricated-vars
+        type: forbidden_terms
+        terms: [TRTSDBJ, TRTEDJ]
+        weight: 1
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: adam-adsl-builder
+            heading_contains: Audited Derivation
+        weight: 2
+
+  - task_id: v7h02-adsl-treatment-duration
+    node_id: adam-adsl
+    prompt: >-
+      Specify the inclusive treatment-duration derivation using the standard ADSL
+      treatment date variables. Return JSON only with answer.start_variable,
+      answer.end_variable, answer.formula, and evidence_ids.
+    criteria:
+      - id: start
+        type: json_exact
+        path: answer.start_variable
+        expected: TRTSDT
+        weight: 1
+      - id: end
+        type: json_exact
+        path: answer.end_variable
+        expected: TRTEDT
+        weight: 1
+      - id: formula
+        type: regex
+        path: answer.formula
+        pattern: 'TRTEDT\s*-\s*TRTSDT\s*\+\s*1'
+        weight: 2
+      - id: fabricated-vars
+        type: forbidden_terms
+        terms: [TRTSDBJ, TRTEDJ]
+        weight: 1
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: adam-adsl-builder
+            heading_contains: Audited Derivation
+        weight: 2
+
+  - task_id: v7h03-adsl-partial-exposure
+    node_id: adam-adsl
+    prompt: >-
+      The SDTM exposure source contains a partial ISO 8601 date. State how the
+      source character value and any analysis-date imputation must be handled.
+      Return JSON only with answer.source_action, answer.analysis_action,
+      answer.imputation_flag_required, and evidence_ids.
+    criteria:
+      - id: source
+        type: json_contains_all
+        path: answer.source_action
+        expected: [preserve, partial]
+        weight: 1
+      - id: analysis
+        type: json_contains_all
+        path: answer.analysis_action
+        expected: [prespecified, SAP]
+        weight: 1
+      - id: flag
+        type: json_exact
+        path: answer.imputation_flag_required
+        expected: true
+        weight: 1
+      - id: no-auto
+        type: forbidden_terms
+        terms: [automatically impute to first day]
+        weight: 1
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: adam-adsl-builder
+            heading_contains: Audited Derivation
+        weight: 2
+
+  - task_id: v7h04-dm-usubjid-length
+    node_id: sdtm-dm-mapping
+    prompt: >-
+      A sponsor-approved USUBJID value is 18 characters and is consistent across
+      all domains. Return JSON only with answer.action, answer.maximum_length,
+      answer.consistency_check, and evidence_ids.
+    criteria:
+      - id: action
+        type: json_exact
+        path: answer.action
+        expected: preserve
+        weight: 1
+      - id: length
+        type: json_exact
+        path: answer.maximum_length
+        expected: sponsor_defined
+        weight: 1
+      - id: consistency
+        type: json_contains_all
+        path: answer.consistency_check
+        expected: [all domains, unique]
+        weight: 1
+      - id: no-truncate
+        type: forbidden_terms
+        terms: [truncate to 11, 11-character maximum]
+        weight: 1
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: sdtm-dm-mapper
+            heading_contains: Audited Derivation
+        weight: 2
+
+  - task_id: v7h05-dm-study-day-code
+    node_id: sdtm-dm-mapping
+    prompt: >-
+      Return JSON only with answer.code defining a pure Python function
+      study_day(event_date, reference_date) for complete YYYY-MM-DD strings using
+      the SDTM no-day-zero rule, plus evidence_ids. Do not import modules.
+    criteria:
+      - id: executable
+        type: restricted_python
+        path: answer.code
+        function: study_day
+        cases:
+          - args: ["2026-01-10", "2026-01-10"]
+            expected: 1
+          - args: ["2026-01-09", "2026-01-10"]
+            expected: -1
+          - args: ["2026-02-01", "2026-01-31"]
+            expected: 2
+          - args: ["2025-12-31", "2026-01-01"]
+            expected: -1
+        weight: 4
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: sdtm-dm-mapper
+            heading_contains: Audited Derivation
+        weight: 2
+
+  - task_id: v7h06-dm-partial-birth-age
+    node_id: sdtm-dm-mapping
+    prompt: >-
+      BRTHDTC contains year and month only, and no sponsor-approved imputation
+      rule exists. Return JSON only with answer.BRTHDTC_action, answer.AGE,
+      answer.AGEU, answer.reason, and evidence_ids.
+    criteria:
+      - id: date
+        type: json_exact
+        path: answer.BRTHDTC_action
+        expected: preserve
+        weight: 1
+      - id: age
+        type: json_exact
+        path: answer.AGE
+        expected: null
+        weight: 1
+      - id: ageu
+        type: json_exact
+        path: answer.AGEU
+        expected: null
+        weight: 1
+      - id: no-divisor
+        type: forbidden_terms
+        terms: ["365.25", auto-impute]
+        weight: 1
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: sdtm-dm-mapper
+            heading_contains: Audited Derivation
+        weight: 2
+
+  - task_id: v7h07-ae-partial-start-date
+    node_id: sdtm-ae-mapping
+    prompt: >-
+      AESTDTC is partial and cannot be converted to a complete date without an
+      assumption. Return JSON only with answer.AESTDTC_action,
+      answer.AESTDY_action, answer.assumption_location, and evidence_ids.
+    criteria:
+      - id: aestdtc
+        type: json_exact
+        path: answer.AESTDTC_action
+        expected: preserve_partial
+        weight: 1
+      - id: aestdy
+        type: json_exact
+        path: answer.AESTDY_action
+        expected: leave_null
+        weight: 1
+      - id: location
+        type: json_contains_all
+        path: answer.assumption_location
+        expected: [analysis, traceable]
+        weight: 1
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: sdtm-ae-mapper
+            heading_contains: Audited Derivation
+        weight: 2
+
+  - task_id: v7h08-ae-treatment-emergence
+    node_id: sdtm-ae-mapping
+    prompt: >-
+      Identify where treatment-emergence classification belongs when preparing
+      SDTM AE and downstream analysis data. Return JSON only with
+      answer.SDTM_variable, answer.analysis_dataset, answer.analysis_variable,
+      and evidence_ids.
+    criteria:
+      - id: no-sdtm-var
+        type: json_exact
+        path: answer.SDTM_variable
+        expected: null
+        weight: 1
+      - id: dataset
+        type: json_exact
+        path: answer.analysis_dataset
+        expected: ADAE
+        weight: 1
+      - id: variable
+        type: json_exact
+        path: answer.analysis_variable
+        expected: TRTEMFL
+        weight: 1
+      - id: forbidden
+        type: forbidden_terms
+        terms: [AETRTEM]
+        weight: 1
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: sdtm-ae-mapper
+            heading_contains: Audited Derivation
+        weight: 2
+
+  - task_id: v7h09-ae-dictionary-freeze
+    node_id: sdtm-ae-mapping
+    prompt: >-
+      The study coding manifest pins MedDRA 26.1 while a workstation also has a
+      newer package. Return JSON only with answer.selected_version,
+      answer.newer_package_action, answer.provenance_fields, and evidence_ids.
+    criteria:
+      - id: selected
+        type: json_exact
+        path: answer.selected_version
+        expected: "26.1"
+        weight: 1
+      - id: action
+        type: json_exact
+        path: answer.newer_package_action
+        expected: reject_as_unpinned
+        weight: 1
+      - id: provenance-fields
+        type: json_set_equals
+        path: answer.provenance_fields
+        expected: [dictionary_name, dictionary_version, coding_snapshot_hash]
+        weight: 2
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: sdtm-ae-mapper
+            heading_contains: Audited Derivation
+        weight: 2
+
+  - task_id: v7h10-sdtm-ct-conflict
+    node_id: p21-sdtm-validation
+    prompt: >-
+      The study manifest pins a CDISC CT package dated 2025-09-26, but a finding
+      was produced with a 2026 package. Return JSON only with
+      answer.selected_package, answer.finding_status, answer.required_rerun,
+      and evidence_ids.
+    criteria:
+      - id: selected
+        type: json_exact
+        path: answer.selected_package
+        expected: "2025-09-26"
+        weight: 1
+      - id: status
+        type: json_exact
+        path: answer.finding_status
+        expected: stale_version_conflict
+        weight: 1
+      - id: rerun
+        type: json_exact
+        path: answer.required_rerun
+        expected: true
+        weight: 1
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: p21-validator
+            heading_contains: Audited Validation
+        weight: 2
+
+  - task_id: v7h11-p21-run-identity
+    node_id: p21-sdtm-validation
+    prompt: >-
+      Design a machine-readable identity object for a validation run. Return JSON
+      only with answer.manifest and evidence_ids. The manifest must make the run
+      reproducible and distinguish engine, rules, standards, terminology, and
+      inputs.
+    criteria:
+      - id: schema
+        type: object_schema
+        path: answer.manifest
+        required:
+          product: string
+          edition: string
+          engine_version: string
+          rule_catalog_version: string
+          agency_profile: string
+          standard_versions: object
+          terminology_versions: object
+          input_sha256: object
+        weight: 4
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: p21-validator
+            heading_contains: Audited Validation
+        weight: 2
+
+  - task_id: v7h12-p21-finding-preservation
+    node_id: p21-sdtm-validation
+    prompt: >-
+      Frozen engine output contains finding ID SD1234, severity Warning, dataset
+      AE, variable AESTDTC, and record key SUBJ7/AE4. Return JSON
+      only with answer.finding_id, answer.severity, answer.dataset,
+      answer.variable, answer.record_key, answer.remediation_basis, and evidence_ids.
+    criteria:
+      - id: id
+        type: json_exact
+        path: answer.finding_id
+        expected: SD1234
+        weight: 1
+      - id: severity
+        type: json_exact
+        path: answer.severity
+        expected: Warning
+        weight: 1
+      - id: dataset
+        type: json_exact
+        path: answer.dataset
+        expected: AE
+        weight: 1
+      - id: variable
+        type: json_exact
+        path: answer.variable
+        expected: AESTDTC
+        weight: 1
+      - id: record
+        type: json_exact
+        path: answer.record_key
+        expected: SUBJ7/AE4
+        weight: 1
+      - id: basis
+        type: json_contains_all
+        path: answer.remediation_basis
+        expected: [verbatim, catalog]
+        weight: 1
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: p21-validator
+            heading_contains: Versioned Finding
+        weight: 2
+
+  - task_id: v7h13-p21-artifact-role
+    node_id: p21-sdtm-validation
+    prompt: >-
+      Classify the role of a Pinnacle 21 validation report in a regulated data
+      workflow. Return JSON only with answer.internal_qc_evidence,
+      answer.submission_deliverable, answer.compliance_claim, and evidence_ids.
+    criteria:
+      - id: internal
+        type: json_exact
+        path: answer.internal_qc_evidence
+        expected: true
+        weight: 1
+      - id: submission
+        type: json_exact
+        path: answer.submission_deliverable
+        expected: false
+        weight: 1
+      - id: compliance
+        type: json_exact
+        path: answer.compliance_claim
+        expected: not_established_by_tool
+        weight: 1
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: p21-validator
+            heading_contains: Audited Validation
+        weight: 2
+
+  - task_id: v7h14-define-method-crossref
+    node_id: define-xml-sdtm
+    version_pins:
+      Define-XML: "2.1.0"
+      SDTM IG: "3.4"
+    prompt: >-
+      Return JSON only with answer.xml containing a minimal parseable ODM
+      fragment for SDTMIG 3.4 and Define-XML 2.1.0. It must define ItemDef
+      IT.DM.USUBJID, reference it from an ItemGroupDef, define derivation method
+      MT.DM.USUBJID, link the item reference to that method, and include required
+      metadata version attributes. Also return evidence_ids.
+    criteria:
+      - id: xml
+        type: define_xml
+        path: answer.xml
+        required_item_oids: [IT.DM.USUBJID]
+        required_method_oids: [MT.DM.USUBJID]
+        weight: 5
+      - id: forbidden
+        type: forbidden_terms
+        terms: [ComputationalMethod, MethodRef]
+        weight: 1
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: define-xml-builder
+            heading_contains: MethodDef
+        weight: 2
+
+  - task_id: v7h15-define-version-metadata
+    node_id: define-xml-sdtm
+    version_pins:
+      Define-XML: "2.1.0"
+      SDTM IG: "3.4"
+    prompt: >-
+      Return JSON only with answer.define_version, answer.standard_name,
+      answer.standard_version, answer.required_namespaces, and evidence_ids for
+      the pinned SDTM metadata package.
+    criteria:
+      - id: define-version
+        type: json_exact
+        path: answer.define_version
+        expected: "2.1.0"
+        weight: 1
+      - id: standard
+        type: json_exact
+        path: answer.standard_name
+        expected: SDTM-IG
+        weight: 1
+      - id: standard-version
+        type: json_exact
+        path: answer.standard_version
+        expected: "3.4"
+        weight: 1
+      - id: namespaces
+        type: json_set_equals
+        path: answer.required_namespaces
+        expected:
+          - http://www.cdisc.org/ns/odm/v1.3
+          - http://www.cdisc.org/ns/def/v2.1
+        weight: 2
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: define-xml-builder
+            heading_contains: Audited Schema
+        weight: 2
+
+  - task_id: v7h16-define-value-list
+    node_id: define-xml-sdtm
+    prompt: >-
+      A variable has value-level metadata and a visible label. Return JSON only
+      with answer.item_label_location, answer.value_list_link,
+      answer.method_link, answer.forbidden_constructs, and evidence_ids.
+    criteria:
+      - id: label
+        type: json_exact
+        path: answer.item_label_location
+        expected: Description/TranslatedText
+        weight: 1
+      - id: value-list
+        type: json_exact
+        path: answer.value_list_link
+        expected: ValueListRef@ValueListOID
+        weight: 1
+      - id: method
+        type: json_exact
+        path: answer.method_link
+        expected: ItemRef@MethodOID
+        weight: 1
+      - id: forbidden-set
+        type: json_set_equals
+        path: answer.forbidden_constructs
+        expected: [def:Label, def:ComputationalMethod, Include]
+        weight: 2
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: define-xml-builder
+            heading_contains: Audited Schema
+        weight: 2
+
+  - task_id: v7h17-define-stale-version
+    node_id: define-xml-validation
+    version_pins:
+      Define-XML: "2.1.0"
+    prompt: >-
+      A candidate context section describes Define-XML 2.0 while the study
+      manifest pins 2.1.0. Return JSON only with answer.candidate_status,
+      answer.selected_version, answer.diagnostic, and evidence_ids.
+    criteria:
+      - id: status
+        type: json_exact
+        path: answer.candidate_status
+        expected: excluded
+        weight: 1
+      - id: selected
+        type: json_exact
+        path: answer.selected_version
+        expected: "2.1.0"
+        weight: 1
+      - id: diagnostic
+        type: json_contains_all
+        path: answer.diagnostic
+        expected: [stale, conflict]
+        weight: 1
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: define-xml-builder
+            heading_contains: Audited Schema
+        weight: 2
+
+  - task_id: v7h18-tfl-demographics-denominator
+    node_id: tfl-table-generation
+    prompt: >-
+      The frozen shell uses the randomized population. Treatment A has 60
+      randomized subjects; AGE is nonmissing for 58. Return JSON only with
+      answer.column_N, answer.age_n, answer.denominator_source,
+      answer.recompute_age, and evidence_ids.
+    criteria:
+      - id: N
+        type: json_exact
+        path: answer.column_N
+        expected: 60
+        weight: 1
+      - id: n
+        type: json_exact
+        path: answer.age_n
+        expected: 58
+        weight: 1
+      - id: source
+        type: json_contains_all
+        path: answer.denominator_source
+        expected: [SAP, shell, distinct USUBJID]
+        weight: 2
+      - id: recompute
+        type: json_exact
+        path: answer.recompute_age
+        expected: false
+        weight: 1
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: tfl-demographics
+            heading_contains: Audited Denominator
+        weight: 2
+
+  - task_id: v7h19-tfl-ae-subject-incidence
+    node_id: tfl-table-generation
+    prompt: >-
+      In a treatment group with population N=50, three distinct subjects have
+      qualifying treatment-emergent events in one preferred-term category,
+      represented by five event records. Return JSON only with answer.n,
+      answer.percent, answer.counting_unit, answer.denominator, and evidence_ids.
+    criteria:
+      - id: n
+        type: json_exact
+        path: answer.n
+        expected: 3
+        weight: 1
+      - id: percent
+        type: json_exact
+        path: answer.percent
+        expected: 6.0
+        weight: 1
+      - id: unit
+        type: json_exact
+        path: answer.counting_unit
+        expected: distinct_subjects
+        weight: 1
+      - id: denominator
+        type: json_exact
+        path: answer.denominator
+        expected: 50
+        weight: 1
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: tfl-table-generator
+            heading_contains: Audited Counting
+        weight: 2
+
+  - task_id: v7h20-tfl-event-count-label
+    node_id: tfl-table-generation
+    prompt: >-
+      A shell requests both subject incidence and a separate event-record total
+      for a category containing five events in three subjects. Return JSON only
+      with answer.subject_n, answer.event_count, answer.event_count_label,
+      answer.percent_numerator, and evidence_ids.
+    criteria:
+      - id: subject
+        type: json_exact
+        path: answer.subject_n
+        expected: 3
+        weight: 1
+      - id: event
+        type: json_exact
+        path: answer.event_count
+        expected: 5
+        weight: 1
+      - id: label
+        type: json_contains_all
+        path: answer.event_count_label
+        expected: [event, count]
+        weight: 1
+      - id: numerator
+        type: json_exact
+        path: answer.percent_numerator
+        expected: 3
+        weight: 1
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: tfl-table-generator
+            heading_contains: Audited Counting
+        weight: 2
+
+  - task_id: v7h21-tfl-population-change
+    node_id: tfl-table-generation
+    prompt: >-
+      A corrected ADSL population flag changes membership for two subjects used
+      by one demographics table. Return JSON only with answer.affected,
+      answer.unaffected, answer.manifest_action, and evidence_ids.
+    criteria:
+      - id: affected
+        type: json_set_equals
+        path: answer.affected
+        expected:
+          - column_headers
+          - population_denominators
+          - dependent_numerators
+          - percentages
+          - total_columns
+          - structured_qc
+          - context_manifest
+        weight: 4
+      - id: unaffected
+        type: json_set_equals
+        path: answer.unaffected
+        expected: [unrelated_tables, unrelated_figures]
+        weight: 1
+      - id: manifest
+        type: json_exact
+        path: answer.manifest_action
+        expected: regenerate
+        weight: 1
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: tfl-demographics
+            heading_contains: Audited Denominator
+          - skill_name: tfl-table-generator
+            heading_contains: Audited Counting
+        weight: 3
+
+  - task_id: v7h22-tfl-qc-method
+    node_id: tfl-qc-validation
+    prompt: >-
+      Choose the primary and secondary comparison methods for numeric table QC
+      and visual presentation regression. Return JSON only with
+      answer.primary_method, answer.secondary_method,
+      answer.pixel_diff_can_prove_numeric_equality, and evidence_ids.
+    criteria:
+      - id: primary
+        type: json_contains_all
+        path: answer.primary_method
+        expected: [independent, source data, structured]
+        weight: 2
+      - id: secondary
+        type: json_contains_all
+        path: answer.secondary_method
+        expected: [visual, rendering]
+        weight: 1
+      - id: pixels
+        type: json_exact
+        path: answer.pixel_diff_can_prove_numeric_equality
+        expected: false
+        weight: 1
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: tfl-qc-validator
+            heading_contains: Audited QC
+        weight: 2
+
+  - task_id: v7h23-context-manifest-schema
+    node_id: p21-sdtm-validation
+    prompt: >-
+      Return JSON only with answer.manifest describing a reproducible context
+      build for task v7h23. It must identify the task, arm, routing configuration
+      hash, graph hash, ordered selected chunks, context hash, and version
+      conflicts, plus answer.reproducible and evidence_ids.
+    criteria:
+      - id: schema
+        type: object_schema
+        path: answer.manifest
+        required:
+          task_id: string
+          arm: string
+          routing_config_sha256: string
+          graph_sha256: string
+          selected_chunks: array
+          context_sha256: string
+          version_conflicts: array
+        weight: 4
+      - id: reproducible
+        type: json_exact
+        path: answer.reproducible
+        expected: true
+        weight: 1
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: p21-validator
+            heading_contains: Audited Validation
+        weight: 2
+
+  - task_id: v7h24-change-containment-yaml
+    node_id: tfl-qc-validation
+    prompt: >-
+      A source ADSL population flag changes and only one demographics output
+      manifest references it. Return JSON only with answer.yaml encoding the
+      changed source, deterministic impact mode, affected task IDs
+      [demog-14-1-3], unaffected task IDs [ae-14-3-1, fig-14-2-1], and
+      answer.claim_scope, plus evidence_ids.
+    criteria:
+      - id: yaml
+        type: yaml_exact
+        path: answer.yaml
+        expected_paths:
+          change.source: adam-adsl-builder
+          change.mode: manifest_dependency
+          change.affected.0: demog-14-1-3
+          change.unaffected.0: ae-14-3-1
+          change.unaffected.1: fig-14-2-1
+        weight: 4
+      - id: scope
+        type: json_exact
+        path: answer.claim_scope
+        expected: deterministic_change_containment
+        weight: 1
+      - id: provenance
+        type: provenance_citation
+        path: evidence_ids
+        required:
+          - skill_name: tfl-qc-validator
+            heading_contains: Audited QC
+        weight: 2

@@ -1,7 +1,7 @@
 ---
 name: define-xml-validator
 description: Validate Define.xml against CDISC schema and business rules. Triggers on "Define.xml SDTM", "SDTM Define", "define-xml SDTM", "SDTM metadata", "CRT-DD", "final Define SDTM".
-version: "2.0"
+version: "3.0"
 user-invocable: true
 context: fork
 model: sonnet
@@ -80,10 +80,15 @@ cross_reference_validation:
   checks:
     - "ItemRef ItemOID points to valid ItemDef"
     - "CodeListRef CodeListOID points to valid CodeList"
-    - "MethodRef points to valid ComputationalMethod"
+    - "ItemRef MethodOID points to a valid MethodDef"
     - "ValueListRef points to valid ValueListDef"
     - "No orphan elements without references"
     - "All datasets have at least one ItemRef"
+
+The cross-reference vocabulary is version-sensitive. For the pinned
+Define-XML 2.1.0 package, derivations are represented by `def:MethodDef`, and
+an ODM `ItemRef` may point to it with `MethodOID`. Do not emit or validate invented
+`def:ComputationalMethod` or `MethodRef` constructs.
 ```
 
 ### Check 3: Stylesheet Rendering

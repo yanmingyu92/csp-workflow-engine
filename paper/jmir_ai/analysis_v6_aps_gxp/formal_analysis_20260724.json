@@ -1,0 +1,1831 @@
+{
+  "analysis_version": "aps-gxp-v6-task-paired-1",
+  "source_sha256": "fb9f787a6e95e2bd0813c7f7b90fd986e64adeba09305645572a3875df927aa0",
+  "seed": 42,
+  "dry_run": false,
+  "confirmatory_family": [
+    "aps_gxp_optimized_minus_aps_v5_frozen",
+    "aps_gxp_optimized_minus_flat_8000",
+    "aps_gxp_optimized_minus_random_token_matched"
+  ],
+  "quality": {
+    "metric": "quality_score",
+    "intention_to_run": true,
+    "bootstrap_resamples": 10000,
+    "holm_family": [
+      "aps_gxp_optimized_minus_aps_v5_frozen",
+      "aps_gxp_optimized_minus_flat_8000",
+      "aps_gxp_optimized_minus_random_token_matched"
+    ],
+    "arm_summary": {
+      "aps_v5_frozen": {
+        "n_tasks": 10,
+        "mean": 4.233333333333333,
+        "sd_across_tasks": 0.5223404121574738
+      },
+      "aps_gxp_optimized": {
+        "n_tasks": 10,
+        "mean": 4.2444444444444445,
+        "sd_across_tasks": 0.44072517868573396
+      },
+      "flat_8000": {
+        "n_tasks": 10,
+        "mean": 4.066666666666666,
+        "sd_across_tasks": 0.5999542735204917
+      },
+      "random_token_matched": {
+        "n_tasks": 10,
+        "mean": 4.033333333333333,
+        "sd_across_tasks": 0.49704200472209775
+      }
+    },
+    "condition_summary": {
+      "aps_v5_frozen": {
+        "n_tasks": 10,
+        "mean": 4.233333333333333,
+        "sd_across_tasks": 0.5223404121574738
+      },
+      "aps_gxp_optimized": {
+        "n_tasks": 10,
+        "mean": 4.2444444444444445,
+        "sd_across_tasks": 0.44072517868573396
+      },
+      "flat_8000": {
+        "n_tasks": 10,
+        "mean": 4.066666666666666,
+        "sd_across_tasks": 0.5999542735204917
+      },
+      "random_token_matched": {
+        "n_tasks": 10,
+        "mean": 4.033333333333333,
+        "sd_across_tasks": 0.49704200472209775
+      }
+    },
+    "task_means": {
+      "random_token_matched": {
+        "task-01-sap-parse": 3.0,
+        "task-17-tfl-demographics": 3.7777777777777772,
+        "task-07-sdtm-ae": 4.111111111111111,
+        "task-14-adam-adae": 4.444444444444444,
+        "task-13-adam-adsl": 4.333333333333333,
+        "task-02-protocol-setup": 3.4444444444444446,
+        "task-06-sdtm-dm": 4.666666666666667,
+        "task-10-p21-sdtm": 4.111111111111111,
+        "task-21-define-sdtm": 4.222222222222222,
+        "task-20-tfl-ae": 4.222222222222222
+      },
+      "aps_v5_frozen": {
+        "task-17-tfl-demographics": 4.333333333333333,
+        "task-20-tfl-ae": 4.222222222222222,
+        "task-21-define-sdtm": 4.888888888888889,
+        "task-13-adam-adsl": 4.444444444444444,
+        "task-01-sap-parse": 3.2222222222222228,
+        "task-06-sdtm-dm": 4.555555555555556,
+        "task-10-p21-sdtm": 4.111111111111111,
+        "task-07-sdtm-ae": 4.555555555555556,
+        "task-14-adam-adae": 4.555555555555556,
+        "task-02-protocol-setup": 3.444444444444444
+      },
+      "flat_8000": {
+        "task-21-define-sdtm": 4.888888888888889,
+        "task-17-tfl-demographics": 3.7777777777777772,
+        "task-06-sdtm-dm": 4.555555555555556,
+        "task-14-adam-adae": 4.333333333333333,
+        "task-13-adam-adsl": 4.444444444444444,
+        "task-01-sap-parse": 3.222222222222222,
+        "task-10-p21-sdtm": 3.6666666666666665,
+        "task-02-protocol-setup": 3.111111111111111,
+        "task-07-sdtm-ae": 4.555555555555556,
+        "task-20-tfl-ae": 4.111111111111111
+      },
+      "aps_gxp_optimized": {
+        "task-17-tfl-demographics": 4.0,
+        "task-02-protocol-setup": 3.6666666666666665,
+        "task-10-p21-sdtm": 3.888888888888889,
+        "task-07-sdtm-ae": 4.444444444444445,
+        "task-14-adam-adae": 4.777777777777778,
+        "task-13-adam-adsl": 4.111111111111111,
+        "task-20-tfl-ae": 4.444444444444444,
+        "task-21-define-sdtm": 4.888888888888889,
+        "task-01-sap-parse": 3.6666666666666665,
+        "task-06-sdtm-dm": 4.555555555555556
+      }
+    },
+    "confirmatory": {
+      "aps_gxp_optimized_minus_aps_v5_frozen": {
+        "arm_a": "aps_gxp_optimized",
+        "arm_b": "aps_v5_frozen",
+        "tasks": [
+          "task-01-sap-parse",
+          "task-02-protocol-setup",
+          "task-06-sdtm-dm",
+          "task-07-sdtm-ae",
+          "task-10-p21-sdtm",
+          "task-13-adam-adsl",
+          "task-14-adam-adae",
+          "task-17-tfl-demographics",
+          "task-20-tfl-ae",
+          "task-21-define-sdtm"
+        ],
+        "n_tasks": 10,
+        "task_differences": [
+          0.44444444444444375,
+          0.22222222222222232,
+          0.0,
+          -0.1111111111111116,
+          -0.22222222222222188,
+          -0.33333333333333304,
+          0.22222222222222143,
+          -0.33333333333333304,
+          0.22222222222222143,
+          0.0
+        ],
+        "mean_difference": 0.011111111111110938,
+        "ci_95": [
+          -0.14444444444444438,
+          0.16666666666666635
+        ],
+        "p_exact_sign_flip": 1.0,
+        "paired_dz": 0.042049647894074775,
+        "task_signs": {
+          "positive": 4,
+          "negative": 4,
+          "tied": 2
+        },
+        "leave_one_task_out_range": [
+          -0.03703703703703715,
+          0.04938271604938249
+        ],
+        "p_holm": 1.0
+      },
+      "aps_gxp_optimized_minus_flat_8000": {
+        "arm_a": "aps_gxp_optimized",
+        "arm_b": "flat_8000",
+        "tasks": [
+          "task-01-sap-parse",
+          "task-02-protocol-setup",
+          "task-06-sdtm-dm",
+          "task-07-sdtm-ae",
+          "task-10-p21-sdtm",
+          "task-13-adam-adsl",
+          "task-14-adam-adae",
+          "task-17-tfl-demographics",
+          "task-20-tfl-ae",
+          "task-21-define-sdtm"
+        ],
+        "n_tasks": 10,
+        "task_differences": [
+          0.44444444444444464,
+          0.5555555555555554,
+          0.0,
+          -0.1111111111111116,
+          0.22222222222222232,
+          -0.33333333333333304,
+          0.44444444444444464,
+          0.22222222222222276,
+          0.33333333333333304,
+          0.0
+        ],
+        "mean_difference": 0.1777777777777778,
+        "ci_95": [
+          0.011111111111110983,
+          0.33333333333333354
+        ],
+        "p_exact_sign_flip": 0.1015625,
+        "paired_dz": 0.6281087071082566,
+        "task_signs": {
+          "positive": 6,
+          "negative": 2,
+          "tied": 2
+        },
+        "leave_one_task_out_range": [
+          0.13580246913580252,
+          0.23456790123456792
+        ],
+        "p_holm": 0.26953125
+      },
+      "aps_gxp_optimized_minus_random_token_matched": {
+        "arm_a": "aps_gxp_optimized",
+        "arm_b": "random_token_matched",
+        "tasks": [
+          "task-01-sap-parse",
+          "task-02-protocol-setup",
+          "task-06-sdtm-dm",
+          "task-07-sdtm-ae",
+          "task-10-p21-sdtm",
+          "task-13-adam-adsl",
+          "task-14-adam-adae",
+          "task-17-tfl-demographics",
+          "task-20-tfl-ae",
+          "task-21-define-sdtm"
+        ],
+        "n_tasks": 10,
+        "task_differences": [
+          0.6666666666666665,
+          0.22222222222222188,
+          -0.11111111111111072,
+          0.3333333333333339,
+          -0.22222222222222188,
+          -0.22222222222222232,
+          0.3333333333333339,
+          0.22222222222222276,
+          0.22222222222222143,
+          0.666666666666667
+        ],
+        "mean_difference": 0.21111111111111125,
+        "ci_95": [
+          0.022222222222222365,
+          0.4000000000000002
+        ],
+        "p_exact_sign_flip": 0.08984375,
+        "paired_dz": 0.6586185323550722,
+        "task_signs": {
+          "positive": 7,
+          "negative": 3,
+          "tied": 0
+        },
+        "leave_one_task_out_range": [
+          0.16049382716049396,
+          0.2592592592592594
+        ],
+        "p_holm": 0.26953125
+      }
+    }
+  },
+  "dimension_sensitivity": {
+    "dim_completeness": {
+      "metric": "dim_completeness",
+      "intention_to_run": true,
+      "bootstrap_resamples": 10000,
+      "holm_family": null,
+      "arm_summary": {
+        "aps_v5_frozen": {
+          "n_tasks": 10,
+          "mean": 4.6,
+          "sd_across_tasks": 0.7665861471404596
+        },
+        "aps_gxp_optimized": {
+          "n_tasks": 10,
+          "mean": 4.666666666666666,
+          "sd_across_tasks": 0.6285393610547089
+        },
+        "flat_8000": {
+          "n_tasks": 10,
+          "mean": 4.533333333333333,
+          "sd_across_tasks": 0.7568616162633955
+        },
+        "random_token_matched": {
+          "n_tasks": 10,
+          "mean": 4.5,
+          "sd_across_tasks": 0.8050764858994133
+        }
+      },
+      "condition_summary": {
+        "aps_v5_frozen": {
+          "n_tasks": 10,
+          "mean": 4.6,
+          "sd_across_tasks": 0.7665861471404596
+        },
+        "aps_gxp_optimized": {
+          "n_tasks": 10,
+          "mean": 4.666666666666666,
+          "sd_across_tasks": 0.6285393610547089
+        },
+        "flat_8000": {
+          "n_tasks": 10,
+          "mean": 4.533333333333333,
+          "sd_across_tasks": 0.7568616162633955
+        },
+        "random_token_matched": {
+          "n_tasks": 10,
+          "mean": 4.5,
+          "sd_across_tasks": 0.8050764858994133
+        }
+      },
+      "task_means": {
+        "random_token_matched": {
+          "task-01-sap-parse": 3.0,
+          "task-17-tfl-demographics": 4.666666666666667,
+          "task-07-sdtm-ae": 5.0,
+          "task-14-adam-adae": 5.0,
+          "task-13-adam-adsl": 5.0,
+          "task-02-protocol-setup": 3.0,
+          "task-06-sdtm-dm": 5.0,
+          "task-10-p21-sdtm": 4.666666666666667,
+          "task-21-define-sdtm": 4.666666666666667,
+          "task-20-tfl-ae": 5.0
+        },
+        "aps_v5_frozen": {
+          "task-17-tfl-demographics": 5.0,
+          "task-20-tfl-ae": 5.0,
+          "task-21-define-sdtm": 4.666666666666667,
+          "task-13-adam-adsl": 5.0,
+          "task-01-sap-parse": 3.0,
+          "task-06-sdtm-dm": 5.0,
+          "task-10-p21-sdtm": 5.0,
+          "task-07-sdtm-ae": 5.0,
+          "task-14-adam-adae": 5.0,
+          "task-02-protocol-setup": 3.3333333333333335
+        },
+        "flat_8000": {
+          "task-21-define-sdtm": 5.0,
+          "task-17-tfl-demographics": 5.0,
+          "task-06-sdtm-dm": 5.0,
+          "task-14-adam-adae": 5.0,
+          "task-13-adam-adsl": 5.0,
+          "task-01-sap-parse": 3.3333333333333335,
+          "task-10-p21-sdtm": 4.333333333333333,
+          "task-02-protocol-setup": 3.0,
+          "task-07-sdtm-ae": 5.0,
+          "task-20-tfl-ae": 4.666666666666667
+        },
+        "aps_gxp_optimized": {
+          "task-17-tfl-demographics": 5.0,
+          "task-02-protocol-setup": 3.3333333333333335,
+          "task-10-p21-sdtm": 4.666666666666667,
+          "task-07-sdtm-ae": 5.0,
+          "task-14-adam-adae": 5.0,
+          "task-13-adam-adsl": 5.0,
+          "task-20-tfl-ae": 5.0,
+          "task-21-define-sdtm": 5.0,
+          "task-01-sap-parse": 3.6666666666666665,
+          "task-06-sdtm-dm": 5.0
+        }
+      },
+      "confirmatory": {
+        "aps_gxp_optimized_minus_aps_v5_frozen": {
+          "arm_a": "aps_gxp_optimized",
+          "arm_b": "aps_v5_frozen",
+          "tasks": [
+            "task-01-sap-parse",
+            "task-02-protocol-setup",
+            "task-06-sdtm-dm",
+            "task-07-sdtm-ae",
+            "task-10-p21-sdtm",
+            "task-13-adam-adsl",
+            "task-14-adam-adae",
+            "task-17-tfl-demographics",
+            "task-20-tfl-ae",
+            "task-21-define-sdtm"
+          ],
+          "n_tasks": 10,
+          "task_differences": [
+            0.6666666666666665,
+            0.0,
+            0.0,
+            0.0,
+            -0.33333333333333304,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.33333333333333304
+          ],
+          "mean_difference": 0.06666666666666665,
+          "ci_95": [
+            -0.06666666666666661,
+            0.23333333333333325
+          ],
+          "p_exact_sign_flip": 0.75,
+          "paired_dz": 0.25354627641855504,
+          "task_signs": {
+            "positive": 2,
+            "negative": 1,
+            "tied": 7
+          },
+          "leave_one_task_out_range": [
+            0.0,
+            0.11111111111111106
+          ]
+        },
+        "aps_gxp_optimized_minus_flat_8000": {
+          "arm_a": "aps_gxp_optimized",
+          "arm_b": "flat_8000",
+          "tasks": [
+            "task-01-sap-parse",
+            "task-02-protocol-setup",
+            "task-06-sdtm-dm",
+            "task-07-sdtm-ae",
+            "task-10-p21-sdtm",
+            "task-13-adam-adsl",
+            "task-14-adam-adae",
+            "task-17-tfl-demographics",
+            "task-20-tfl-ae",
+            "task-21-define-sdtm"
+          ],
+          "n_tasks": 10,
+          "task_differences": [
+            0.33333333333333304,
+            0.3333333333333335,
+            0.0,
+            0.0,
+            0.3333333333333339,
+            0.0,
+            0.0,
+            0.0,
+            0.33333333333333304,
+            0.0
+          ],
+          "mean_difference": 0.13333333333333336,
+          "ci_95": [
+            0.033333333333333305,
+            0.2333333333333334
+          ],
+          "p_exact_sign_flip": 0.125,
+          "paired_dz": 0.7745966692414834,
+          "task_signs": {
+            "positive": 4,
+            "negative": 0,
+            "tied": 6
+          },
+          "leave_one_task_out_range": [
+            0.11111111111111106,
+            0.14814814814814817
+          ]
+        },
+        "aps_gxp_optimized_minus_random_token_matched": {
+          "arm_a": "aps_gxp_optimized",
+          "arm_b": "random_token_matched",
+          "tasks": [
+            "task-01-sap-parse",
+            "task-02-protocol-setup",
+            "task-06-sdtm-dm",
+            "task-07-sdtm-ae",
+            "task-10-p21-sdtm",
+            "task-13-adam-adsl",
+            "task-14-adam-adae",
+            "task-17-tfl-demographics",
+            "task-20-tfl-ae",
+            "task-21-define-sdtm"
+          ],
+          "n_tasks": 10,
+          "task_differences": [
+            0.6666666666666665,
+            0.3333333333333335,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.33333333333333304,
+            0.0,
+            0.33333333333333304
+          ],
+          "mean_difference": 0.1666666666666666,
+          "ci_95": [
+            0.03333333333333335,
+            0.29999999999999993
+          ],
+          "p_exact_sign_flip": 0.125,
+          "paired_dz": 0.7071067811865475,
+          "task_signs": {
+            "positive": 4,
+            "negative": 0,
+            "tied": 6
+          },
+          "leave_one_task_out_range": [
+            0.11111111111111106,
+            0.18518518518518512
+          ]
+        }
+      }
+    },
+    "dim_terminology": {
+      "metric": "dim_terminology",
+      "intention_to_run": true,
+      "bootstrap_resamples": 10000,
+      "holm_family": null,
+      "arm_summary": {
+        "aps_v5_frozen": {
+          "n_tasks": 10,
+          "mean": 3.9,
+          "sd_across_tasks": 0.7209390310003705
+        },
+        "aps_gxp_optimized": {
+          "n_tasks": 10,
+          "mean": 4.0,
+          "sd_across_tasks": 0.8012336167697754
+        },
+        "flat_8000": {
+          "n_tasks": 10,
+          "mean": 3.9666666666666663,
+          "sd_across_tasks": 0.7445273585667092
+        },
+        "random_token_matched": {
+          "n_tasks": 10,
+          "mean": 3.9333333333333327,
+          "sd_across_tasks": 0.5397759022884941
+        }
+      },
+      "condition_summary": {
+        "aps_v5_frozen": {
+          "n_tasks": 10,
+          "mean": 3.9,
+          "sd_across_tasks": 0.7209390310003705
+        },
+        "aps_gxp_optimized": {
+          "n_tasks": 10,
+          "mean": 4.0,
+          "sd_across_tasks": 0.8012336167697754
+        },
+        "flat_8000": {
+          "n_tasks": 10,
+          "mean": 3.9666666666666663,
+          "sd_across_tasks": 0.7445273585667092
+        },
+        "random_token_matched": {
+          "n_tasks": 10,
+          "mean": 3.9333333333333327,
+          "sd_across_tasks": 0.5397759022884941
+        }
+      },
+      "task_means": {
+        "random_token_matched": {
+          "task-01-sap-parse": 3.0,
+          "task-17-tfl-demographics": 3.6666666666666665,
+          "task-07-sdtm-ae": 4.0,
+          "task-14-adam-adae": 4.333333333333333,
+          "task-13-adam-adsl": 3.6666666666666665,
+          "task-02-protocol-setup": 3.6666666666666665,
+          "task-06-sdtm-dm": 5.0,
+          "task-10-p21-sdtm": 4.333333333333333,
+          "task-21-define-sdtm": 4.0,
+          "task-20-tfl-ae": 3.6666666666666665
+        },
+        "aps_v5_frozen": {
+          "task-17-tfl-demographics": 3.3333333333333335,
+          "task-20-tfl-ae": 3.0,
+          "task-21-define-sdtm": 5.0,
+          "task-13-adam-adsl": 4.0,
+          "task-01-sap-parse": 3.0,
+          "task-06-sdtm-dm": 4.666666666666667,
+          "task-10-p21-sdtm": 4.0,
+          "task-07-sdtm-ae": 4.666666666666667,
+          "task-14-adam-adae": 4.0,
+          "task-02-protocol-setup": 3.3333333333333335
+        },
+        "flat_8000": {
+          "task-21-define-sdtm": 5.0,
+          "task-17-tfl-demographics": 3.3333333333333335,
+          "task-06-sdtm-dm": 4.666666666666667,
+          "task-14-adam-adae": 4.0,
+          "task-13-adam-adsl": 4.0,
+          "task-01-sap-parse": 3.0,
+          "task-10-p21-sdtm": 3.6666666666666665,
+          "task-02-protocol-setup": 3.0,
+          "task-07-sdtm-ae": 5.0,
+          "task-20-tfl-ae": 4.0
+        },
+        "aps_gxp_optimized": {
+          "task-17-tfl-demographics": 3.0,
+          "task-02-protocol-setup": 3.3333333333333335,
+          "task-10-p21-sdtm": 4.0,
+          "task-07-sdtm-ae": 4.666666666666667,
+          "task-14-adam-adae": 5.0,
+          "task-13-adam-adsl": 3.3333333333333335,
+          "task-20-tfl-ae": 4.0,
+          "task-21-define-sdtm": 5.0,
+          "task-01-sap-parse": 3.0,
+          "task-06-sdtm-dm": 4.666666666666667
+        }
+      },
+      "confirmatory": {
+        "aps_gxp_optimized_minus_aps_v5_frozen": {
+          "arm_a": "aps_gxp_optimized",
+          "arm_b": "aps_v5_frozen",
+          "tasks": [
+            "task-01-sap-parse",
+            "task-02-protocol-setup",
+            "task-06-sdtm-dm",
+            "task-07-sdtm-ae",
+            "task-10-p21-sdtm",
+            "task-13-adam-adsl",
+            "task-14-adam-adae",
+            "task-17-tfl-demographics",
+            "task-20-tfl-ae",
+            "task-21-define-sdtm"
+          ],
+          "n_tasks": 10,
+          "task_differences": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            -0.6666666666666665,
+            1.0,
+            -0.3333333333333335,
+            1.0,
+            0.0
+          ],
+          "mean_difference": 0.1,
+          "ci_95": [
+            -0.19999999999999996,
+            0.4333333333333333
+          ],
+          "p_exact_sign_flip": 0.75,
+          "paired_dz": 0.19144603341518268,
+          "task_signs": {
+            "positive": 2,
+            "negative": 2,
+            "tied": 6
+          },
+          "leave_one_task_out_range": [
+            0.0,
+            0.18518518518518517
+          ]
+        },
+        "aps_gxp_optimized_minus_flat_8000": {
+          "arm_a": "aps_gxp_optimized",
+          "arm_b": "flat_8000",
+          "tasks": [
+            "task-01-sap-parse",
+            "task-02-protocol-setup",
+            "task-06-sdtm-dm",
+            "task-07-sdtm-ae",
+            "task-10-p21-sdtm",
+            "task-13-adam-adsl",
+            "task-14-adam-adae",
+            "task-17-tfl-demographics",
+            "task-20-tfl-ae",
+            "task-21-define-sdtm"
+          ],
+          "n_tasks": 10,
+          "task_differences": [
+            0.0,
+            0.3333333333333335,
+            0.0,
+            -0.33333333333333304,
+            0.3333333333333335,
+            -0.6666666666666665,
+            1.0,
+            -0.3333333333333335,
+            0.0,
+            0.0
+          ],
+          "mean_difference": 0.033333333333333395,
+          "ci_95": [
+            -0.23333333333333323,
+            0.33333333333333337
+          ],
+          "p_exact_sign_flip": 1.0,
+          "paired_dz": 0.07297563831157812,
+          "task_signs": {
+            "positive": 3,
+            "negative": 3,
+            "tied": 4
+          },
+          "leave_one_task_out_range": [
+            -0.07407407407407401,
+            0.11111111111111116
+          ]
+        },
+        "aps_gxp_optimized_minus_random_token_matched": {
+          "arm_a": "aps_gxp_optimized",
+          "arm_b": "random_token_matched",
+          "tasks": [
+            "task-01-sap-parse",
+            "task-02-protocol-setup",
+            "task-06-sdtm-dm",
+            "task-07-sdtm-ae",
+            "task-10-p21-sdtm",
+            "task-13-adam-adsl",
+            "task-14-adam-adae",
+            "task-17-tfl-demographics",
+            "task-20-tfl-ae",
+            "task-21-define-sdtm"
+          ],
+          "n_tasks": 10,
+          "task_differences": [
+            0.0,
+            -0.33333333333333304,
+            -0.33333333333333304,
+            0.666666666666667,
+            -0.33333333333333304,
+            -0.33333333333333304,
+            0.666666666666667,
+            -0.6666666666666665,
+            0.3333333333333335,
+            1.0
+          ],
+          "mean_difference": 0.06666666666666687,
+          "ci_95": [
+            -0.23333333333333317,
+            0.4000000000000002
+          ],
+          "p_exact_sign_flip": 0.8515625,
+          "paired_dz": 0.11858541225631461,
+          "task_signs": {
+            "positive": 4,
+            "negative": 5,
+            "tied": 1
+          },
+          "leave_one_task_out_range": [
+            -0.037037037037036806,
+            0.14814814814814836
+          ]
+        }
+      }
+    },
+    "dim_structure": {
+      "metric": "dim_structure",
+      "intention_to_run": true,
+      "bootstrap_resamples": 10000,
+      "holm_family": null,
+      "arm_summary": {
+        "aps_v5_frozen": {
+          "n_tasks": 10,
+          "mean": 4.2,
+          "sd_across_tasks": 0.5488484015657098
+        },
+        "aps_gxp_optimized": {
+          "n_tasks": 10,
+          "mean": 4.066666666666666,
+          "sd_across_tasks": 0.46613726585340065
+        },
+        "flat_8000": {
+          "n_tasks": 10,
+          "mean": 3.7,
+          "sd_across_tasks": 0.55444333110554
+        },
+        "random_token_matched": {
+          "n_tasks": 10,
+          "mean": 3.6666666666666665,
+          "sd_across_tasks": 0.4714045207910316
+        }
+      },
+      "condition_summary": {
+        "aps_v5_frozen": {
+          "n_tasks": 10,
+          "mean": 4.2,
+          "sd_across_tasks": 0.5488484015657098
+        },
+        "aps_gxp_optimized": {
+          "n_tasks": 10,
+          "mean": 4.066666666666666,
+          "sd_across_tasks": 0.46613726585340065
+        },
+        "flat_8000": {
+          "n_tasks": 10,
+          "mean": 3.7,
+          "sd_across_tasks": 0.55444333110554
+        },
+        "random_token_matched": {
+          "n_tasks": 10,
+          "mean": 3.6666666666666665,
+          "sd_across_tasks": 0.4714045207910316
+        }
+      },
+      "task_means": {
+        "random_token_matched": {
+          "task-01-sap-parse": 3.0,
+          "task-17-tfl-demographics": 3.0,
+          "task-07-sdtm-ae": 3.3333333333333335,
+          "task-14-adam-adae": 4.0,
+          "task-13-adam-adsl": 4.333333333333333,
+          "task-02-protocol-setup": 3.6666666666666665,
+          "task-06-sdtm-dm": 4.0,
+          "task-10-p21-sdtm": 3.3333333333333335,
+          "task-21-define-sdtm": 4.0,
+          "task-20-tfl-ae": 4.0
+        },
+        "aps_v5_frozen": {
+          "task-17-tfl-demographics": 4.666666666666667,
+          "task-20-tfl-ae": 4.666666666666667,
+          "task-21-define-sdtm": 5.0,
+          "task-13-adam-adsl": 4.333333333333333,
+          "task-01-sap-parse": 3.6666666666666665,
+          "task-06-sdtm-dm": 4.0,
+          "task-10-p21-sdtm": 3.3333333333333335,
+          "task-07-sdtm-ae": 4.0,
+          "task-14-adam-adae": 4.666666666666667,
+          "task-02-protocol-setup": 3.6666666666666665
+        },
+        "flat_8000": {
+          "task-21-define-sdtm": 4.666666666666667,
+          "task-17-tfl-demographics": 3.0,
+          "task-06-sdtm-dm": 4.0,
+          "task-14-adam-adae": 4.0,
+          "task-13-adam-adsl": 4.333333333333333,
+          "task-01-sap-parse": 3.3333333333333335,
+          "task-10-p21-sdtm": 3.0,
+          "task-02-protocol-setup": 3.3333333333333335,
+          "task-07-sdtm-ae": 3.6666666666666665,
+          "task-20-tfl-ae": 3.6666666666666665
+        },
+        "aps_gxp_optimized": {
+          "task-17-tfl-demographics": 4.0,
+          "task-02-protocol-setup": 4.333333333333333,
+          "task-10-p21-sdtm": 3.0,
+          "task-07-sdtm-ae": 3.6666666666666665,
+          "task-14-adam-adae": 4.333333333333333,
+          "task-13-adam-adsl": 4.0,
+          "task-20-tfl-ae": 4.333333333333333,
+          "task-21-define-sdtm": 4.666666666666667,
+          "task-01-sap-parse": 4.333333333333333,
+          "task-06-sdtm-dm": 4.0
+        }
+      },
+      "confirmatory": {
+        "aps_gxp_optimized_minus_aps_v5_frozen": {
+          "arm_a": "aps_gxp_optimized",
+          "arm_b": "aps_v5_frozen",
+          "tasks": [
+            "task-01-sap-parse",
+            "task-02-protocol-setup",
+            "task-06-sdtm-dm",
+            "task-07-sdtm-ae",
+            "task-10-p21-sdtm",
+            "task-13-adam-adsl",
+            "task-14-adam-adae",
+            "task-17-tfl-demographics",
+            "task-20-tfl-ae",
+            "task-21-define-sdtm"
+          ],
+          "n_tasks": 10,
+          "task_differences": [
+            0.6666666666666665,
+            0.6666666666666665,
+            0.0,
+            -0.3333333333333335,
+            -0.3333333333333335,
+            -0.33333333333333304,
+            -0.3333333333333339,
+            -0.666666666666667,
+            -0.3333333333333339,
+            -0.33333333333333304
+          ],
+          "mean_difference": -0.13333333333333347,
+          "ci_95": [
+            -0.36666666666666686,
+            0.16666666666666644
+          ],
+          "p_exact_sign_flip": 0.4921875,
+          "paired_dz": -0.2963188789948772,
+          "task_signs": {
+            "positive": 2,
+            "negative": 7,
+            "tied": 1
+          },
+          "leave_one_task_out_range": [
+            -0.22222222222222238,
+            -0.07407407407407421
+          ]
+        },
+        "aps_gxp_optimized_minus_flat_8000": {
+          "arm_a": "aps_gxp_optimized",
+          "arm_b": "flat_8000",
+          "tasks": [
+            "task-01-sap-parse",
+            "task-02-protocol-setup",
+            "task-06-sdtm-dm",
+            "task-07-sdtm-ae",
+            "task-10-p21-sdtm",
+            "task-13-adam-adsl",
+            "task-14-adam-adae",
+            "task-17-tfl-demographics",
+            "task-20-tfl-ae",
+            "task-21-define-sdtm"
+          ],
+          "n_tasks": 10,
+          "task_differences": [
+            0.9999999999999996,
+            0.9999999999999996,
+            0.0,
+            0.0,
+            0.0,
+            -0.33333333333333304,
+            0.33333333333333304,
+            1.0,
+            0.6666666666666665,
+            0.0
+          ],
+          "mean_difference": 0.3666666666666666,
+          "ci_95": [
+            0.0666666666666667,
+            0.6666666666666664
+          ],
+          "p_exact_sign_flip": 0.09375,
+          "paired_dz": 0.7218397547786819,
+          "task_signs": {
+            "positive": 5,
+            "negative": 1,
+            "tied": 4
+          },
+          "leave_one_task_out_range": [
+            0.29629629629629617,
+            0.4444444444444443
+          ]
+        },
+        "aps_gxp_optimized_minus_random_token_matched": {
+          "arm_a": "aps_gxp_optimized",
+          "arm_b": "random_token_matched",
+          "tasks": [
+            "task-01-sap-parse",
+            "task-02-protocol-setup",
+            "task-06-sdtm-dm",
+            "task-07-sdtm-ae",
+            "task-10-p21-sdtm",
+            "task-13-adam-adsl",
+            "task-14-adam-adae",
+            "task-17-tfl-demographics",
+            "task-20-tfl-ae",
+            "task-21-define-sdtm"
+          ],
+          "n_tasks": 10,
+          "task_differences": [
+            1.333333333333333,
+            0.6666666666666665,
+            0.0,
+            0.33333333333333304,
+            -0.3333333333333335,
+            -0.33333333333333304,
+            0.33333333333333304,
+            1.0,
+            0.33333333333333304,
+            0.666666666666667
+          ],
+          "mean_difference": 0.3999999999999999,
+          "ci_95": [
+            0.09999999999999987,
+            0.7333333333333332
+          ],
+          "p_exact_sign_flip": 0.0703125,
+          "paired_dz": 0.7410482726333563,
+          "task_signs": {
+            "positive": 7,
+            "negative": 2,
+            "tied": 1
+          },
+          "leave_one_task_out_range": [
+            0.2962962962962962,
+            0.48148148148148134
+          ]
+        }
+      }
+    }
+  },
+  "efficiency": {
+    "task_level_arm_tokens": {
+      "random_token_matched": {
+        "task-01-sap-parse": 3082.0,
+        "task-17-tfl-demographics": 6151.0,
+        "task-07-sdtm-ae": 6351.0,
+        "task-14-adam-adae": 5867.0,
+        "task-13-adam-adsl": 6707.0,
+        "task-02-protocol-setup": 2426.0,
+        "task-06-sdtm-dm": 6215.0,
+        "task-10-p21-sdtm": 6852.0,
+        "task-21-define-sdtm": 6474.0,
+        "task-20-tfl-ae": 6718.0
+      },
+      "aps_v5_frozen": {
+        "task-17-tfl-demographics": 7994.0,
+        "task-20-tfl-ae": 7994.0,
+        "task-21-define-sdtm": 7979.0,
+        "task-13-adam-adsl": 7996.0,
+        "task-01-sap-parse": 7996.0,
+        "task-06-sdtm-dm": 7991.0,
+        "task-10-p21-sdtm": 7998.0,
+        "task-07-sdtm-ae": 7993.0,
+        "task-14-adam-adae": 7976.0,
+        "task-02-protocol-setup": 7993.0
+      },
+      "flat_8000": {
+        "task-21-define-sdtm": 7986.0,
+        "task-17-tfl-demographics": 7986.0,
+        "task-06-sdtm-dm": 7986.0,
+        "task-14-adam-adae": 7986.0,
+        "task-13-adam-adsl": 7986.0,
+        "task-01-sap-parse": 7986.0,
+        "task-10-p21-sdtm": 7986.0,
+        "task-02-protocol-setup": 7986.0,
+        "task-07-sdtm-ae": 7986.0,
+        "task-20-tfl-ae": 7986.0
+      },
+      "aps_gxp_optimized": {
+        "task-17-tfl-demographics": 6151.0,
+        "task-02-protocol-setup": 2426.0,
+        "task-10-p21-sdtm": 6852.0,
+        "task-07-sdtm-ae": 6351.0,
+        "task-14-adam-adae": 5867.0,
+        "task-13-adam-adsl": 6707.0,
+        "task-20-tfl-ae": 6718.0,
+        "task-21-define-sdtm": 6474.0,
+        "task-01-sap-parse": 3082.0,
+        "task-06-sdtm-dm": 6215.0
+      }
+    },
+    "arm_summary": {
+      "aps_v5_frozen": {
+        "n_tasks": 10,
+        "mean": 7991.0,
+        "sd_across_tasks": 7.408703590297623
+      },
+      "aps_gxp_optimized": {
+        "n_tasks": 10,
+        "mean": 5684.3,
+        "sd_across_tasks": 1579.993111799331
+      },
+      "flat_8000": {
+        "n_tasks": 10,
+        "mean": 7986.0,
+        "sd_across_tasks": 0.0
+      },
+      "random_token_matched": {
+        "n_tasks": 10,
+        "mean": 5684.3,
+        "sd_across_tasks": 1579.993111799331
+      }
+    },
+    "optimized_vs_flat_mean_token_reduction_percent": 28.821687953919355,
+    "prespecified_15_percent_reduction_met": true
+  },
+  "governance": {
+    "provenance_completeness_percent": 100.0,
+    "provenance_complete_fragments": 559,
+    "provenance_admitted_fragments": 559,
+    "manifest_reproducibility_percent": 100.0,
+    "manifest_reproducible_contexts": 120,
+    "manifest_contexts_with_repeats": 120,
+    "context_scope": {
+      "random_token_matched": {
+        "current": {
+          "skills": 1,
+          "tokens": 3113
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 16,
+          "tokens": 30839
+        },
+        "global": {
+          "skills": 7,
+          "tokens": 7204
+        },
+        "out_of_scope": {
+          "skills": 82,
+          "tokens": 129373
+        }
+      },
+      "aps_v5_frozen": {
+        "current": {
+          "skills": 54,
+          "tokens": 122088
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 93,
+          "tokens": 117642
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      },
+      "flat_8000": {
+        "current": {
+          "skills": 6,
+          "tokens": 5895
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 54,
+          "tokens": 58974
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 150,
+          "tokens": 174711
+        }
+      },
+      "aps_gxp_optimized": {
+        "current": {
+          "skills": 54,
+          "tokens": 122088
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 36,
+          "tokens": 43767
+        },
+        "global": {
+          "skills": 6,
+          "tokens": 4674
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    "change_impact": {
+      "simulated_skills": [
+        "acrf-finalizer",
+        "adam-adae-builder",
+        "adam-adeff-builder",
+        "adam-adlb-builder",
+        "adam-adsl-builder",
+        "adam-adtte-builder",
+        "adam-custom-builder",
+        "adam-traceability-checker",
+        "adam-validator",
+        "adrg-writer",
+        "crf-annotator",
+        "crf-validator",
+        "data-extract",
+        "data-quality",
+        "data-reconciler",
+        "data-validator",
+        "define-draft-builder",
+        "define-xml-builder",
+        "define-xml-validator",
+        "esub-assembler",
+        "esub-validator",
+        "p21-adam-validation",
+        "p21-report-reviewer",
+        "p21-validator",
+        "principle-review",
+        "quality-report",
+        "sap-parser",
+        "sdrg-writer",
+        "sdtm-ae-mapper",
+        "sdtm-cm-mapper",
+        "sdtm-consistency-checker",
+        "sdtm-custom-builder",
+        "sdtm-dm-mapper",
+        "sdtm-ds-mapper",
+        "sdtm-ex-mapper",
+        "sdtm-lb-mapper",
+        "sdtm-mh-mapper",
+        "sdtm-relrec-builder",
+        "sdtm-supp-builder",
+        "sdtm-sv-mapper",
+        "sdtm-trial-design-builder",
+        "sdtm-validator",
+        "sdtm-vs-mapper",
+        "spec-builder",
+        "spec-reviewer",
+        "study-setup",
+        "submission-checklist",
+        "tfl-comparator",
+        "tfl-demographics",
+        "tfl-double-programmer",
+        "tfl-figure-generator",
+        "tfl-formatter",
+        "tfl-listing-generator",
+        "tfl-qc-validator",
+        "tfl-shell-reviewer",
+        "tfl-table-generator",
+        "tfl-template-builder",
+        "workflow",
+        "workflow-status"
+      ],
+      "per_arm": {
+        "aps_v5_frozen": {
+          "n_tasks": 10,
+          "per_skill_affected_tasks": {
+            "acrf-finalizer": 1,
+            "adam-adae-builder": 5,
+            "adam-adeff-builder": 3,
+            "adam-adlb-builder": 3,
+            "adam-adsl-builder": 6,
+            "adam-adtte-builder": 1,
+            "adam-custom-builder": 1,
+            "adam-traceability-checker": 2,
+            "adam-validator": 7,
+            "adrg-writer": 0,
+            "crf-annotator": 0,
+            "crf-validator": 0,
+            "data-extract": 1,
+            "data-quality": 10,
+            "data-reconciler": 0,
+            "data-validator": 2,
+            "define-draft-builder": 2,
+            "define-xml-builder": 2,
+            "define-xml-validator": 2,
+            "esub-assembler": 0,
+            "esub-validator": 0,
+            "p21-adam-validation": 0,
+            "p21-report-reviewer": 6,
+            "p21-validator": 6,
+            "principle-review": 0,
+            "quality-report": 2,
+            "sap-parser": 2,
+            "sdrg-writer": 1,
+            "sdtm-ae-mapper": 3,
+            "sdtm-cm-mapper": 1,
+            "sdtm-consistency-checker": 1,
+            "sdtm-custom-builder": 1,
+            "sdtm-dm-mapper": 2,
+            "sdtm-ds-mapper": 1,
+            "sdtm-ex-mapper": 1,
+            "sdtm-lb-mapper": 1,
+            "sdtm-mh-mapper": 1,
+            "sdtm-relrec-builder": 3,
+            "sdtm-supp-builder": 2,
+            "sdtm-sv-mapper": 1,
+            "sdtm-trial-design-builder": 2,
+            "sdtm-validator": 5,
+            "sdtm-vs-mapper": 1,
+            "spec-builder": 4,
+            "spec-reviewer": 4,
+            "study-setup": 1,
+            "submission-checklist": 0,
+            "tfl-comparator": 3,
+            "tfl-demographics": 0,
+            "tfl-double-programmer": 2,
+            "tfl-figure-generator": 1,
+            "tfl-formatter": 4,
+            "tfl-listing-generator": 1,
+            "tfl-qc-validator": 3,
+            "tfl-shell-reviewer": 3,
+            "tfl-table-generator": 4,
+            "tfl-template-builder": 3,
+            "workflow": 10,
+            "workflow-status": 10
+          },
+          "per_skill_affected_proportion": {
+            "acrf-finalizer": 0.1,
+            "adam-adae-builder": 0.5,
+            "adam-adeff-builder": 0.3,
+            "adam-adlb-builder": 0.3,
+            "adam-adsl-builder": 0.6,
+            "adam-adtte-builder": 0.1,
+            "adam-custom-builder": 0.1,
+            "adam-traceability-checker": 0.2,
+            "adam-validator": 0.7,
+            "adrg-writer": 0.0,
+            "crf-annotator": 0.0,
+            "crf-validator": 0.0,
+            "data-extract": 0.1,
+            "data-quality": 1.0,
+            "data-reconciler": 0.0,
+            "data-validator": 0.2,
+            "define-draft-builder": 0.2,
+            "define-xml-builder": 0.2,
+            "define-xml-validator": 0.2,
+            "esub-assembler": 0.0,
+            "esub-validator": 0.0,
+            "p21-adam-validation": 0.0,
+            "p21-report-reviewer": 0.6,
+            "p21-validator": 0.6,
+            "principle-review": 0.0,
+            "quality-report": 0.2,
+            "sap-parser": 0.2,
+            "sdrg-writer": 0.1,
+            "sdtm-ae-mapper": 0.3,
+            "sdtm-cm-mapper": 0.1,
+            "sdtm-consistency-checker": 0.1,
+            "sdtm-custom-builder": 0.1,
+            "sdtm-dm-mapper": 0.2,
+            "sdtm-ds-mapper": 0.1,
+            "sdtm-ex-mapper": 0.1,
+            "sdtm-lb-mapper": 0.1,
+            "sdtm-mh-mapper": 0.1,
+            "sdtm-relrec-builder": 0.3,
+            "sdtm-supp-builder": 0.2,
+            "sdtm-sv-mapper": 0.1,
+            "sdtm-trial-design-builder": 0.2,
+            "sdtm-validator": 0.5,
+            "sdtm-vs-mapper": 0.1,
+            "spec-builder": 0.4,
+            "spec-reviewer": 0.4,
+            "study-setup": 0.1,
+            "submission-checklist": 0.0,
+            "tfl-comparator": 0.3,
+            "tfl-demographics": 0.0,
+            "tfl-double-programmer": 0.2,
+            "tfl-figure-generator": 0.1,
+            "tfl-formatter": 0.4,
+            "tfl-listing-generator": 0.1,
+            "tfl-qc-validator": 0.3,
+            "tfl-shell-reviewer": 0.3,
+            "tfl-table-generator": 0.4,
+            "tfl-template-builder": 0.3,
+            "workflow": 1.0,
+            "workflow-status": 1.0
+          },
+          "mean_affected_tasks": 2.440677966101695,
+          "median_affected_tasks": 2,
+          "range_affected_tasks": [
+            0,
+            10
+          ]
+        },
+        "aps_gxp_optimized": {
+          "n_tasks": 10,
+          "per_skill_affected_tasks": {
+            "acrf-finalizer": 1,
+            "adam-adae-builder": 5,
+            "adam-adeff-builder": 3,
+            "adam-adlb-builder": 3,
+            "adam-adsl-builder": 6,
+            "adam-adtte-builder": 1,
+            "adam-custom-builder": 1,
+            "adam-traceability-checker": 2,
+            "adam-validator": 7,
+            "adrg-writer": 0,
+            "crf-annotator": 0,
+            "crf-validator": 0,
+            "data-extract": 1,
+            "data-quality": 10,
+            "data-reconciler": 0,
+            "data-validator": 2,
+            "define-draft-builder": 2,
+            "define-xml-builder": 2,
+            "define-xml-validator": 2,
+            "esub-assembler": 0,
+            "esub-validator": 0,
+            "p21-adam-validation": 0,
+            "p21-report-reviewer": 6,
+            "p21-validator": 6,
+            "principle-review": 0,
+            "quality-report": 2,
+            "sap-parser": 2,
+            "sdrg-writer": 1,
+            "sdtm-ae-mapper": 3,
+            "sdtm-cm-mapper": 1,
+            "sdtm-consistency-checker": 1,
+            "sdtm-custom-builder": 1,
+            "sdtm-dm-mapper": 2,
+            "sdtm-ds-mapper": 1,
+            "sdtm-ex-mapper": 1,
+            "sdtm-lb-mapper": 1,
+            "sdtm-mh-mapper": 1,
+            "sdtm-relrec-builder": 3,
+            "sdtm-supp-builder": 2,
+            "sdtm-sv-mapper": 1,
+            "sdtm-trial-design-builder": 2,
+            "sdtm-validator": 5,
+            "sdtm-vs-mapper": 1,
+            "spec-builder": 4,
+            "spec-reviewer": 4,
+            "study-setup": 1,
+            "submission-checklist": 0,
+            "tfl-comparator": 3,
+            "tfl-demographics": 0,
+            "tfl-double-programmer": 2,
+            "tfl-figure-generator": 1,
+            "tfl-formatter": 4,
+            "tfl-listing-generator": 1,
+            "tfl-qc-validator": 3,
+            "tfl-shell-reviewer": 3,
+            "tfl-table-generator": 4,
+            "tfl-template-builder": 3,
+            "workflow": 10,
+            "workflow-status": 10
+          },
+          "per_skill_affected_proportion": {
+            "acrf-finalizer": 0.1,
+            "adam-adae-builder": 0.5,
+            "adam-adeff-builder": 0.3,
+            "adam-adlb-builder": 0.3,
+            "adam-adsl-builder": 0.6,
+            "adam-adtte-builder": 0.1,
+            "adam-custom-builder": 0.1,
+            "adam-traceability-checker": 0.2,
+            "adam-validator": 0.7,
+            "adrg-writer": 0.0,
+            "crf-annotator": 0.0,
+            "crf-validator": 0.0,
+            "data-extract": 0.1,
+            "data-quality": 1.0,
+            "data-reconciler": 0.0,
+            "data-validator": 0.2,
+            "define-draft-builder": 0.2,
+            "define-xml-builder": 0.2,
+            "define-xml-validator": 0.2,
+            "esub-assembler": 0.0,
+            "esub-validator": 0.0,
+            "p21-adam-validation": 0.0,
+            "p21-report-reviewer": 0.6,
+            "p21-validator": 0.6,
+            "principle-review": 0.0,
+            "quality-report": 0.2,
+            "sap-parser": 0.2,
+            "sdrg-writer": 0.1,
+            "sdtm-ae-mapper": 0.3,
+            "sdtm-cm-mapper": 0.1,
+            "sdtm-consistency-checker": 0.1,
+            "sdtm-custom-builder": 0.1,
+            "sdtm-dm-mapper": 0.2,
+            "sdtm-ds-mapper": 0.1,
+            "sdtm-ex-mapper": 0.1,
+            "sdtm-lb-mapper": 0.1,
+            "sdtm-mh-mapper": 0.1,
+            "sdtm-relrec-builder": 0.3,
+            "sdtm-supp-builder": 0.2,
+            "sdtm-sv-mapper": 0.1,
+            "sdtm-trial-design-builder": 0.2,
+            "sdtm-validator": 0.5,
+            "sdtm-vs-mapper": 0.1,
+            "spec-builder": 0.4,
+            "spec-reviewer": 0.4,
+            "study-setup": 0.1,
+            "submission-checklist": 0.0,
+            "tfl-comparator": 0.3,
+            "tfl-demographics": 0.0,
+            "tfl-double-programmer": 0.2,
+            "tfl-figure-generator": 0.1,
+            "tfl-formatter": 0.4,
+            "tfl-listing-generator": 0.1,
+            "tfl-qc-validator": 0.3,
+            "tfl-shell-reviewer": 0.3,
+            "tfl-table-generator": 0.4,
+            "tfl-template-builder": 0.3,
+            "workflow": 1.0,
+            "workflow-status": 1.0
+          },
+          "mean_affected_tasks": 2.440677966101695,
+          "median_affected_tasks": 2,
+          "range_affected_tasks": [
+            0,
+            10
+          ]
+        },
+        "flat_8000": {
+          "n_tasks": 10,
+          "per_skill_affected_tasks": {
+            "acrf-finalizer": 10,
+            "adam-adae-builder": 10,
+            "adam-adeff-builder": 10,
+            "adam-adlb-builder": 10,
+            "adam-adsl-builder": 10,
+            "adam-adtte-builder": 10,
+            "adam-custom-builder": 10,
+            "adam-traceability-checker": 10,
+            "adam-validator": 10,
+            "adrg-writer": 10,
+            "crf-annotator": 10,
+            "crf-validator": 10,
+            "data-extract": 10,
+            "data-quality": 10,
+            "data-reconciler": 10,
+            "data-validator": 10,
+            "define-draft-builder": 10,
+            "define-xml-builder": 10,
+            "define-xml-validator": 10,
+            "esub-assembler": 10,
+            "esub-validator": 10,
+            "p21-adam-validation": 10,
+            "p21-report-reviewer": 10,
+            "p21-validator": 10,
+            "principle-review": 10,
+            "quality-report": 10,
+            "sap-parser": 10,
+            "sdrg-writer": 10,
+            "sdtm-ae-mapper": 10,
+            "sdtm-cm-mapper": 10,
+            "sdtm-consistency-checker": 10,
+            "sdtm-custom-builder": 10,
+            "sdtm-dm-mapper": 10,
+            "sdtm-ds-mapper": 10,
+            "sdtm-ex-mapper": 10,
+            "sdtm-lb-mapper": 10,
+            "sdtm-mh-mapper": 10,
+            "sdtm-relrec-builder": 10,
+            "sdtm-supp-builder": 10,
+            "sdtm-sv-mapper": 10,
+            "sdtm-trial-design-builder": 10,
+            "sdtm-validator": 10,
+            "sdtm-vs-mapper": 10,
+            "spec-builder": 10,
+            "spec-reviewer": 10,
+            "study-setup": 10,
+            "submission-checklist": 10,
+            "tfl-comparator": 10,
+            "tfl-demographics": 10,
+            "tfl-double-programmer": 10,
+            "tfl-figure-generator": 10,
+            "tfl-formatter": 10,
+            "tfl-listing-generator": 10,
+            "tfl-qc-validator": 10,
+            "tfl-shell-reviewer": 10,
+            "tfl-table-generator": 10,
+            "tfl-template-builder": 10,
+            "workflow": 10,
+            "workflow-status": 10
+          },
+          "per_skill_affected_proportion": {
+            "acrf-finalizer": 1.0,
+            "adam-adae-builder": 1.0,
+            "adam-adeff-builder": 1.0,
+            "adam-adlb-builder": 1.0,
+            "adam-adsl-builder": 1.0,
+            "adam-adtte-builder": 1.0,
+            "adam-custom-builder": 1.0,
+            "adam-traceability-checker": 1.0,
+            "adam-validator": 1.0,
+            "adrg-writer": 1.0,
+            "crf-annotator": 1.0,
+            "crf-validator": 1.0,
+            "data-extract": 1.0,
+            "data-quality": 1.0,
+            "data-reconciler": 1.0,
+            "data-validator": 1.0,
+            "define-draft-builder": 1.0,
+            "define-xml-builder": 1.0,
+            "define-xml-validator": 1.0,
+            "esub-assembler": 1.0,
+            "esub-validator": 1.0,
+            "p21-adam-validation": 1.0,
+            "p21-report-reviewer": 1.0,
+            "p21-validator": 1.0,
+            "principle-review": 1.0,
+            "quality-report": 1.0,
+            "sap-parser": 1.0,
+            "sdrg-writer": 1.0,
+            "sdtm-ae-mapper": 1.0,
+            "sdtm-cm-mapper": 1.0,
+            "sdtm-consistency-checker": 1.0,
+            "sdtm-custom-builder": 1.0,
+            "sdtm-dm-mapper": 1.0,
+            "sdtm-ds-mapper": 1.0,
+            "sdtm-ex-mapper": 1.0,
+            "sdtm-lb-mapper": 1.0,
+            "sdtm-mh-mapper": 1.0,
+            "sdtm-relrec-builder": 1.0,
+            "sdtm-supp-builder": 1.0,
+            "sdtm-sv-mapper": 1.0,
+            "sdtm-trial-design-builder": 1.0,
+            "sdtm-validator": 1.0,
+            "sdtm-vs-mapper": 1.0,
+            "spec-builder": 1.0,
+            "spec-reviewer": 1.0,
+            "study-setup": 1.0,
+            "submission-checklist": 1.0,
+            "tfl-comparator": 1.0,
+            "tfl-demographics": 1.0,
+            "tfl-double-programmer": 1.0,
+            "tfl-figure-generator": 1.0,
+            "tfl-formatter": 1.0,
+            "tfl-listing-generator": 1.0,
+            "tfl-qc-validator": 1.0,
+            "tfl-shell-reviewer": 1.0,
+            "tfl-table-generator": 1.0,
+            "tfl-template-builder": 1.0,
+            "workflow": 1.0,
+            "workflow-status": 1.0
+          },
+          "mean_affected_tasks": 10.0,
+          "median_affected_tasks": 10,
+          "range_affected_tasks": [
+            10,
+            10
+          ]
+        },
+        "random_token_matched": {
+          "n_tasks": 10,
+          "per_skill_affected_tasks": {
+            "acrf-finalizer": 10,
+            "adam-adae-builder": 10,
+            "adam-adeff-builder": 10,
+            "adam-adlb-builder": 10,
+            "adam-adsl-builder": 10,
+            "adam-adtte-builder": 10,
+            "adam-custom-builder": 10,
+            "adam-traceability-checker": 10,
+            "adam-validator": 10,
+            "adrg-writer": 10,
+            "crf-annotator": 10,
+            "crf-validator": 10,
+            "data-extract": 10,
+            "data-quality": 10,
+            "data-reconciler": 10,
+            "data-validator": 10,
+            "define-draft-builder": 10,
+            "define-xml-builder": 10,
+            "define-xml-validator": 10,
+            "esub-assembler": 10,
+            "esub-validator": 10,
+            "p21-adam-validation": 10,
+            "p21-report-reviewer": 10,
+            "p21-validator": 10,
+            "principle-review": 10,
+            "quality-report": 10,
+            "sap-parser": 10,
+            "sdrg-writer": 10,
+            "sdtm-ae-mapper": 10,
+            "sdtm-cm-mapper": 10,
+            "sdtm-consistency-checker": 10,
+            "sdtm-custom-builder": 10,
+            "sdtm-dm-mapper": 10,
+            "sdtm-ds-mapper": 10,
+            "sdtm-ex-mapper": 10,
+            "sdtm-lb-mapper": 10,
+            "sdtm-mh-mapper": 10,
+            "sdtm-relrec-builder": 10,
+            "sdtm-supp-builder": 10,
+            "sdtm-sv-mapper": 10,
+            "sdtm-trial-design-builder": 10,
+            "sdtm-validator": 10,
+            "sdtm-vs-mapper": 10,
+            "spec-builder": 10,
+            "spec-reviewer": 10,
+            "study-setup": 10,
+            "submission-checklist": 10,
+            "tfl-comparator": 10,
+            "tfl-demographics": 10,
+            "tfl-double-programmer": 10,
+            "tfl-figure-generator": 10,
+            "tfl-formatter": 10,
+            "tfl-listing-generator": 10,
+            "tfl-qc-validator": 10,
+            "tfl-shell-reviewer": 10,
+            "tfl-table-generator": 10,
+            "tfl-template-builder": 10,
+            "workflow": 10,
+            "workflow-status": 10
+          },
+          "per_skill_affected_proportion": {
+            "acrf-finalizer": 1.0,
+            "adam-adae-builder": 1.0,
+            "adam-adeff-builder": 1.0,
+            "adam-adlb-builder": 1.0,
+            "adam-adsl-builder": 1.0,
+            "adam-adtte-builder": 1.0,
+            "adam-custom-builder": 1.0,
+            "adam-traceability-checker": 1.0,
+            "adam-validator": 1.0,
+            "adrg-writer": 1.0,
+            "crf-annotator": 1.0,
+            "crf-validator": 1.0,
+            "data-extract": 1.0,
+            "data-quality": 1.0,
+            "data-reconciler": 1.0,
+            "data-validator": 1.0,
+            "define-draft-builder": 1.0,
+            "define-xml-builder": 1.0,
+            "define-xml-validator": 1.0,
+            "esub-assembler": 1.0,
+            "esub-validator": 1.0,
+            "p21-adam-validation": 1.0,
+            "p21-report-reviewer": 1.0,
+            "p21-validator": 1.0,
+            "principle-review": 1.0,
+            "quality-report": 1.0,
+            "sap-parser": 1.0,
+            "sdrg-writer": 1.0,
+            "sdtm-ae-mapper": 1.0,
+            "sdtm-cm-mapper": 1.0,
+            "sdtm-consistency-checker": 1.0,
+            "sdtm-custom-builder": 1.0,
+            "sdtm-dm-mapper": 1.0,
+            "sdtm-ds-mapper": 1.0,
+            "sdtm-ex-mapper": 1.0,
+            "sdtm-lb-mapper": 1.0,
+            "sdtm-mh-mapper": 1.0,
+            "sdtm-relrec-builder": 1.0,
+            "sdtm-supp-builder": 1.0,
+            "sdtm-sv-mapper": 1.0,
+            "sdtm-trial-design-builder": 1.0,
+            "sdtm-validator": 1.0,
+            "sdtm-vs-mapper": 1.0,
+            "spec-builder": 1.0,
+            "spec-reviewer": 1.0,
+            "study-setup": 1.0,
+            "submission-checklist": 1.0,
+            "tfl-comparator": 1.0,
+            "tfl-demographics": 1.0,
+            "tfl-double-programmer": 1.0,
+            "tfl-figure-generator": 1.0,
+            "tfl-formatter": 1.0,
+            "tfl-listing-generator": 1.0,
+            "tfl-qc-validator": 1.0,
+            "tfl-shell-reviewer": 1.0,
+            "tfl-table-generator": 1.0,
+            "tfl-template-builder": 1.0,
+            "workflow": 1.0,
+            "workflow-status": 1.0
+          },
+          "mean_affected_tasks": 10.0,
+          "median_affected_tasks": 10,
+          "range_affected_tasks": [
+            10,
+            10
+          ]
+        }
+      },
+      "paired_optimized_minus_flat": {
+        "per_skill_affected_task_difference": {
+          "acrf-finalizer": -9,
+          "adam-adae-builder": -5,
+          "adam-adeff-builder": -7,
+          "adam-adlb-builder": -7,
+          "adam-adsl-builder": -4,
+          "adam-adtte-builder": -9,
+          "adam-custom-builder": -9,
+          "adam-traceability-checker": -8,
+          "adam-validator": -3,
+          "adrg-writer": -10,
+          "crf-annotator": -10,
+          "crf-validator": -10,
+          "data-extract": -9,
+          "data-quality": 0,
+          "data-reconciler": -10,
+          "data-validator": -8,
+          "define-draft-builder": -8,
+          "define-xml-builder": -8,
+          "define-xml-validator": -8,
+          "esub-assembler": -10,
+          "esub-validator": -10,
+          "p21-adam-validation": -10,
+          "p21-report-reviewer": -4,
+          "p21-validator": -4,
+          "principle-review": -10,
+          "quality-report": -8,
+          "sap-parser": -8,
+          "sdrg-writer": -9,
+          "sdtm-ae-mapper": -7,
+          "sdtm-cm-mapper": -9,
+          "sdtm-consistency-checker": -9,
+          "sdtm-custom-builder": -9,
+          "sdtm-dm-mapper": -8,
+          "sdtm-ds-mapper": -9,
+          "sdtm-ex-mapper": -9,
+          "sdtm-lb-mapper": -9,
+          "sdtm-mh-mapper": -9,
+          "sdtm-relrec-builder": -7,
+          "sdtm-supp-builder": -8,
+          "sdtm-sv-mapper": -9,
+          "sdtm-trial-design-builder": -8,
+          "sdtm-validator": -5,
+          "sdtm-vs-mapper": -9,
+          "spec-builder": -6,
+          "spec-reviewer": -6,
+          "study-setup": -9,
+          "submission-checklist": -10,
+          "tfl-comparator": -7,
+          "tfl-demographics": -10,
+          "tfl-double-programmer": -8,
+          "tfl-figure-generator": -9,
+          "tfl-formatter": -6,
+          "tfl-listing-generator": -9,
+          "tfl-qc-validator": -7,
+          "tfl-shell-reviewer": -7,
+          "tfl-table-generator": -6,
+          "tfl-template-builder": -7,
+          "workflow": 0,
+          "workflow-status": 0
+        },
+        "mean_difference": -7.559322033898305,
+        "median_difference": -8,
+        "range_difference": [
+          -10,
+          0
+        ]
+      }
+    },
+    "interpretation_boundary": "Deterministic governance proxies only; no operational GxP compliance claim."
+  },
+  "outcome_decision": {
+    "outcome": "B",
+    "label": "similar quality with efficiency/governance advantage",
+    "gates": {
+      "complete_response_and_checkpoint_integrity": {
+        "pass": true
+      },
+      "superiority_vs_nonrouted_control": {
+        "pass": false,
+        "supported_contrasts": []
+      },
+      "quality_retention": {
+        "pass": true,
+        "optimized_minus_flat_ci_lower": 0.011111111111110983,
+        "engineering_margin": -0.2
+      },
+      "mean_token_reduction": {
+        "pass": true,
+        "actual_percent": 28.821687953919355,
+        "threshold_percent": 15.0,
+        "policy_enforced_efficiency_disclosure": true
+      },
+      "provenance_completeness": {
+        "pass": true,
+        "actual_percent": 100.0,
+        "target_percent": 100.0
+      },
+      "manifest_reproducibility": {
+        "pass": true,
+        "actual_percent": 100.0,
+        "target_percent": 100.0
+      },
+      "change_impact_containment": {
+        "pass": true,
+        "optimized_minus_flat_mean_affected_tasks": -7.559322033898305,
+        "criterion": "<= 0 (optimized is no broader than flat)"
+      }
+    },
+    "boundary": "Applies only to this benchmark, model, judge, and synthetic setting; governance metrics are architectural proxies."
+  },
+  "complete_response_judging": {
+    "policy": "full_stored_response_no_character_truncation",
+    "validated_rows": 120,
+    "errors": [],
+    "pass": true
+  }
+}

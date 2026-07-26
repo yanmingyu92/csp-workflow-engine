@@ -1,7 +1,7 @@
 ---
 name: tfl-table-generator
 description: Generate analysis tables from ADaM datasets. Triggers on "table", "analysis table", "demographics table", "safety table", "efficacy table", "disposition table".
-version: "2.0"
+version: "3.0"
 user-invocable: true
 context: fork
 model: sonnet
@@ -81,17 +81,31 @@ def generate_descriptive_table(adsl, variables, treatment_var='TRT01A'):
 
 ### Frequency Tables (AE, Disposition)
 ```python
-def generate_frequency_table(adae, group_var, treatment_var='TRTA'):
+def generate_ae_subject_incidence(
+    adae, population, group_var, treatment_var='TRTA', population_flag=None
+):
     """
-    Generate frequency count table (e.g., AE by SOC/PT).
+    Generate subject-incidence n (%) for an adverse-event category.
 
-    Statistics: n, % by treatment group
-    Sorted by SOC, then PT alphabetically
-    Include total column
+    The SAP or shell selects the population flag and whether TRTEMFL is
+    required. The numerator is distinct USUBJID values per category and
+    treatment. The denominator is the distinct population N for the same
+    treatment, including subjects without an event.
     """
-    freq = adae.groupby([group_var, treatment_var]).size().unstack(fill_value=0)
-    pct = freq.div(freq.sum(axis=0), axis=1) * 100
-    return freq, pct
+    eligible = population
+    if population_flag:
+        eligible = eligible[eligible[population_flag] == 'Y']
+    denominators = eligible.groupby(treatment_var)['USUBJID'].nunique()
+    events = adae[adae['USUBJID'].isin(eligible['USUBJID'])]
+    if 'TRTEMFL' in events.columns:
+        events = events[events['TRTEMFL'] == 'Y']
+    numerators = (
+        events.groupby([group_var, treatment_var])['USUBJID']
+        .nunique()
+        .unstack(fill_value=0)
+    )
+    percentages = numerators.div(denominators, axis=1) * 100
+    return numerators, percentages, denominators
 ```
 
 ### Inferential Statistics Tables (Efficacy)
@@ -340,6 +354,24 @@ table_output:
 - Use proper decimal precision
 - Sort rows per SAP specification
 - Generate traceable, reproducible results
+
+## Audited Counting, Precision, and Change-Impact Rules (V7-RS-TFL-2026-07)
+
+- For adverse-event incidence `n (%)`, count distinct subjects with at least one
+  qualifying event in the category. Do not divide event-record counts by the
+  number of events.
+- Report event counts only in a separately labeled analysis when the SAP and
+  shell explicitly request them.
+- Resolve the population flag, treatment-emergence filter, denominator,
+  category hierarchy, sort order, precision, and rounding from the frozen SAP
+  and shell. No universal `SAFFL`, one-decimal, or missing-category default is
+  valid.
+- Preserve source-data, ADaM, SAP, shell, program, terminology, and output hashes
+  in the provenance manifest.
+- If an upstream population flag changes, invalidate all dependent column
+  headers, numerator membership, percentages, Total columns, and structured QC
+  comparisons. Do not invalidate unrelated figures or tables whose manifests
+  do not depend on that flag.
 
 ---
 

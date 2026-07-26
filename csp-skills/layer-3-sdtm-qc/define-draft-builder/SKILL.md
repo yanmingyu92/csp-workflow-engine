@@ -1,7 +1,7 @@
 ---
 name: define-draft-builder
 description: Generate draft Define.xml metadata for SDTM. Triggers on "Define.xml draft", "SDTM Define", "define draft", "dataset metadata", "variable metadata", "CRT-DD".
-version: "1.0"
+version: "3.0"
 user-invocable: true
 context: fork
 model: sonnet
@@ -44,8 +44,10 @@ Parse $ARGUMENTS: --input, --output, --spec, --validate, --dry-run
       <StudyDescription>{study_title}</StudyDescription>
       <ProtocolName>{protocol_name}</ProtocolName>
     </GlobalVariables>
-    <MetaDataVersion OID="CDISC.SDTMIG.3.4" Name="SDTM IG v3.4">
-      <Include href="{ct_package_url}"/>
+    <MetaDataVersion OID="CDISC.SDTMIG.3.4" Name="SDTM IG v3.4"
+                     def:DefineVersion="2.1.0"
+                     def:StandardName="SDTM-IG"
+                     def:StandardVersion="3.4">
       <!-- ItemGroupDefs, ItemDefs, CodeListDefs, MethodDefs, ValueListDefs -->
     </MetaDataVersion>
   </Study>
@@ -114,17 +116,16 @@ Parse $ARGUMENTS: --input, --output, --spec, --validate, --dry-run
 ### Dynamic CodeLists
 - **ARMCD (C99073):** Generate `CodeListItem` entries from `study_config.treatment_arms` — each has `armcd` (code) and `arm` (decoded text). Do NOT hardcode.
 - **COUNTRY (ISO 3166):** Generate `EnumeratedItem` entries from unique countries in `study_config.site_information`. Do NOT hardcode.
-- **CT Package:** Set `<Include href="{ct_package_url}"/>` from study config. Document version from `ct_version`.
+- **CT Package:** Record the pinned CT package date/version in aliases and the
+  reproducibility manifest. Do not add an `<Include href>` element that is not
+  admitted by the Define-XML schema.
 
 ---
 
 ## Value-Level Metadata
 ```xml
 <ValueListDef OID="VL.DM.ARM">
-  <ItemRef ItemOID="IT.DM.ARM">
-    <!-- GENERATED: For each arm in study_config.treatment_arms: -->
-    <WhereClauseRef WhereClauseOID="WC.DM.ARM.{arm.armcd}"/>
-  </ItemRef>
+  <ItemRef ItemOID="IT.DM.ARM" OrderNumber="1" Mandatory="No"/>
 </ValueListDef>
 <WhereClauseDef OID="WC.DM.ARM.{arm.armcd}">
   <RangeCheck ItemOID="IT.DM.ARMCD" Comparator="EQ">
@@ -140,7 +141,9 @@ Parse $ARGUMENTS: --input, --output, --spec, --validate, --dry-run
 - **Custom variables without CDISC CT:** Create study-specific CodeListDef with EnumeratedItem; do NOT assign a CDISC CT OID
 - **Multi-source variables:** Use compound MethodDef referencing all source domains (e.g., SAFFL from DM+EX)
 - **Missing treatment_arms or site_information:** Log error and abort — cannot generate ARMCD/COUNTRY CodeListDefs
-- **Derivations:** AGE = floor((RFSTDTC - BRTHDAT) / 365.25); RFSTDTC = earliest EXSTDTC from EX domain
+- **Derivations:** Use the study's documented source/reference-date algorithms.
+  Do not derive age by dividing days by 365.25, and do not assume every
+  `RFSTDTC`/`RFENDTC` is a lexical minimum/maximum of EX character values.
 
 ---
 
@@ -151,7 +154,8 @@ Parse $ARGUMENTS: --input, --output, --spec, --validate, --dry-run
 - CT references with CDISC CT OIDs (C66731, C66734, C66763, C66769, C66770, C66790, C74457, C99073)
 - MethodDefs for all derived variables; key variables identified per dataset
 - ARMCD from `study_config.treatment_arms`, COUNTRY from `site_information`
-- CT version from `ct_version`, Include href from `ct_package_url`, domains from `sdtm_domains`
+- CT package date/version from `ct_version`, source checksums, and domains from
+  `sdtm_domains`; no invented CT include element
 
 **Recommended:** Value-level metadata, SUPPQUAL metadata, RELREC relationships, Comments for complex derivations
 
@@ -181,7 +185,7 @@ When generating specs for **multiple datasets**, prioritize completeness over ve
 - Validate inputs before processing; validate output XML against Define.xml 2.1.0 XSD
 - Include CDISC CT OIDs for all coded variables; document derivation methods
 - Generate ARMCD/COUNTRY/USUBJID dynamically from study config
-- Set Include href from `study_config.ct_package_url`
+- Record the CT package date and source checksum without inventing schema elements
 
 ---
 

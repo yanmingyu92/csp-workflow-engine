@@ -1,0 +1,612 @@
+{
+  "schema_version": "v7-routing-sensitive-freeze-1",
+  "frozen_at": "2026-07-25T18:53:06.231441+00:00",
+  "supersedes_freeze_sha256": "5442fa1ddba22bc7a16c8baf3c6bda27008003a9d75e7c4462a0bddd96ce16c1",
+  "v6_immutable_sha256": "fb9f787a6e95e2bd0813c7f7b90fd986e64adeba09305645572a3875df927aa0",
+  "stage0_path": "experiments/results/experiment_v7_routing_sensitive_stage0_20260725.json",
+  "stage0_sha256": "cf106d3319a20efee1755d417905521d5e0e8131502ab718112f24e99e042ecd",
+  "plan_path": "plan/jmir_aps_gxp_v7_routing_sensitive_experiment_20260725.md",
+  "plan_sha256": "a9d6d40fe70ba4208a3191b86cb1b7fa692eaa43ced3dfb7da35371f8f3de581",
+  "task_registry_sha256": "48776a35bad2ff77f5a70441066a7e511eaab3d0b1ea35a286a1de604a945368",
+  "source_hashes": {
+    "runner": "97a7f388270cebae1aa5d32d4821f2281cf3d520fb9c67cb07c60471766c1832",
+    "routing": "3b70a558b2fbc8568f3b000aa16d7879d10f70b978032a4af43e2744da40bfe7",
+    "deterministic_eval": "e1b0a9029b746eac5fec8f61a8146f10ba9c363de8f02a31021843d4c6cac45a",
+    "stage0": "f0def4ec9aa37bc8a51a4b1e9fc5b76c400ba3706ff1e44317346bb480139792",
+    "task_registry": "48776a35bad2ff77f5a70441066a7e511eaab3d0b1ea35a286a1de604a945368",
+    "graph": "6c0b6e45ea47008021cea4cdc10286ee2322211d7551228f17b13247dbdcb4b5",
+    "analyzer": "0d6e3b6e2a32d36a3a63be0458a6f1f03465a772d8339beefef296f67f97670e",
+    "verifier": "71abcabd094abbd11ebaadd1ca3824a090976e85176a7f981cea1ed6454b0423"
+  },
+  "corpus_files": [
+    {
+      "path": "csp-skills/_global/data-quality/SKILL.md",
+      "sha256": "d57107712654be1a28da8d9afbd46f1e6452c0ecfd7045685cbdecdc024863a8"
+    },
+    {
+      "path": "csp-skills/_global/workflow/SKILL.md",
+      "sha256": "d192e28b586bdae3ffcf794def31d0ba4c60a0f8f8df4d1e183304fe5c5e00f3"
+    },
+    {
+      "path": "csp-skills/_global/workflow-status/SKILL.md",
+      "sha256": "55484afa76a33ba29583439defd9441a4fdd4262785fd2647561cfed2a60affb"
+    },
+    {
+      "path": "csp-skills/layer-0-protocol/sap-parser/SKILL.md",
+      "sha256": "f762717612c14bf438345278a95c4945e336cdf966d348f8e4aab2c7b5eae88a"
+    },
+    {
+      "path": "csp-skills/layer-0-protocol/spec-builder/SKILL.md",
+      "sha256": "de6058715311eacc69e118a866fb7f79c6e30b06fc702e4ed32bff4369fef4ec"
+    },
+    {
+      "path": "csp-skills/layer-0-protocol/spec-reviewer/SKILL.md",
+      "sha256": "25eab58b83c4ec6d6eb79896491a5e2168af1d095daba3029a318b1d9640a1c5"
+    },
+    {
+      "path": "csp-skills/layer-0-protocol/study-setup/SKILL.md",
+      "sha256": "1555e86aeb0caaa0b33e2ea9fe861cea6acd597fbc48bf097a71c68426b7fe0d"
+    },
+    {
+      "path": "csp-skills/layer-1-raw-data/crf-annotator/SKILL.md",
+      "sha256": "437e46ba0cc23621de2a139e6b835193419d6d5a83b7db297e81c2f6068b17cc"
+    },
+    {
+      "path": "csp-skills/layer-1-raw-data/crf-validator/SKILL.md",
+      "sha256": "d50c2edb879359d503ded96060a177ce38c426a504d8b960b7390b9736e7d000"
+    },
+    {
+      "path": "csp-skills/layer-1-raw-data/data-extract/SKILL.md",
+      "sha256": "239f480124ec05cb1e90e88dc86aecaeb6a34e9185d1d5d017bec5119fa0a829"
+    },
+    {
+      "path": "csp-skills/layer-1-raw-data/data-reconciler/SKILL.md",
+      "sha256": "3a727f51a86749215036513a1dd9d0df3d920ed02d3ed9fbe4aaf53cbb131e65"
+    },
+    {
+      "path": "csp-skills/layer-1-raw-data/data-validator/SKILL.md",
+      "sha256": "3be2f9a1946a7bb333bf88f88829c54bf0aafecc50559db6ac8783ab91132565"
+    },
+    {
+      "path": "csp-skills/layer-1-raw-data/quality-report/SKILL.md",
+      "sha256": "98aa700a8d54b9ee38980894ff8515fb54309c1d1b67547b47286b5e5528c487"
+    },
+    {
+      "path": "csp-skills/layer-2-sdtm/sdtm-ae-mapper/SKILL.md",
+      "sha256": "e0ab4fea2694335e2fbaef453efc0361b8d9672f3d1dddec7ecbd8dfeb4283fc"
+    },
+    {
+      "path": "csp-skills/layer-2-sdtm/sdtm-cm-mapper/SKILL.md",
+      "sha256": "9f10fda235a6a5413cdff949ae4f1a3045e7209d807e6bc16273ca7ae6ba1618"
+    },
+    {
+      "path": "csp-skills/layer-2-sdtm/sdtm-custom-builder/SKILL.md",
+      "sha256": "2ca77255a16d13f2a16bcc5becc3c8a981bf9dcf6f560d9cf19230fa96539096"
+    },
+    {
+      "path": "csp-skills/layer-2-sdtm/sdtm-dm-mapper/SKILL.md",
+      "sha256": "f21d10c9009f16685aa0ee9153723a640ec01c3b1df7548a1b1f83c46a0a7167"
+    },
+    {
+      "path": "csp-skills/layer-2-sdtm/sdtm-ds-mapper/SKILL.md",
+      "sha256": "b6aa88d0805987020b20e9dbf9ae44e1e0d0d69d2f62cf9e9cbd6253da77f6c8"
+    },
+    {
+      "path": "csp-skills/layer-2-sdtm/sdtm-ex-mapper/SKILL.md",
+      "sha256": "bede26a563b8ad93d8cdc99037505c72c567c193df0967400282b7f1547e6119"
+    },
+    {
+      "path": "csp-skills/layer-2-sdtm/sdtm-lb-mapper/SKILL.md",
+      "sha256": "929d95a4d0a8bf6b27a63b6d42688cecdff8ab87520a52b31d3cdcd20e0a5313"
+    },
+    {
+      "path": "csp-skills/layer-2-sdtm/sdtm-mh-mapper/SKILL.md",
+      "sha256": "5aaf1230a810b49b85f465024088412aad65d6871adbb54db1fc57d1db8ae946"
+    },
+    {
+      "path": "csp-skills/layer-2-sdtm/sdtm-relrec-builder/SKILL.md",
+      "sha256": "b5e18489af6090c424d87278bdbbdadbd3cb4d8445314cbd07caad98dc1a1068"
+    },
+    {
+      "path": "csp-skills/layer-2-sdtm/sdtm-supp-builder/SKILL.md",
+      "sha256": "17d5974af42f7cf025ed32dea35d40e38b42abc5a5ac115a12e053b7e16a86d3"
+    },
+    {
+      "path": "csp-skills/layer-2-sdtm/sdtm-sv-mapper/SKILL.md",
+      "sha256": "12649009e408a253014b1836ec50ab34c34cc4fd1d51ffb113e697c16f8d23cf"
+    },
+    {
+      "path": "csp-skills/layer-2-sdtm/sdtm-trial-design-builder/SKILL.md",
+      "sha256": "35629276415f76dd58fe3cf594312c7fef079ce359a8525084adbc5a560d3284"
+    },
+    {
+      "path": "csp-skills/layer-2-sdtm/sdtm-validator/SKILL.md",
+      "sha256": "90eaca41c216df8908ac97031df99531c6838f70bc7c1592efb543a8ddcf74b8"
+    },
+    {
+      "path": "csp-skills/layer-2-sdtm/sdtm-vs-mapper/SKILL.md",
+      "sha256": "71e6cb8415821a9bda97edc0662c3be438f1d4013c1df56cd90cdd288607dee1"
+    },
+    {
+      "path": "csp-skills/layer-3-sdtm-qc/acrf-finalizer/SKILL.md",
+      "sha256": "b9407c52dcccd333b611766bfb4701477ef3eb7549d320856067d7a6ebcb678a"
+    },
+    {
+      "path": "csp-skills/layer-3-sdtm-qc/define-draft-builder/SKILL.md",
+      "sha256": "6544b3db7100ee71f30c3105e5d30d14532548276e5321d7fe114feb068b9022"
+    },
+    {
+      "path": "csp-skills/layer-3-sdtm-qc/p21-report-reviewer/SKILL.md",
+      "sha256": "bd686b00e107eb851877e3114d96c02ce18a133a09bdc015bddc17a4673f182c"
+    },
+    {
+      "path": "csp-skills/layer-3-sdtm-qc/p21-validator/SKILL.md",
+      "sha256": "7fa2bd6bb5fc5dd401db8602b731e2380ab24f12337cf868c1e44ebed50c1637"
+    },
+    {
+      "path": "csp-skills/layer-3-sdtm-qc/sdrg-writer/SKILL.md",
+      "sha256": "03941c291346f3da4c44862f515b43ad6e2911cf0d039b92d6b5e0a23a5b0de4"
+    },
+    {
+      "path": "csp-skills/layer-3-sdtm-qc/sdtm-consistency-checker/SKILL.md",
+      "sha256": "b4de56570b831ea8959cb3ad096f47819a505e895b44d8fb0713cd27bcf66e61"
+    },
+    {
+      "path": "csp-skills/layer-4-adam/adam-adae-builder/SKILL.md",
+      "sha256": "e1f0f909ad9469b2966ce968ea6a350b536013a1b16a3e891310d8dd9178758f"
+    },
+    {
+      "path": "csp-skills/layer-4-adam/adam-adeff-builder/SKILL.md",
+      "sha256": "17c0e3c5ff1f2c62506cbf76f3e4beebd5cba756a81614054a2992fb49af5a6d"
+    },
+    {
+      "path": "csp-skills/layer-4-adam/adam-adlb-builder/SKILL.md",
+      "sha256": "b23e735141b12e1376605072c4f6a32203ba08d84d217ade68631b5ed6d6c0d9"
+    },
+    {
+      "path": "csp-skills/layer-4-adam/adam-adsl-builder/SKILL.md",
+      "sha256": "d83e51b36189db6d6a2f9d897545e9cfeb1fc0701659f2736b69a97b8e217be5"
+    },
+    {
+      "path": "csp-skills/layer-4-adam/adam-adtte-builder/SKILL.md",
+      "sha256": "cef6a2de54c679a46eab724846b39101faaf2a9aeb0585a3be8e28248e5ecd26"
+    },
+    {
+      "path": "csp-skills/layer-4-adam/adam-custom-builder/SKILL.md",
+      "sha256": "9eb88aa4337b4cc350ea7dfc6afc3a7a3f0d1c8f821b3dfc1990f7495fcc7590"
+    },
+    {
+      "path": "csp-skills/layer-4-adam/adam-traceability-checker/SKILL.md",
+      "sha256": "c85c4de5440dd5f1bf06dd7f584712314c31cfe2676b1b8238aa4deb722af556"
+    },
+    {
+      "path": "csp-skills/layer-4-adam/adam-validator/SKILL.md",
+      "sha256": "d5078c05220a5023d6364617e055ab14983e2abc523108fed1a62610da644c6b"
+    },
+    {
+      "path": "csp-skills/layer-4-adam/adrg-writer/SKILL.md",
+      "sha256": "d23910eb836faa3a868346a8b9a0bb72a8e6654e01fbee451456fa0146642761"
+    },
+    {
+      "path": "csp-skills/layer-4-adam/p21-adam-validation/SKILL.md",
+      "sha256": "aec6b32751f997f732e1b21f78260dffd3e4733ba864d7fef7c6937447772d30"
+    },
+    {
+      "path": "csp-skills/layer-5-tfl/tfl-comparator/SKILL.md",
+      "sha256": "447107845347d8038b3f852dc7f2a058f8f72b3d0ad1e52ecd709d78d13e3b40"
+    },
+    {
+      "path": "csp-skills/layer-5-tfl/tfl-demographics/SKILL.md",
+      "sha256": "94aa7d8c9333917974ec548c5de4e17e69b659fc000383b728eaff91a36ecfce"
+    },
+    {
+      "path": "csp-skills/layer-5-tfl/tfl-double-programmer/SKILL.md",
+      "sha256": "0df17e6cc5703bf97b3bfe396255fad237a2ecf8674fe2c2bf704690b45377d3"
+    },
+    {
+      "path": "csp-skills/layer-5-tfl/tfl-figure-generator/SKILL.md",
+      "sha256": "35735ef9c80f641ae1c90f980e6ad1c0352e9edb7c2aad417f4aad5db7a9cd77"
+    },
+    {
+      "path": "csp-skills/layer-5-tfl/tfl-formatter/SKILL.md",
+      "sha256": "64648d3d6e1832989a6311afa99c2c4f294062cfedb68b919f3a4093ca95f648"
+    },
+    {
+      "path": "csp-skills/layer-5-tfl/tfl-listing-generator/SKILL.md",
+      "sha256": "6594b87c14ef357ecc9ad450ec778fa40afea266aa96df298cc539783d151744"
+    },
+    {
+      "path": "csp-skills/layer-5-tfl/tfl-qc-validator/SKILL.md",
+      "sha256": "69fcfcb076d07375ddcaddd1297628add4ff69a711f7b191ca7c8b3156bc5f95"
+    },
+    {
+      "path": "csp-skills/layer-5-tfl/tfl-shell-reviewer/SKILL.md",
+      "sha256": "7a15a2aed85bbd8c0410ca8f320f3bffed68e7db421a9da30103566c0248f725"
+    },
+    {
+      "path": "csp-skills/layer-5-tfl/tfl-table-generator/SKILL.md",
+      "sha256": "04f1e86c296b52b5996670a443366c13f1e170ebb9eb3f583d3fd8dbc77c6fd7"
+    },
+    {
+      "path": "csp-skills/layer-5-tfl/tfl-template-builder/SKILL.md",
+      "sha256": "394a9641d86d67430dd80705aa89429b0582861a38d59b235f2cafa303dbfcae"
+    },
+    {
+      "path": "csp-skills/layer-6-submission/define-xml-builder/SKILL.md",
+      "sha256": "678fda7fe41dc3fbcc66e876117fa9cee5d7503f24760b91f6ba554bc03f60da"
+    },
+    {
+      "path": "csp-skills/layer-6-submission/define-xml-validator/SKILL.md",
+      "sha256": "2effe631e42a3e651a3d050a9559eb08c243d96d0ba3c60813d298ba37d5b7ca"
+    },
+    {
+      "path": "csp-skills/layer-6-submission/esub-assembler/SKILL.md",
+      "sha256": "45137b9ae701680c8263f1c24a2627627ad00c9a167f981a6022f3507fb60fe1"
+    },
+    {
+      "path": "csp-skills/layer-6-submission/esub-validator/SKILL.md",
+      "sha256": "cbb00095bf55313bfa48cae3305527db50b7111e137b76067cc70ad0627797aa"
+    },
+    {
+      "path": "csp-skills/layer-6-submission/submission-checklist/SKILL.md",
+      "sha256": "67a5280d7f9aabbbf3ce1de62e209c6dae5c445000173258c448cf3cf5c9832b"
+    },
+    {
+      "path": "csp-skills/principle-review/SKILL.md",
+      "sha256": "58d7dd81c54988216ba39f1f89d3dc2481a290b653d77520bb83d6721117d25f"
+    }
+  ],
+  "corpus_tree_sha256": "ad1c2ec43687655dae8ae638da1fc5a2db1f04eef78daba25b1de7a0663bdb3e",
+  "routing_config": {
+    "seed": 20260725,
+    "context_budget": 4000,
+    "flat_budget": 8000,
+    "max_chunk_tokens": 360,
+    "top_k": 8,
+    "score_gap_ratio": 0.35,
+    "current_service_floor_tokens": 320,
+    "bm25_k1": 1.2,
+    "bm25_b": 0.75,
+    "mmr_lambda": 0.68,
+    "graph_current_boost": 1.25,
+    "dependency_boost": 3.0,
+    "two_hop_penalty": 0.5,
+    "pinned_versions": {
+      "ADaM IG": "1.3",
+      "Define-XML": "2.1.0",
+      "SDTM IG": "3.4"
+    }
+  },
+  "routing_config_sha256": "53a14bb6f1337d498f2715ae293e7006ac65a7767b224329047af0eb706cec3b",
+  "arms": [
+    "graph_bm25_chunk_optimized",
+    "full_corpus_bm25_token_matched",
+    "random_token_matched",
+    "flat_8000"
+  ],
+  "arm_definitions": {
+    "graph_bm25_chunk_optimized": "Graph plus full-content BM25 chunk retrieval with dependency expansion, MMR, version conflict handling, and deterministic provenance.",
+    "full_corpus_bm25_token_matched": "Full-corpus BM25 chunk retrieval without graph features, matched to the optimized arm's exact canonical context tokens.",
+    "random_token_matched": "Seeded random chunk order matched to the optimized arm's exact canonical context tokens.",
+    "flat_8000": "Uniform alphabetical chunk loading at 8000 canonical tokens."
+  },
+  "heldout_task_ids": [
+    "v7h01-adsl-never-dosed",
+    "v7h02-adsl-treatment-duration",
+    "v7h03-adsl-partial-exposure",
+    "v7h04-dm-usubjid-length",
+    "v7h05-dm-study-day-code",
+    "v7h06-dm-partial-birth-age",
+    "v7h07-ae-partial-start-date",
+    "v7h08-ae-treatment-emergence",
+    "v7h09-ae-dictionary-freeze",
+    "v7h10-sdtm-ct-conflict",
+    "v7h11-p21-run-identity",
+    "v7h12-p21-finding-preservation",
+    "v7h13-p21-artifact-role",
+    "v7h14-define-method-crossref",
+    "v7h15-define-version-metadata",
+    "v7h16-define-value-list",
+    "v7h17-define-stale-version",
+    "v7h18-tfl-demographics-denominator",
+    "v7h19-tfl-ae-subject-incidence",
+    "v7h20-tfl-event-count-label",
+    "v7h21-tfl-population-change",
+    "v7h22-tfl-qc-method",
+    "v7h23-context-manifest-schema",
+    "v7h24-change-containment-yaml"
+  ],
+  "heldout_count": 24,
+  "runs": 3,
+  "generation_model_requested": "glm-5",
+  "judge_model_requested": "deepseek-v4-pro",
+  "judge_model_configuration": {
+    "environment_value_supported": false,
+    "unsupported_alias_policy": "resolve_to_deepseek-v4-pro_before_freeze"
+  },
+  "generation_configuration": {
+    "max_turns": 1,
+    "timeout_seconds": 300,
+    "transport_retries": 2,
+    "no_tools_directive_sha256": "fb0d3a5d74faa1fd2d2a3d8ae81de30583e2eb7ae263a5d036018fdfafa58855",
+    "domain_instruction_sha256": "718a1a7dcf691b7b1ebe2696606b2a4923b6b0e7e0b6313be1716b6a0d83880f"
+  },
+  "judge_configuration": {
+    "temperature": 0.0,
+    "max_tokens": 1200,
+    "maximum_attempts": 6,
+    "endpoint": "readability_actionability_secondary_only",
+    "system_prompt_sha256": "e248ab52a0f22057df14bd438909bb186449322363c7f2135054a0c7bb2cbe05"
+  },
+  "statistics": {
+    "independent_unit": "task",
+    "primary": "mean deterministic atomic-criterion score over 3 reps",
+    "primary_contrasts": [
+      [
+        "graph_bm25_chunk_optimized",
+        "full_corpus_bm25_token_matched"
+      ],
+      [
+        "graph_bm25_chunk_optimized",
+        "random_token_matched"
+      ]
+    ],
+    "multiplicity": "Holm correction across two primary contrasts",
+    "paired_test": "exact sign-flip permutation at task level",
+    "bootstrap": "paired task bootstrap with fixed seed",
+    "effect_size": "paired Cohen dz",
+    "missing_policy": "generation failure aborts; invalid answer scores zero",
+    "retention_margin": -0.05
+  },
+  "decision_rule": "Routing superiority requires positive optimized differences and Holm-adjusted p<0.05 against both BM25-only and random on the deterministic primary. Otherwise report null or efficiency/governance only.",
+  "heldout_structural_preflight": {
+    "quality_scores_computed": false,
+    "generation_or_judge_scores_used": false,
+    "cell_count": 96,
+    "cells": [
+      {
+        "task_id": "v7h01-adsl-never-dosed",
+        "optimized_tokens": 1092,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "25f4992c52e61b51c755c75e942520851e80241f489374d8067849feebb7368a",
+          "full_corpus_bm25_token_matched": "5936a9d014f14aea2a0a2a12fd9a84ad2d544d48a6f1245597647f9786ccab8b",
+          "random_token_matched": "e8ab2752d6c57f678d912ff3b34038144fe2c6ed7bbb66c8e8ace5f652ea0594",
+          "flat_8000": "2c35358db4d96e1ed245c1ad6c1ffba2d97bf719f8c5af5b2dd3da9308d3f566"
+        }
+      },
+      {
+        "task_id": "v7h02-adsl-treatment-duration",
+        "optimized_tokens": 1602,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "2331382bdfc16d0ef197162c517a66022c74ecb31f38b2be46c9cc0edf5e8ae9",
+          "full_corpus_bm25_token_matched": "6fb7e55267348b788e62d8372d8e9cba4feb0b8c59ea1f92661356e6622425f2",
+          "random_token_matched": "8b8e10ca831c18d51d26f4462e9355dd031418792c86c03b698e7a4bf11f9a96",
+          "flat_8000": "c8ac2730bec4a3bf7cfa7a537e608d553553e47753b6374985e9adaa513c06e8"
+        }
+      },
+      {
+        "task_id": "v7h03-adsl-partial-exposure",
+        "optimized_tokens": 1748,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "68ffc13d4756b258f8e0632cd5e9424a1ccfc2e94f1b23a6f561428300fb3c4a",
+          "full_corpus_bm25_token_matched": "aef40e0ee67bc9b1e1ffe106fa23c1e0e3441c9847cef8c509ea21ee45d45a93",
+          "random_token_matched": "9ddccbe6d6a4b9fd4ddcad2a76526e62df4071c508890413968d82b7c4ee0348",
+          "flat_8000": "6b399bf4d33cdc231e9b23353b35dcd9b824c367864fd4fa9e988b1efff40bde"
+        }
+      },
+      {
+        "task_id": "v7h04-dm-usubjid-length",
+        "optimized_tokens": 1836,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "cbf2d295c9ab0afb87db79575832723abb096f2bea8a0313ff505b3125877bec",
+          "full_corpus_bm25_token_matched": "735ae5466d4ac59432231d442b1f5406b57b0280ffa349fa5169e911058ac5d0",
+          "random_token_matched": "8fdbd33a6a6d04b33bd1f668a5daf1ef1f2965315681e84b912327c280f625a5",
+          "flat_8000": "0c84ad1651979460b2deb4d350f91c8cf6b1489a63d8db542557f935d2eb4b6a"
+        }
+      },
+      {
+        "task_id": "v7h05-dm-study-day-code",
+        "optimized_tokens": 706,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "49a40cc9b63e4612cb0ed15fd2fa6469a5218c262447b240242b6357c1cd8ec4",
+          "full_corpus_bm25_token_matched": "284f323cf46d91ebd993080813a6758a658cfd4452961ee8be19dd073637fba6",
+          "random_token_matched": "a38212eda3314c59647f1cc3ae9cbe197dfe18575ac2034183de3c690abcd4fc",
+          "flat_8000": "9ccf89c8cd4466c1e6bbdbdf775f7f4158ed1f5631c87ae1a39f288c76b2f042"
+        }
+      },
+      {
+        "task_id": "v7h06-dm-partial-birth-age",
+        "optimized_tokens": 1766,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "c57f17be4e2406127cca25ea926e38e4a52683617b6d226346e9fbb4efd3c306",
+          "full_corpus_bm25_token_matched": "7edb5e954d603d0f7920c4b8f4044f5617840b6b294e11eb79b2420605d3c85e",
+          "random_token_matched": "3d74397238805f944ab80ed1294decb1e48ddaf3465b85cfe158b027b3eb206e",
+          "flat_8000": "1e323dcef558ed9381ca9f79e8649af061a189365a6949aa3c986a0aaeffcbc7"
+        }
+      },
+      {
+        "task_id": "v7h07-ae-partial-start-date",
+        "optimized_tokens": 1601,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "54c5108cb21dda9c0a1c125d40888a4641ae44831841cb0888b153912d78e256",
+          "full_corpus_bm25_token_matched": "4887b4b5854a130cd1ce6972b4c4062e9b6de1d68d1e519e476a0b78d270e361",
+          "random_token_matched": "30f8b08f31b57ca04465e16101c13dc411dbde2fcbb2ca6386a78c26c576004c",
+          "flat_8000": "e47e2143e4b8afa543c3c3545c88ce8bd35b67ea6ec92f095f427e00f242bd3a"
+        }
+      },
+      {
+        "task_id": "v7h08-ae-treatment-emergence",
+        "optimized_tokens": 1355,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "619e54a79b68316aecec53f941bc65fb7751e760c3d04225bc4251d4180624fb",
+          "full_corpus_bm25_token_matched": "cf78307f46de73ef6df3213b95f0108322674fc8f0dfe80b046cf4d2f782c839",
+          "random_token_matched": "c9ea964ed27dc6ba7cda217de957a888f3a557b1588ffcbe41a1b5e536563d93",
+          "flat_8000": "7a100a072cd2d461493ae7e63ecac11ff5caba60ae94f3640ea5e59621708340"
+        }
+      },
+      {
+        "task_id": "v7h09-ae-dictionary-freeze",
+        "optimized_tokens": 1407,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "4488ca83cbd5b93ca4810bd11e65f767e8623d08826b216f76574b10e1aad532",
+          "full_corpus_bm25_token_matched": "74301aea5693420f68b3e4976ccab08814658fd1cbd5b3d9f0c627adf95f9746",
+          "random_token_matched": "b82e1a11414e4f4a3cebaa0bf094fde6305ee06374487bae247a52202db4afc6",
+          "flat_8000": "ad0ad12ab77c06e33dcbcd32cea61d6279cfd14e12a27da1819457217eac6eb7"
+        }
+      },
+      {
+        "task_id": "v7h10-sdtm-ct-conflict",
+        "optimized_tokens": 1766,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "7cf67e37e3b7d8ddf041be48f83bfd52739f85ce93dd83b0e73945ac5d0c3a74",
+          "full_corpus_bm25_token_matched": "625b1e510979c5eb0c38801aabb64c52327dae43059d4778383c978d2e94a38a",
+          "random_token_matched": "c4d15e3e5c48c97d3ed167adbb284ebea2612a3f879b9b5ecce3dbfb87f83472",
+          "flat_8000": "ddf0091f3059d36755676929cb50a78282a1ac41fd4a93b90bd8ce364174387e"
+        }
+      },
+      {
+        "task_id": "v7h11-p21-run-identity",
+        "optimized_tokens": 1298,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "88877178c10733906834b5e0ebab87025c07f754e40a12b51b941b2db06ca30d",
+          "full_corpus_bm25_token_matched": "fe315590aff056338c2222355e229442463aa4557dfb17035dca3ed2945fc0fb",
+          "random_token_matched": "2c74e8c4eafae47c7d6b3d77db83469684934e3b4dc2afbb8d016ecc9f38ce30",
+          "flat_8000": "263486ababcac6a8dc3ee5293db5eb6d74d710c19515283a6c03812d28d5b5f1"
+        }
+      },
+      {
+        "task_id": "v7h12-p21-finding-preservation",
+        "optimized_tokens": 976,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "d9f7b0008c66db96ba082858bdd560c95727da25b77dde83cf9e28911c313670",
+          "full_corpus_bm25_token_matched": "19b605b6d7b2265092da0209950c3f16bac51275da1b13c61a87779b6946d417",
+          "random_token_matched": "b6c7df3a6756bd3a5fa604c41b37057a2a6f9966a9a0554a233bf7b3a825783a",
+          "flat_8000": "d72f7cc8cc0351c55ad7c5bfffa4b5568cb54aaa366c6db36664a6d83b8fc040"
+        }
+      },
+      {
+        "task_id": "v7h13-p21-artifact-role",
+        "optimized_tokens": 860,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "f6b71d7d95ee3571b7c170f0ecbd85faf4a8af2993191fe8a266e30c4e5893ac",
+          "full_corpus_bm25_token_matched": "94422a44c01b60f5dcdce7257ca55fd118f96c5755d223888e69002c9ec1a554",
+          "random_token_matched": "a338d0159f2858053d0eda80a6d6184f763dd245514211646d469bb81e5d5f45",
+          "flat_8000": "8eb8dfbdfe094f0f19584bee98eaf45cd441a01bd455ac124e9ee5958567b5bc"
+        }
+      },
+      {
+        "task_id": "v7h14-define-method-crossref",
+        "optimized_tokens": 1665,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "56d46c4134a17b66b9be763a92e9cf0ed01dc9b759997db66177a1c505d1078e",
+          "full_corpus_bm25_token_matched": "c38c0d56f04e22b3ca0db2b76f7eee61f3fb2d03cf15b796d1854abf716722a1",
+          "random_token_matched": "99b835d473ec14a5fe1271f31e2ef2922dbc52f1673e8c9a98471bf677b74e2e",
+          "flat_8000": "dd316096245ae45e728895ce7552629bb585d201de03a963b9b90a292c8b787f"
+        }
+      },
+      {
+        "task_id": "v7h15-define-version-metadata",
+        "optimized_tokens": 1376,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "46b0f0444a4ce2cfbc5b972ed543b4883bba2b1edbf7db10d9fb46acb7f3cd03",
+          "full_corpus_bm25_token_matched": "8db6ec65e46ca7f287d770b4ab5dd987eaa4016b4a6ad6bd60b5a6378ee88324",
+          "random_token_matched": "cfeac29167e2c23bb1921900bc6637d6233010b533ee551ecd780d2e08163fd4",
+          "flat_8000": "92494081dcd192eb0fe8f8911022c0db6b17092f7eaa882d420052d793586aa5"
+        }
+      },
+      {
+        "task_id": "v7h16-define-value-list",
+        "optimized_tokens": 898,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "b634a3982ec91332764c2f3cc09dfdc2b271d4e6563b8fc1591ea573997c4a98",
+          "full_corpus_bm25_token_matched": "4cde446877b38354b56b995c84399321131c95a855b6b307ec677509bde217e4",
+          "random_token_matched": "f181e1fa60014f749f7afd0c8232341f44cffb04070973f04b0a56c975aca4b5",
+          "flat_8000": "caa70a674e790be558e0a3edeb0bb945acbfa21211b2a4bd7a30aa61d916b5f1"
+        }
+      },
+      {
+        "task_id": "v7h17-define-stale-version",
+        "optimized_tokens": 1618,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "9a289c682dc4bea1cf4457b3938df5f0ef841d9e0c951722c24dccedbfce4546",
+          "full_corpus_bm25_token_matched": "c0dd9447be33dacdc4fb850849b7c203565d32323ab4c278bef395ede00ff760",
+          "random_token_matched": "104ce36f2b45611bc463f05db9a405472ae993c81f65d28efa5e590f34344040",
+          "flat_8000": "0255728ed82133079dfeda13ea17a18f426d12b434fd9bade54113d342728e4a"
+        }
+      },
+      {
+        "task_id": "v7h18-tfl-demographics-denominator",
+        "optimized_tokens": 887,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "de6d2ee3dd82c2677c0ef31572bc916996ec272fee2a803c33a27176af7d5e69",
+          "full_corpus_bm25_token_matched": "e6e7ff1c2772a30c9fd9cf232bdbc2f8e6ea0a940aef46218859aab8661a15c2",
+          "random_token_matched": "c9d3b6c56ff7eb037f8a1ad3f79eedecfb0b4eb2bf1197ac01506fa705aacc2a",
+          "flat_8000": "4ceead6dc6292a244739a8555a58657a362911411db39a87d24f94bae42835ba"
+        }
+      },
+      {
+        "task_id": "v7h19-tfl-ae-subject-incidence",
+        "optimized_tokens": 991,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "766f141dddbcaef3e16fbcc5cf882ae58cdc31502c43ba1d306d762dc868aca2",
+          "full_corpus_bm25_token_matched": "6c8128e505589d0e60a82105736cc968f8ea88f712bb3f8e8d648a930882813c",
+          "random_token_matched": "0a5a191e396392be5740ea32b24abc701978d017f0e3c23e10f40101b9dcfa12",
+          "flat_8000": "841c1d21352c3810e3a0e96c5f9acfae687997fc1e24d4c52b03004b0f4ccc4d"
+        }
+      },
+      {
+        "task_id": "v7h20-tfl-event-count-label",
+        "optimized_tokens": 591,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "aae6ccd420c3486953a0058ff7fa664ac40c508f0758416cc8c156953a75b9f2",
+          "full_corpus_bm25_token_matched": "fd5e8179d9df542ff0702b422b0d3d3c9e76af7daf1117725ce0e3e4320b2819",
+          "random_token_matched": "b77f866c718b21030a4947a5d55cf743f18a91286b635d213107f8e184d346cc",
+          "flat_8000": "ca45c3de09074edf00a74ba89c92e15b93aff5736180823f7e6445e6833668c0"
+        }
+      },
+      {
+        "task_id": "v7h21-tfl-population-change",
+        "optimized_tokens": 1876,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "010968cefb0a0f149ed215c5efed2c0e47f8d907526ad1d92df2c5e7990ed2c6",
+          "full_corpus_bm25_token_matched": "42aafcfad319c625999f8367fea2b406d7d486b5eceb611d4f608aebb316a153",
+          "random_token_matched": "035b991f73e498380bddc4bf995834dea2b7f6ddd502023c31253673cc10292c",
+          "flat_8000": "0fbb6e8310b9a5d2e7f5e0a7cd82af1f60ab3ae8e28e27e2220304190ac89bb7"
+        }
+      },
+      {
+        "task_id": "v7h22-tfl-qc-method",
+        "optimized_tokens": 408,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "534ff56112df2902ac5290a52bb94c8738361638e08208b87b62664b5500b0aa",
+          "full_corpus_bm25_token_matched": "9ee425457fd8148bfa32ec7c6556d1d67c80b18b2ba09f81046415bf08ae3f3d",
+          "random_token_matched": "1e428f6ae7c532adc1124a5eba229d7409fd8805a49eaff55ca771c16f0cc568",
+          "flat_8000": "e2c7ebb293f3966be41b5d9cfaaf428d943f8edb7f12d7df1a4659e93fc17464"
+        }
+      },
+      {
+        "task_id": "v7h23-context-manifest-schema",
+        "optimized_tokens": 1752,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "267780299607bc067ac763fa9b419228197389809d86f0bf1c299ea132c5e893",
+          "full_corpus_bm25_token_matched": "15ebb06773ec91b36288eedf8a45fd1604fa31e832092adc4286fcbd888e0257",
+          "random_token_matched": "a817c17c1e42e7c798fb951b54605fbd1e70d9136ae266b7dea17f5533d59a9b",
+          "flat_8000": "b3ed2545eaa7cfe48f8ab6374f5fcd30ce00d3fcc67462e393342488f02c6270"
+        }
+      },
+      {
+        "task_id": "v7h24-change-containment-yaml",
+        "optimized_tokens": 1906,
+        "manifest_sha256": {
+          "graph_bm25_chunk_optimized": "e976419d7b28bcb3993156dacc0a1bc90593ca78fc32152cf554e9f55f8c3003",
+          "full_corpus_bm25_token_matched": "e47889d223fac80eb5f971d3f687d12e251cb1ced096353dab823b70b94ec066",
+          "random_token_matched": "2500d35fc9fb3099e7bb6f651f597213e34f80317cfd83155442d5136403561a",
+          "flat_8000": "bfd60e26779c4606810c14cb254362033c235c2f4f1462ee561ee5a2df6297d8"
+        }
+      }
+    ]
+  },
+  "manuscript_modified": false,
+  "operational_gxp_compliance_claimed": false,
+  "freeze_content_sha256": "c0d6aeaf9b3677de01327f31e3aaca381a43d558e230f5dd7cad8b884fadbed2"
+}

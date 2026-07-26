@@ -1,7 +1,7 @@
 ---
 name: define-xml-builder
 description: Generate final Define.xml for SDTM and ADaM datasets. Triggers on "Define.xml SDTM", "SDTM Define", "define-xml SDTM", "SDTM metadata", "CRT-DD", "final Define SDTM".
-version: "2.0"
+version: "3.0"
 user-invocable: true
 context: fork
 model: sonnet
@@ -85,7 +85,7 @@ Parse $ARGUMENTS: --input, --draft, --output, --validate, --dry-run
 <ItemGroupDef OID="IG.DM" Name="DM" Domain="DM"
               Repeating="No" IsReferenceData="No"
               def:Structure="One record per subject"
-              def:DatasetName="DM"
+              def:Class="SPECIAL PURPOSE"
               def:HasNoData="No">
   <Description><TranslatedText>Demographics</TranslatedText></Description>
   <ItemRef ItemOID="IT.DM.STUDYID" OrderNumber="1" Mandatory="Yes"/>
@@ -96,9 +96,9 @@ Parse $ARGUMENTS: --input, --draft, --output, --validate, --dry-run
 
 ### ItemDef (Variable-Level)
 ```xml
-<ItemDef OID="IT.DM.SEX" Name="SEX" DataType="text" Length="$SEX_LENGTH"
-         def:Label="Sex">
-  <Description><TranslatedText>Sex of the subject</TranslatedText></Description>
+<ItemDef OID="IT.DM.SEX" Name="SEX" DataType="text" Length="$SEX_LENGTH">
+  <Description><TranslatedText xml:lang="en">Sex</TranslatedText></Description>
+  <def:Origin Type="CRF"/>
   <CodeListRef CodeListOID="CL.SEX"/>
 </ItemDef>
 ```
@@ -115,13 +115,17 @@ Parse $ARGUMENTS: --input, --draft, --output, --validate, --dry-run
 </CodeList>
 ```
 
-### ComputationalMethod
+### MethodDef and ItemRef Cross-Reference
 ```xml
-<def:ComputationalMethod OID="CM.USUBJID" Name="USUBJID Derivation">
+<ItemRef ItemOID="IT.DM.USUBJID" OrderNumber="2" Mandatory="Yes"
+         MethodOID="MT.DM.USUBJID"/>
+<MethodDef OID="MT.DM.USUBJID" Name="USUBJID Derivation"
+           Type="Computation">
   <Description>
-    <TranslatedText>USUBJID = STUDYID || '-' || SITEID || '-' || SUBJID</TranslatedText>
+    <TranslatedText xml:lang="en">Assigned consistently from the
+    sponsor-defined subject identifier algorithm.</TranslatedText>
   </Description>
-</def:ComputationalMethod>
+</MethodDef>
 ```
 
 ---
@@ -162,15 +166,17 @@ define_xml_result:
 ### Value-Level Metadata
 - Some variables require value-level metadata (e.g., VSTESTCD has different attributes per test)
 - Must define ValueListDef for these variables
-- Document in the ItemDef with def:ValueListRef
+- Reference the list from the parent ItemDef with
+  `<def:ValueListRef ValueListOID="VL..."/>`
 
 ### Supplemental Qualifiers
-- SUPPXX datasets must reference their parent domains via RELDEF
-- Document the relationship in the Define.xml structure
+- Document SUPPQUAL dataset keys and the parent-domain relationship in metadata;
+  do not invent a `RELDEF` element
 
 ### Custom Domains
 - Non-standard domains must document justification
-- Include custom domain metadata with def:CustomDomain attribute
+- Mark nonstandard structures with attributes admitted by the pinned schema and
+  document the justification; do not invent a `def:CustomDomain` attribute
 
 ---
 
@@ -197,7 +203,8 @@ define_xml_result:
 - Schema-valid against Define-XML v2.1 schema
 - All datasets and variables documented
 - Controlled terminology references valid (CDISC CT version documented)
-- Computational methods documented for derived variables
+- `MethodDef` elements documented and linked by `ItemRef/@MethodOID` for
+  derived variables where a method is required
 
 **Recommended:**
 - Renders correctly in CDISC stylesheet
@@ -219,6 +226,35 @@ define_xml_result:
 - Document the CT version used for each codelist
 - Validate schema compliance before output
 - Generate from both draft and actual datasets
+
+---
+
+## Audited Schema and Version Constraints (V7-RS-DEFINE-2026-07)
+
+### Constraints
+
+- Pin ODM namespace `http://www.cdisc.org/ns/odm/v1.3` and Define namespace
+  `http://www.cdisc.org/ns/def/v2.1` for this profile.
+- `MetaDataVersion` carries `def:DefineVersion="2.1.0"` plus the actual
+  `def:StandardName` and `def:StandardVersion`.
+- A variable label is represented by `ItemDef/Description/TranslatedText`;
+  `def:Label` is not admitted by this profile.
+- Derivations use ODM `MethodDef` and are linked from `ItemRef/@MethodOID`.
+  `def:ComputationalMethod` and `MethodRef` are forbidden hallucinations.
+- A value-level list is linked from its parent `ItemDef` using
+  `def:ValueListRef/@ValueListOID`; every OID reference resolves exactly once.
+- Use a versioned `CodeList` with the applicable NCI external-code alias for
+  CDISC CT, and `ExternalCodeList` for external dictionaries when appropriate.
+  Never represent a CT package by an invented `<Include href="...">` element.
+
+### Validation
+
+1. Validate against the exact Define-XML v2.1 XSD set and record XSD hashes.
+2. Resolve every `ItemOID`, `CodeListOID`, `MethodOID`, `ValueListOID`,
+   `WhereClauseOID`, comment, leaf, and document reference.
+3. Reconcile dataset/variable metadata against the delivered transport files.
+4. Record SDTMIG/ADaMIG, CT package date, MedDRA version, stylesheet hash, and
+   validation-engine/rule-catalog versions in the reproducibility manifest.
 
 ---
 

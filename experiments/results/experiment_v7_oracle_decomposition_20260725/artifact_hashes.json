@@ -1,0 +1,12 @@
+{
+  "analysis-report.md": "7e77322c3e1f21acf93dea6f4b97ab186304b9c422d9469ff6d08c17d6060706",
+  "failure_log.json": "a298fb68ad9707fb918ad5993ce71d66f024efea9698231e82158348877a57dc",
+  "figure-catalog.md": "15816c09a8c05d4c0e958481c2ac5cf03f0cba7972cbb0311843273fc3b14bfa",
+  "figures/figure-01-oracle-retrieval.svg": "56b40a4e6cd24dddf4c6133dd62dd0bb7d6503c60c85f8f678f7dd93af098ae8",
+  "figures/figure-02-error-decomposition.svg": "de7e7407ba0a19c7ba2d9c51be9be01e029692cd0271c4e4159744d62cff83ab",
+  "figures/figure-03-evidence-output-delta.svg": "d4437632673fa32e82deed5f04953a29868dbe27cef8184df6f9ca81568037c9",
+  "input_hashes.json": "be393ef7f77d96167d7cffca91d18ac6abd4a7379b284f6aca3b34d8a02bca56",
+  "oracle_decomposition.json": "f2aa9dcbb3c0ec1c2c8ff7b1b8460b5ff2949f1f5d0b556f1fd8d18d26984ea7",
+  "regulatory-alignment-matrix.md": "066731b7b7b59fb8c4c29b058cddc2bff44b7444cd35b483fd39b3e43d831722",
+  "stats-appendix.md": "15db2dc2e6f9d01e5ab8529c3654681b0db9caa4cf6762c5564077fd823f64e1"
+}

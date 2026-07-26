@@ -1,7 +1,7 @@
 ---
 name: sdtm-ae-mapper
 description: Map adverse event data to SDTM AE domain with MedDRA coding. Triggers on "AE", "adverse event", "AETERM", "AEDECOD", "MedDRA".
-version: "1.0"
+version: "3.0"
 user-invocable: true
 context: fork
 model: sonnet
@@ -84,10 +84,8 @@ Parse $ARGUMENTS: --input, --output, --spec, --study-config, --meddra, --validat
 | AEENDTC | No | RAW.AE | End date/time (ISO 8601) |
 | AESTDY | No | Derived | Study day of AE start |
 | AEENDY | No | Derived | Study day of AE end |
-| AEDUR | No | Derived | Duration of AE |
 | AEENRF | No | Derived | End relative to reference period |
 | AEENTPT | No | Derived | End reference time point |
-| AETRTEM | No | Derived | Treatment-emergent flag (SDTM-level) |
 
 ---
 
@@ -143,7 +141,7 @@ def meddra_code(aeterm, meddra_dictionary):
 # Document the MedDRA version used for coding
 # Must be specified in study config (ops/workflow-state.yaml or --study-config)
 # Update if newer version required by regulatory authority
-meddra_version = study_config.get('meddra_version', 'latest')
+meddra_version = require_pinned_meddra_version(study_config)
 ```
 
 ---
@@ -226,19 +224,21 @@ def derive_study_days(aestdtc, aeendtc, rfstdtc):
     """
     Study day relative to reference start date (RFSTDTC from DM).
 
-    AESTDY = (AESTDTC - RFSTDTC) + 1
-    If AESTDTC < RFSTDTC: negative study day
-    Partial dates: use imputed date for calculation
+    AESTDY = (AESTDTC - RFSTDTC) + 1 when AESTDTC >= RFSTDTC
+    AESTDY = (AESTDTC - RFSTDTC) when AESTDTC < RFSTDTC
+    Partial dates: leave study day missing when the ordering/day is indeterminate
 
     AEENDY = (AEENDTC - RFSTDTC) + 1
     """
     if aestdtc and rfstdtc:
-        aestdy = (parse_iso_date(aestdtc) - parse_iso_date(rfstdtc)).days + 1
+        difference = (parse_iso_date(aestdtc) - parse_iso_date(rfstdtc)).days
+        aestdy = difference + 1 if difference >= 0 else difference
     else:
         aestdy = None
 
     if aeendtc and rfstdtc:
-        aeendy = (parse_iso_date(aeendtc) - parse_iso_date(rfstdtc)).days + 1
+        difference = (parse_iso_date(aeendtc) - parse_iso_date(rfstdtc)).days
+        aeendy = difference + 1 if difference >= 0 else difference
     else:
         aeendy = None
 
@@ -370,15 +370,16 @@ ae_domain:
 # AEENDTC is null:
 # - Event may be ongoing at data cutoff
 # - AEOUT may be "NOT RECOVERED/NOT RESOLVED"
-# - AEDUR should be null (cannot calculate without end date)
+# - Analysis duration remains an ADAE derivation and is missing without an end date
 ```
 
 ### Pre-Treatment AEs
 ```python
 # AE start date before first dose (AESTDTC < RFSTDTC):
 # - Include in AE domain
-# - AESTDY will be negative (or zero)
-# - Treatment-emergent flag (AETRTEM) = 'N'
+# - AESTDY is negative; there is no SDTM study day zero
+# - Derive treatment-emergence in ADAE under the SAP rule, not in a nonstandard
+#   SDTM AE variable
 ```
 
 ---
@@ -402,16 +403,15 @@ ae_domain:
 
 ---
 
-## P21 Validation -- Common AE Failures
+## Versioned Validation Findings
 
-| Rule ID | Message | How to Avoid |
-|---------|---------|--------------|
-| SD0001 | AETERM is missing | Always populate verbatim term |
-| SD0002 | AEDECOD is missing | Complete MedDRA coding before output |
-| SD0003 | AEBODSYS is missing | Derive from MedDRA hierarchy |
-| SD1001 | AESER inconsistent with seriousness criteria | AESER='Y' iff any criterion='Y' |
-| SD0051 | AESTDTC format invalid | Use ISO 8601 format |
-| SD0053 | AEENDTC before AESTDTC | Validate date logic |
+Do not embed assumed Pinnacle 21 rule identifiers in mapping logic or test
+expectations. Preserve identifiers, messages, and severities exactly as emitted
+by the frozen engine and rule catalog. Mapping-level checks such as nonmissing
+verbatim terms, dictionary coding completeness, seriousness-criterion
+consistency, ISO 8601 syntax, and start/end chronology are sponsor QC checks
+unless the recorded validation output explicitly associates them with a
+versioned engine finding.
 
 ---
 
@@ -427,7 +427,7 @@ ae_domain:
 **Recommended:**
 - Complete MedDRA hierarchy (PT, HLT, HLGT, SOC)
 - Study days derived for all records with valid dates
-- Treatment-emergent flag derived
+- Treatment-emergence deferred to traceable ADAE derivation
 - Severity mapping complete
 
 ---
@@ -450,6 +450,40 @@ ae_domain:
 - Validate USUBJID against DM domain
 - Document MedDRA version used for coding
 - Generate traceable, reproducible results
+
+---
+
+## Audited Derivation and Dictionary Constraints (V7-RS-SDTM-AE-2026-07)
+
+### Constraints
+
+- Preserve partial `AESTDTC`/`AEENDTC` values in SDTM. Do not impute a complete
+  SDTM date to calculate `AESTDY` or `AEENDY`; leave study day missing when the
+  source precision cannot support it.
+- `AEDUR` and `AETRTEM` are not admitted standard AE variables in this profile.
+  Derive duration and treatment-emergence in ADAE using prespecified rules,
+  analysis-date imputation flags, and traceability to the original AE date.
+- Use the pinned MedDRA version for all hierarchy fields. Never use `"latest"`
+  as a reproducible dictionary version and never combine terms coded under
+  different versions without an explicit recoding/conflict decision.
+
+### Derivation
+
+For a complete event date and complete `RFSTDTC`, use the no-day-zero rule:
+
+```python
+difference = (event_date - rfstdtc).days
+study_day = difference + 1 if difference >= 0 else difference
+```
+
+### Validation
+
+1. Verify verbatim `AETERM` preservation and dictionary-derived coding fields.
+2. Record MedDRA version, dictionary checksum, coding timestamp, and coding status.
+3. Reconcile `AESER` with the collected seriousness criteria and retain source
+   discrepancies for review rather than overwriting source silently.
+4. Fail any cross-version merge until all records are reconciled to the pinned
+   MedDRA version.
 
 ---
 

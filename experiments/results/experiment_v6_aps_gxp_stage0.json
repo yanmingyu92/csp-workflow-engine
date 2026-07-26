@@ -1,0 +1,2432 @@
+{
+  "report_version": "aps-gxp-v6-stage0-1",
+  "generated_at": "2026-07-25T06:00:21.473037+00:00",
+  "network_calls": 0,
+  "seed": 42,
+  "budget": 8000,
+  "task_ids": [
+    "task-01-sap-parse",
+    "task-02-protocol-setup",
+    "task-06-sdtm-dm",
+    "task-07-sdtm-ae",
+    "task-10-p21-sdtm",
+    "task-13-adam-adsl",
+    "task-14-adam-adae",
+    "task-17-tfl-demographics",
+    "task-20-tfl-ae",
+    "task-21-define-sdtm"
+  ],
+  "task_count": 10,
+  "arms": [
+    "aps_v5_frozen",
+    "aps_gxp_optimized",
+    "flat_8000",
+    "random_token_matched"
+  ],
+  "repeats": 3,
+  "relevance_rule": {
+    "version": "bm25-k1-1.2-b-0.75-absolute-10.0",
+    "absolute_threshold": 10.0
+  },
+  "optimization_policy": {
+    "version": "optimized-soft-cap-0.84-full-current-override-v1",
+    "soft_cap_ratio": 0.84,
+    "full_current_override": true
+  },
+  "source_hashes": {
+    "runner": "304238a34de570f6dcb1d920d68eb25d2e0e3009848a21571dc5e77cac82a232",
+    "v6_context": "452cd46ff7d1cb6b067fc54e28314d9deab33e2b7154512603d94ba9e947f617",
+    "v5_runner": "ee717d96f0343eac759742491a70493bd353a7606ec44f7c6f9ee60cb5622efd",
+    "analyzer": "56e08f177aed773b845c3200a6a38a664fbf83bd0c8db0693d3076652592336d",
+    "scheduler": "ed0125d6db267d7456df58b53d0687b9ead076d5ffae484380916c582d88154f",
+    "invocation": "f3fc2a7e0c5a6d5c5b3e2e4892042dbf2917d483f626dcc93101a9e7c59074fd",
+    "graph": "6c0b6e45ea47008021cea4cdc10286ee2322211d7551228f17b13247dbdcb4b5",
+    "regulatory_patterns": "14d7b9dce5af789d9c18b81f12de0272c275e9c5ae2d641cfd3e0d31537fda4f",
+    "design": "4bc55199fef7c37a8d38cf504aff19529a77ed6ac1b0be7917ba7ba7a95e715b",
+    "system_prompt": "323fa149855bd915cee6dbdf776d3f02d3d0aa7a2820c8766cdbe103427f1139",
+    "task_panel": "4f198f1b7e76094de4fe8e549e2cc22c65c7ce94f45ffff1c54b0c11618a044b",
+    "judge_prompt": "3ca4589e764f6673230255b122fbd453a06aea7805114e31e058b775eef4113d",
+    "relevance_rule": "b28b762b3a9a9b9210f616a2b255679dc7cfc6c8e7e865d8a8d03c0582df943b",
+    "optimization_policy": "e35d70b449d9a7450da2201ec65d3d67bc16f1a522892fa284873ed44481e34f",
+    "skill_manifest": "0cead079089d226d3f35fc9257320bdabafc7f0e35b9f684e97863ec53b11247"
+  },
+  "actuals": {
+    "context_cells": 40,
+    "context_builds": 120,
+    "optimized_tokens": {
+      "task-01-sap-parse": 3082,
+      "task-02-protocol-setup": 2426,
+      "task-06-sdtm-dm": 6215,
+      "task-07-sdtm-ae": 6351,
+      "task-10-p21-sdtm": 6852,
+      "task-13-adam-adsl": 6707,
+      "task-14-adam-adae": 5867,
+      "task-17-tfl-demographics": 6151,
+      "task-20-tfl-ae": 6718,
+      "task-21-define-sdtm": 6474
+    },
+    "flat_tokens": {
+      "task-01-sap-parse": 7986,
+      "task-02-protocol-setup": 7986,
+      "task-06-sdtm-dm": 7986,
+      "task-07-sdtm-ae": 7986,
+      "task-10-p21-sdtm": 7986,
+      "task-13-adam-adsl": 7986,
+      "task-14-adam-adae": 7986,
+      "task-17-tfl-demographics": 7986,
+      "task-20-tfl-ae": 7986,
+      "task-21-define-sdtm": 7986
+    },
+    "random_token_differences": {
+      "task-01-sap-parse": 0,
+      "task-02-protocol-setup": 0,
+      "task-06-sdtm-dm": 0,
+      "task-07-sdtm-ae": 0,
+      "task-10-p21-sdtm": 0,
+      "task-13-adam-adsl": 0,
+      "task-14-adam-adae": 0,
+      "task-17-tfl-demographics": 0,
+      "task-20-tfl-ae": 0,
+      "task-21-define-sdtm": 0
+    },
+    "change_impact": {
+      "per_arm": {
+        "aps_v5_frozen": {
+          "per_skill_affected_tasks": {
+            "acrf-finalizer": 1,
+            "adam-adae-builder": 5,
+            "adam-adeff-builder": 3,
+            "adam-adlb-builder": 3,
+            "adam-adsl-builder": 6,
+            "adam-adtte-builder": 1,
+            "adam-custom-builder": 1,
+            "adam-traceability-checker": 2,
+            "adam-validator": 7,
+            "adrg-writer": 0,
+            "crf-annotator": 0,
+            "crf-validator": 0,
+            "data-extract": 1,
+            "data-quality": 10,
+            "data-reconciler": 0,
+            "data-validator": 2,
+            "define-draft-builder": 2,
+            "define-xml-builder": 2,
+            "define-xml-validator": 2,
+            "esub-assembler": 0,
+            "esub-validator": 0,
+            "p21-adam-validation": 0,
+            "p21-report-reviewer": 6,
+            "p21-validator": 6,
+            "principle-review": 0,
+            "quality-report": 2,
+            "sap-parser": 2,
+            "sdrg-writer": 1,
+            "sdtm-ae-mapper": 3,
+            "sdtm-cm-mapper": 1,
+            "sdtm-consistency-checker": 1,
+            "sdtm-custom-builder": 1,
+            "sdtm-dm-mapper": 2,
+            "sdtm-ds-mapper": 1,
+            "sdtm-ex-mapper": 1,
+            "sdtm-lb-mapper": 1,
+            "sdtm-mh-mapper": 1,
+            "sdtm-relrec-builder": 3,
+            "sdtm-supp-builder": 2,
+            "sdtm-sv-mapper": 1,
+            "sdtm-trial-design-builder": 2,
+            "sdtm-validator": 5,
+            "sdtm-vs-mapper": 1,
+            "spec-builder": 4,
+            "spec-reviewer": 4,
+            "study-setup": 1,
+            "submission-checklist": 0,
+            "tfl-comparator": 3,
+            "tfl-demographics": 0,
+            "tfl-double-programmer": 2,
+            "tfl-figure-generator": 1,
+            "tfl-formatter": 4,
+            "tfl-listing-generator": 1,
+            "tfl-qc-validator": 3,
+            "tfl-shell-reviewer": 3,
+            "tfl-table-generator": 4,
+            "tfl-template-builder": 3,
+            "workflow": 10,
+            "workflow-status": 10
+          },
+          "per_skill_affected_task_proportion": {
+            "acrf-finalizer": 0.1,
+            "adam-adae-builder": 0.5,
+            "adam-adeff-builder": 0.3,
+            "adam-adlb-builder": 0.3,
+            "adam-adsl-builder": 0.6,
+            "adam-adtte-builder": 0.1,
+            "adam-custom-builder": 0.1,
+            "adam-traceability-checker": 0.2,
+            "adam-validator": 0.7,
+            "adrg-writer": 0.0,
+            "crf-annotator": 0.0,
+            "crf-validator": 0.0,
+            "data-extract": 0.1,
+            "data-quality": 1.0,
+            "data-reconciler": 0.0,
+            "data-validator": 0.2,
+            "define-draft-builder": 0.2,
+            "define-xml-builder": 0.2,
+            "define-xml-validator": 0.2,
+            "esub-assembler": 0.0,
+            "esub-validator": 0.0,
+            "p21-adam-validation": 0.0,
+            "p21-report-reviewer": 0.6,
+            "p21-validator": 0.6,
+            "principle-review": 0.0,
+            "quality-report": 0.2,
+            "sap-parser": 0.2,
+            "sdrg-writer": 0.1,
+            "sdtm-ae-mapper": 0.3,
+            "sdtm-cm-mapper": 0.1,
+            "sdtm-consistency-checker": 0.1,
+            "sdtm-custom-builder": 0.1,
+            "sdtm-dm-mapper": 0.2,
+            "sdtm-ds-mapper": 0.1,
+            "sdtm-ex-mapper": 0.1,
+            "sdtm-lb-mapper": 0.1,
+            "sdtm-mh-mapper": 0.1,
+            "sdtm-relrec-builder": 0.3,
+            "sdtm-supp-builder": 0.2,
+            "sdtm-sv-mapper": 0.1,
+            "sdtm-trial-design-builder": 0.2,
+            "sdtm-validator": 0.5,
+            "sdtm-vs-mapper": 0.1,
+            "spec-builder": 0.4,
+            "spec-reviewer": 0.4,
+            "study-setup": 0.1,
+            "submission-checklist": 0.0,
+            "tfl-comparator": 0.3,
+            "tfl-demographics": 0.0,
+            "tfl-double-programmer": 0.2,
+            "tfl-figure-generator": 0.1,
+            "tfl-formatter": 0.4,
+            "tfl-listing-generator": 0.1,
+            "tfl-qc-validator": 0.3,
+            "tfl-shell-reviewer": 0.3,
+            "tfl-table-generator": 0.4,
+            "tfl-template-builder": 0.3,
+            "workflow": 1.0,
+            "workflow-status": 1.0
+          },
+          "mean_affected_tasks": 2.440677966101695,
+          "median_affected_tasks": 2,
+          "range_affected_tasks": [
+            0,
+            10
+          ],
+          "mean_affected_task_proportion": 0.2440677966101695,
+          "median_affected_task_proportion": 0.2,
+          "range_affected_task_proportion": [
+            0.0,
+            1.0
+          ]
+        },
+        "aps_gxp_optimized": {
+          "per_skill_affected_tasks": {
+            "acrf-finalizer": 1,
+            "adam-adae-builder": 5,
+            "adam-adeff-builder": 3,
+            "adam-adlb-builder": 3,
+            "adam-adsl-builder": 6,
+            "adam-adtte-builder": 1,
+            "adam-custom-builder": 1,
+            "adam-traceability-checker": 2,
+            "adam-validator": 7,
+            "adrg-writer": 0,
+            "crf-annotator": 0,
+            "crf-validator": 0,
+            "data-extract": 1,
+            "data-quality": 10,
+            "data-reconciler": 0,
+            "data-validator": 2,
+            "define-draft-builder": 2,
+            "define-xml-builder": 2,
+            "define-xml-validator": 2,
+            "esub-assembler": 0,
+            "esub-validator": 0,
+            "p21-adam-validation": 0,
+            "p21-report-reviewer": 6,
+            "p21-validator": 6,
+            "principle-review": 0,
+            "quality-report": 2,
+            "sap-parser": 2,
+            "sdrg-writer": 1,
+            "sdtm-ae-mapper": 3,
+            "sdtm-cm-mapper": 1,
+            "sdtm-consistency-checker": 1,
+            "sdtm-custom-builder": 1,
+            "sdtm-dm-mapper": 2,
+            "sdtm-ds-mapper": 1,
+            "sdtm-ex-mapper": 1,
+            "sdtm-lb-mapper": 1,
+            "sdtm-mh-mapper": 1,
+            "sdtm-relrec-builder": 3,
+            "sdtm-supp-builder": 2,
+            "sdtm-sv-mapper": 1,
+            "sdtm-trial-design-builder": 2,
+            "sdtm-validator": 5,
+            "sdtm-vs-mapper": 1,
+            "spec-builder": 4,
+            "spec-reviewer": 4,
+            "study-setup": 1,
+            "submission-checklist": 0,
+            "tfl-comparator": 3,
+            "tfl-demographics": 0,
+            "tfl-double-programmer": 2,
+            "tfl-figure-generator": 1,
+            "tfl-formatter": 4,
+            "tfl-listing-generator": 1,
+            "tfl-qc-validator": 3,
+            "tfl-shell-reviewer": 3,
+            "tfl-table-generator": 4,
+            "tfl-template-builder": 3,
+            "workflow": 10,
+            "workflow-status": 10
+          },
+          "per_skill_affected_task_proportion": {
+            "acrf-finalizer": 0.1,
+            "adam-adae-builder": 0.5,
+            "adam-adeff-builder": 0.3,
+            "adam-adlb-builder": 0.3,
+            "adam-adsl-builder": 0.6,
+            "adam-adtte-builder": 0.1,
+            "adam-custom-builder": 0.1,
+            "adam-traceability-checker": 0.2,
+            "adam-validator": 0.7,
+            "adrg-writer": 0.0,
+            "crf-annotator": 0.0,
+            "crf-validator": 0.0,
+            "data-extract": 0.1,
+            "data-quality": 1.0,
+            "data-reconciler": 0.0,
+            "data-validator": 0.2,
+            "define-draft-builder": 0.2,
+            "define-xml-builder": 0.2,
+            "define-xml-validator": 0.2,
+            "esub-assembler": 0.0,
+            "esub-validator": 0.0,
+            "p21-adam-validation": 0.0,
+            "p21-report-reviewer": 0.6,
+            "p21-validator": 0.6,
+            "principle-review": 0.0,
+            "quality-report": 0.2,
+            "sap-parser": 0.2,
+            "sdrg-writer": 0.1,
+            "sdtm-ae-mapper": 0.3,
+            "sdtm-cm-mapper": 0.1,
+            "sdtm-consistency-checker": 0.1,
+            "sdtm-custom-builder": 0.1,
+            "sdtm-dm-mapper": 0.2,
+            "sdtm-ds-mapper": 0.1,
+            "sdtm-ex-mapper": 0.1,
+            "sdtm-lb-mapper": 0.1,
+            "sdtm-mh-mapper": 0.1,
+            "sdtm-relrec-builder": 0.3,
+            "sdtm-supp-builder": 0.2,
+            "sdtm-sv-mapper": 0.1,
+            "sdtm-trial-design-builder": 0.2,
+            "sdtm-validator": 0.5,
+            "sdtm-vs-mapper": 0.1,
+            "spec-builder": 0.4,
+            "spec-reviewer": 0.4,
+            "study-setup": 0.1,
+            "submission-checklist": 0.0,
+            "tfl-comparator": 0.3,
+            "tfl-demographics": 0.0,
+            "tfl-double-programmer": 0.2,
+            "tfl-figure-generator": 0.1,
+            "tfl-formatter": 0.4,
+            "tfl-listing-generator": 0.1,
+            "tfl-qc-validator": 0.3,
+            "tfl-shell-reviewer": 0.3,
+            "tfl-table-generator": 0.4,
+            "tfl-template-builder": 0.3,
+            "workflow": 1.0,
+            "workflow-status": 1.0
+          },
+          "mean_affected_tasks": 2.440677966101695,
+          "median_affected_tasks": 2,
+          "range_affected_tasks": [
+            0,
+            10
+          ],
+          "mean_affected_task_proportion": 0.2440677966101695,
+          "median_affected_task_proportion": 0.2,
+          "range_affected_task_proportion": [
+            0.0,
+            1.0
+          ]
+        },
+        "flat_8000": {
+          "per_skill_affected_tasks": {
+            "acrf-finalizer": 10,
+            "adam-adae-builder": 10,
+            "adam-adeff-builder": 10,
+            "adam-adlb-builder": 10,
+            "adam-adsl-builder": 10,
+            "adam-adtte-builder": 10,
+            "adam-custom-builder": 10,
+            "adam-traceability-checker": 10,
+            "adam-validator": 10,
+            "adrg-writer": 10,
+            "crf-annotator": 10,
+            "crf-validator": 10,
+            "data-extract": 10,
+            "data-quality": 10,
+            "data-reconciler": 10,
+            "data-validator": 10,
+            "define-draft-builder": 10,
+            "define-xml-builder": 10,
+            "define-xml-validator": 10,
+            "esub-assembler": 10,
+            "esub-validator": 10,
+            "p21-adam-validation": 10,
+            "p21-report-reviewer": 10,
+            "p21-validator": 10,
+            "principle-review": 10,
+            "quality-report": 10,
+            "sap-parser": 10,
+            "sdrg-writer": 10,
+            "sdtm-ae-mapper": 10,
+            "sdtm-cm-mapper": 10,
+            "sdtm-consistency-checker": 10,
+            "sdtm-custom-builder": 10,
+            "sdtm-dm-mapper": 10,
+            "sdtm-ds-mapper": 10,
+            "sdtm-ex-mapper": 10,
+            "sdtm-lb-mapper": 10,
+            "sdtm-mh-mapper": 10,
+            "sdtm-relrec-builder": 10,
+            "sdtm-supp-builder": 10,
+            "sdtm-sv-mapper": 10,
+            "sdtm-trial-design-builder": 10,
+            "sdtm-validator": 10,
+            "sdtm-vs-mapper": 10,
+            "spec-builder": 10,
+            "spec-reviewer": 10,
+            "study-setup": 10,
+            "submission-checklist": 10,
+            "tfl-comparator": 10,
+            "tfl-demographics": 10,
+            "tfl-double-programmer": 10,
+            "tfl-figure-generator": 10,
+            "tfl-formatter": 10,
+            "tfl-listing-generator": 10,
+            "tfl-qc-validator": 10,
+            "tfl-shell-reviewer": 10,
+            "tfl-table-generator": 10,
+            "tfl-template-builder": 10,
+            "workflow": 10,
+            "workflow-status": 10
+          },
+          "per_skill_affected_task_proportion": {
+            "acrf-finalizer": 1.0,
+            "adam-adae-builder": 1.0,
+            "adam-adeff-builder": 1.0,
+            "adam-adlb-builder": 1.0,
+            "adam-adsl-builder": 1.0,
+            "adam-adtte-builder": 1.0,
+            "adam-custom-builder": 1.0,
+            "adam-traceability-checker": 1.0,
+            "adam-validator": 1.0,
+            "adrg-writer": 1.0,
+            "crf-annotator": 1.0,
+            "crf-validator": 1.0,
+            "data-extract": 1.0,
+            "data-quality": 1.0,
+            "data-reconciler": 1.0,
+            "data-validator": 1.0,
+            "define-draft-builder": 1.0,
+            "define-xml-builder": 1.0,
+            "define-xml-validator": 1.0,
+            "esub-assembler": 1.0,
+            "esub-validator": 1.0,
+            "p21-adam-validation": 1.0,
+            "p21-report-reviewer": 1.0,
+            "p21-validator": 1.0,
+            "principle-review": 1.0,
+            "quality-report": 1.0,
+            "sap-parser": 1.0,
+            "sdrg-writer": 1.0,
+            "sdtm-ae-mapper": 1.0,
+            "sdtm-cm-mapper": 1.0,
+            "sdtm-consistency-checker": 1.0,
+            "sdtm-custom-builder": 1.0,
+            "sdtm-dm-mapper": 1.0,
+            "sdtm-ds-mapper": 1.0,
+            "sdtm-ex-mapper": 1.0,
+            "sdtm-lb-mapper": 1.0,
+            "sdtm-mh-mapper": 1.0,
+            "sdtm-relrec-builder": 1.0,
+            "sdtm-supp-builder": 1.0,
+            "sdtm-sv-mapper": 1.0,
+            "sdtm-trial-design-builder": 1.0,
+            "sdtm-validator": 1.0,
+            "sdtm-vs-mapper": 1.0,
+            "spec-builder": 1.0,
+            "spec-reviewer": 1.0,
+            "study-setup": 1.0,
+            "submission-checklist": 1.0,
+            "tfl-comparator": 1.0,
+            "tfl-demographics": 1.0,
+            "tfl-double-programmer": 1.0,
+            "tfl-figure-generator": 1.0,
+            "tfl-formatter": 1.0,
+            "tfl-listing-generator": 1.0,
+            "tfl-qc-validator": 1.0,
+            "tfl-shell-reviewer": 1.0,
+            "tfl-table-generator": 1.0,
+            "tfl-template-builder": 1.0,
+            "workflow": 1.0,
+            "workflow-status": 1.0
+          },
+          "mean_affected_tasks": 10,
+          "median_affected_tasks": 10,
+          "range_affected_tasks": [
+            10,
+            10
+          ],
+          "mean_affected_task_proportion": 1.0,
+          "median_affected_task_proportion": 1.0,
+          "range_affected_task_proportion": [
+            1.0,
+            1.0
+          ]
+        },
+        "random_token_matched": {
+          "per_skill_affected_tasks": {
+            "acrf-finalizer": 10,
+            "adam-adae-builder": 10,
+            "adam-adeff-builder": 10,
+            "adam-adlb-builder": 10,
+            "adam-adsl-builder": 10,
+            "adam-adtte-builder": 10,
+            "adam-custom-builder": 10,
+            "adam-traceability-checker": 10,
+            "adam-validator": 10,
+            "adrg-writer": 10,
+            "crf-annotator": 10,
+            "crf-validator": 10,
+            "data-extract": 10,
+            "data-quality": 10,
+            "data-reconciler": 10,
+            "data-validator": 10,
+            "define-draft-builder": 10,
+            "define-xml-builder": 10,
+            "define-xml-validator": 10,
+            "esub-assembler": 10,
+            "esub-validator": 10,
+            "p21-adam-validation": 10,
+            "p21-report-reviewer": 10,
+            "p21-validator": 10,
+            "principle-review": 10,
+            "quality-report": 10,
+            "sap-parser": 10,
+            "sdrg-writer": 10,
+            "sdtm-ae-mapper": 10,
+            "sdtm-cm-mapper": 10,
+            "sdtm-consistency-checker": 10,
+            "sdtm-custom-builder": 10,
+            "sdtm-dm-mapper": 10,
+            "sdtm-ds-mapper": 10,
+            "sdtm-ex-mapper": 10,
+            "sdtm-lb-mapper": 10,
+            "sdtm-mh-mapper": 10,
+            "sdtm-relrec-builder": 10,
+            "sdtm-supp-builder": 10,
+            "sdtm-sv-mapper": 10,
+            "sdtm-trial-design-builder": 10,
+            "sdtm-validator": 10,
+            "sdtm-vs-mapper": 10,
+            "spec-builder": 10,
+            "spec-reviewer": 10,
+            "study-setup": 10,
+            "submission-checklist": 10,
+            "tfl-comparator": 10,
+            "tfl-demographics": 10,
+            "tfl-double-programmer": 10,
+            "tfl-figure-generator": 10,
+            "tfl-formatter": 10,
+            "tfl-listing-generator": 10,
+            "tfl-qc-validator": 10,
+            "tfl-shell-reviewer": 10,
+            "tfl-table-generator": 10,
+            "tfl-template-builder": 10,
+            "workflow": 10,
+            "workflow-status": 10
+          },
+          "per_skill_affected_task_proportion": {
+            "acrf-finalizer": 1.0,
+            "adam-adae-builder": 1.0,
+            "adam-adeff-builder": 1.0,
+            "adam-adlb-builder": 1.0,
+            "adam-adsl-builder": 1.0,
+            "adam-adtte-builder": 1.0,
+            "adam-custom-builder": 1.0,
+            "adam-traceability-checker": 1.0,
+            "adam-validator": 1.0,
+            "adrg-writer": 1.0,
+            "crf-annotator": 1.0,
+            "crf-validator": 1.0,
+            "data-extract": 1.0,
+            "data-quality": 1.0,
+            "data-reconciler": 1.0,
+            "data-validator": 1.0,
+            "define-draft-builder": 1.0,
+            "define-xml-builder": 1.0,
+            "define-xml-validator": 1.0,
+            "esub-assembler": 1.0,
+            "esub-validator": 1.0,
+            "p21-adam-validation": 1.0,
+            "p21-report-reviewer": 1.0,
+            "p21-validator": 1.0,
+            "principle-review": 1.0,
+            "quality-report": 1.0,
+            "sap-parser": 1.0,
+            "sdrg-writer": 1.0,
+            "sdtm-ae-mapper": 1.0,
+            "sdtm-cm-mapper": 1.0,
+            "sdtm-consistency-checker": 1.0,
+            "sdtm-custom-builder": 1.0,
+            "sdtm-dm-mapper": 1.0,
+            "sdtm-ds-mapper": 1.0,
+            "sdtm-ex-mapper": 1.0,
+            "sdtm-lb-mapper": 1.0,
+            "sdtm-mh-mapper": 1.0,
+            "sdtm-relrec-builder": 1.0,
+            "sdtm-supp-builder": 1.0,
+            "sdtm-sv-mapper": 1.0,
+            "sdtm-trial-design-builder": 1.0,
+            "sdtm-validator": 1.0,
+            "sdtm-vs-mapper": 1.0,
+            "spec-builder": 1.0,
+            "spec-reviewer": 1.0,
+            "study-setup": 1.0,
+            "submission-checklist": 1.0,
+            "tfl-comparator": 1.0,
+            "tfl-demographics": 1.0,
+            "tfl-double-programmer": 1.0,
+            "tfl-figure-generator": 1.0,
+            "tfl-formatter": 1.0,
+            "tfl-listing-generator": 1.0,
+            "tfl-qc-validator": 1.0,
+            "tfl-shell-reviewer": 1.0,
+            "tfl-table-generator": 1.0,
+            "tfl-template-builder": 1.0,
+            "workflow": 1.0,
+            "workflow-status": 1.0
+          },
+          "mean_affected_tasks": 10,
+          "median_affected_tasks": 10,
+          "range_affected_tasks": [
+            10,
+            10
+          ],
+          "mean_affected_task_proportion": 1.0,
+          "median_affected_task_proportion": 1.0,
+          "range_affected_task_proportion": [
+            1.0,
+            1.0
+          ]
+        }
+      },
+      "paired_optimized_minus_flat": {
+        "acrf-finalizer": -9,
+        "adam-adae-builder": -5,
+        "adam-adeff-builder": -7,
+        "adam-adlb-builder": -7,
+        "adam-adsl-builder": -4,
+        "adam-adtte-builder": -9,
+        "adam-custom-builder": -9,
+        "adam-traceability-checker": -8,
+        "adam-validator": -3,
+        "adrg-writer": -10,
+        "crf-annotator": -10,
+        "crf-validator": -10,
+        "data-extract": -9,
+        "data-quality": 0,
+        "data-reconciler": -10,
+        "data-validator": -8,
+        "define-draft-builder": -8,
+        "define-xml-builder": -8,
+        "define-xml-validator": -8,
+        "esub-assembler": -10,
+        "esub-validator": -10,
+        "p21-adam-validation": -10,
+        "p21-report-reviewer": -4,
+        "p21-validator": -4,
+        "principle-review": -10,
+        "quality-report": -8,
+        "sap-parser": -8,
+        "sdrg-writer": -9,
+        "sdtm-ae-mapper": -7,
+        "sdtm-cm-mapper": -9,
+        "sdtm-consistency-checker": -9,
+        "sdtm-custom-builder": -9,
+        "sdtm-dm-mapper": -8,
+        "sdtm-ds-mapper": -9,
+        "sdtm-ex-mapper": -9,
+        "sdtm-lb-mapper": -9,
+        "sdtm-mh-mapper": -9,
+        "sdtm-relrec-builder": -7,
+        "sdtm-supp-builder": -8,
+        "sdtm-sv-mapper": -9,
+        "sdtm-trial-design-builder": -8,
+        "sdtm-validator": -5,
+        "sdtm-vs-mapper": -9,
+        "spec-builder": -6,
+        "spec-reviewer": -6,
+        "study-setup": -9,
+        "submission-checklist": -10,
+        "tfl-comparator": -7,
+        "tfl-demographics": -10,
+        "tfl-double-programmer": -8,
+        "tfl-figure-generator": -9,
+        "tfl-formatter": -6,
+        "tfl-listing-generator": -9,
+        "tfl-qc-validator": -7,
+        "tfl-shell-reviewer": -7,
+        "tfl-table-generator": -6,
+        "tfl-template-builder": -7,
+        "workflow": 0,
+        "workflow-status": 0
+      }
+    }
+  },
+  "gates": {
+    "frozen_v5_parity": {
+      "pass": true,
+      "actual": {
+        "checkpoint_sha256": "e337862a974fd2bb5cd1bd691875f1e6483b8acca5687cbe4e758f5fcb587ed8",
+        "expected_checkpoint_sha256": "e337862a974fd2bb5cd1bd691875f1e6483b8acca5687cbe4e758f5fcb587ed8",
+        "stored_framework_rows": 30,
+        "task_parity": {
+          "task-01-sap-parse": true,
+          "task-02-protocol-setup": true,
+          "task-06-sdtm-dm": true,
+          "task-07-sdtm-ae": true,
+          "task-10-p21-sdtm": true,
+          "task-13-adam-adsl": true,
+          "task-14-adam-adae": true,
+          "task-17-tfl-demographics": true,
+          "task-20-tfl-ae": true,
+          "task-21-define-sdtm": true
+        }
+      },
+      "expected": "all 10 task projections match the hashed v5 checkpoint"
+    },
+    "context_cardinality": {
+      "pass": true,
+      "actual": 40,
+      "expected": 40
+    },
+    "budgets": {
+      "pass": true,
+      "actual": 7998,
+      "expected": "maximum <= 8000"
+    },
+    "relevance_score_variation": {
+      "pass": true,
+      "actual": true,
+      "expected": "at least one same-node task pair varies"
+    },
+    "current_protection": {
+      "pass": true,
+      "actual": {
+        "task-01-sap-parse": true,
+        "task-02-protocol-setup": true,
+        "task-06-sdtm-dm": true,
+        "task-07-sdtm-ae": true,
+        "task-10-p21-sdtm": true,
+        "task-13-adam-adsl": true,
+        "task-14-adam-adae": true,
+        "task-17-tfl-demographics": true,
+        "task-20-tfl-ae": true,
+        "task-21-define-sdtm": true
+      },
+      "expected": "optimized CURRENT names/statuses/tokens equal frozen CURRENT"
+    },
+    "optimized_median_context": {
+      "pass": true,
+      "actual": 6283.0,
+      "expected": "[4000, 7200]"
+    },
+    "optimized_max_context": {
+      "pass": true,
+      "actual": 6852,
+      "expected": "<= 8000"
+    },
+    "optimized_15_percent_reduction": {
+      "pass": true,
+      "actual": 9,
+      "expected": "at least 6 of 10 tasks"
+    },
+    "tfl_noncurrent_selection_difference": {
+      "pass": true,
+      "actual": true,
+      "expected": "the two fixed TFL tasks differ"
+    },
+    "provenance_completeness": {
+      "pass": true,
+      "actual": 100.0,
+      "expected": "100%"
+    },
+    "manifest_reproducibility": {
+      "pass": true,
+      "actual": 100.0,
+      "expected": "100% across three builds"
+    },
+    "random_token_matching": {
+      "pass": true,
+      "actual": 0,
+      "expected": "<= 1 estimated token"
+    },
+    "change_impact_determinism": {
+      "pass": true,
+      "actual": true,
+      "expected": true
+    },
+    "no_secrets_or_absolute_paths": {
+      "pass": true,
+      "actual": [],
+      "expected": []
+    }
+  },
+  "all_gates_pass": true,
+  "cells": [
+    {
+      "task_id": "task-01-sap-parse",
+      "arm": "aps_v5_frozen",
+      "run_id": 0,
+      "skills_tokens": 7996,
+      "budget_used": 7996,
+      "candidate_count": 10,
+      "admitted_skills": [
+        "sap-parser",
+        "adam-adsl-builder",
+        "adam-validator",
+        "spec-builder",
+        "spec-reviewer",
+        "tfl-shell-reviewer"
+      ],
+      "manifest_sha256": "282296b4db41f010f9032c69df96e71d567b3300badf3b4c422ebfa370fb9f50",
+      "repeated_manifest_sha256": [
+        "282296b4db41f010f9032c69df96e71d567b3300badf3b4c422ebfa370fb9f50",
+        "282296b4db41f010f9032c69df96e71d567b3300badf3b4c422ebfa370fb9f50",
+        "282296b4db41f010f9032c69df96e71d567b3300badf3b4c422ebfa370fb9f50"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 1,
+          "tokens": 1757
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 5,
+          "tokens": 6239
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    {
+      "task_id": "task-01-sap-parse",
+      "arm": "aps_gxp_optimized",
+      "run_id": 0,
+      "skills_tokens": 3082,
+      "budget_used": 3082,
+      "candidate_count": 10,
+      "admitted_skills": [
+        "sap-parser",
+        "spec-builder"
+      ],
+      "manifest_sha256": "a52590f1ffcc1825f3eae5005c215b8524895dc475174d9dd0c140c69c7ac5f6",
+      "repeated_manifest_sha256": [
+        "a52590f1ffcc1825f3eae5005c215b8524895dc475174d9dd0c140c69c7ac5f6",
+        "a52590f1ffcc1825f3eae5005c215b8524895dc475174d9dd0c140c69c7ac5f6",
+        "a52590f1ffcc1825f3eae5005c215b8524895dc475174d9dd0c140c69c7ac5f6"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 1,
+          "tokens": 1757
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 1,
+          "tokens": 1325
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    {
+      "task_id": "task-01-sap-parse",
+      "arm": "flat_8000",
+      "run_id": 0,
+      "skills_tokens": 7986,
+      "budget_used": 7986,
+      "candidate_count": 59,
+      "admitted_skills": [
+        "acrf-finalizer",
+        "adam-adae-builder",
+        "adam-adeff-builder",
+        "adam-adlb-builder",
+        "adam-adsl-builder",
+        "adam-adtte-builder",
+        "adam-custom-builder"
+      ],
+      "manifest_sha256": "379406d973da41a04575729fe80d38e6c197913dcbd46c29f3b4fad777b08f9c",
+      "repeated_manifest_sha256": [
+        "379406d973da41a04575729fe80d38e6c197913dcbd46c29f3b4fad777b08f9c",
+        "379406d973da41a04575729fe80d38e6c197913dcbd46c29f3b4fad777b08f9c",
+        "379406d973da41a04575729fe80d38e6c197913dcbd46c29f3b4fad777b08f9c"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 1,
+          "tokens": 879
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 6,
+          "tokens": 7107
+        }
+      }
+    },
+    {
+      "task_id": "task-01-sap-parse",
+      "arm": "random_token_matched",
+      "run_id": 0,
+      "skills_tokens": 3082,
+      "budget_used": 3082,
+      "candidate_count": 59,
+      "admitted_skills": [
+        "p21-report-reviewer"
+      ],
+      "manifest_sha256": "bf6be2a9c2fdc660173d9efd49b20175ded37a63cea15b7c6e943846b04d600d",
+      "repeated_manifest_sha256": [
+        "bf6be2a9c2fdc660173d9efd49b20175ded37a63cea15b7c6e943846b04d600d",
+        "bf6be2a9c2fdc660173d9efd49b20175ded37a63cea15b7c6e943846b04d600d",
+        "bf6be2a9c2fdc660173d9efd49b20175ded37a63cea15b7c6e943846b04d600d"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 1,
+          "tokens": 3082
+        }
+      }
+    },
+    {
+      "task_id": "task-02-protocol-setup",
+      "arm": "aps_v5_frozen",
+      "run_id": 0,
+      "skills_tokens": 7993,
+      "budget_used": 7993,
+      "candidate_count": 9,
+      "admitted_skills": [
+        "study-setup",
+        "spec-builder",
+        "spec-reviewer",
+        "sdtm-validator",
+        "data-extract"
+      ],
+      "manifest_sha256": "448856cf163704ca338e1bdc641c1167d2cc230485027f9548b37d5589c0dd4d",
+      "repeated_manifest_sha256": [
+        "448856cf163704ca338e1bdc641c1167d2cc230485027f9548b37d5589c0dd4d",
+        "448856cf163704ca338e1bdc641c1167d2cc230485027f9548b37d5589c0dd4d",
+        "448856cf163704ca338e1bdc641c1167d2cc230485027f9548b37d5589c0dd4d"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 1,
+          "tokens": 2426
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 4,
+          "tokens": 5567
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    {
+      "task_id": "task-02-protocol-setup",
+      "arm": "aps_gxp_optimized",
+      "run_id": 0,
+      "skills_tokens": 2426,
+      "budget_used": 2426,
+      "candidate_count": 9,
+      "admitted_skills": [
+        "study-setup"
+      ],
+      "manifest_sha256": "c4a1822f82cbc41feb5972c7aef508ad8df608c8db69c25f348ac16af28493a2",
+      "repeated_manifest_sha256": [
+        "c4a1822f82cbc41feb5972c7aef508ad8df608c8db69c25f348ac16af28493a2",
+        "c4a1822f82cbc41feb5972c7aef508ad8df608c8db69c25f348ac16af28493a2",
+        "c4a1822f82cbc41feb5972c7aef508ad8df608c8db69c25f348ac16af28493a2"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 1,
+          "tokens": 2426
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    {
+      "task_id": "task-02-protocol-setup",
+      "arm": "flat_8000",
+      "run_id": 0,
+      "skills_tokens": 7986,
+      "budget_used": 7986,
+      "candidate_count": 59,
+      "admitted_skills": [
+        "acrf-finalizer",
+        "adam-adae-builder",
+        "adam-adeff-builder",
+        "adam-adlb-builder",
+        "adam-adsl-builder",
+        "adam-adtte-builder",
+        "adam-custom-builder"
+      ],
+      "manifest_sha256": "f2af4aedb2cc06442e6c7308168cdb1b7d90f464fe77af2c603d0430a49871e5",
+      "repeated_manifest_sha256": [
+        "f2af4aedb2cc06442e6c7308168cdb1b7d90f464fe77af2c603d0430a49871e5",
+        "f2af4aedb2cc06442e6c7308168cdb1b7d90f464fe77af2c603d0430a49871e5",
+        "f2af4aedb2cc06442e6c7308168cdb1b7d90f464fe77af2c603d0430a49871e5"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 7,
+          "tokens": 7986
+        }
+      }
+    },
+    {
+      "task_id": "task-02-protocol-setup",
+      "arm": "random_token_matched",
+      "run_id": 0,
+      "skills_tokens": 2426,
+      "budget_used": 2426,
+      "candidate_count": 59,
+      "admitted_skills": [
+        "sdtm-cm-mapper",
+        "sdtm-relrec-builder",
+        "sdtm-consistency-checker"
+      ],
+      "manifest_sha256": "2899673d163b9bdf2428d539afadd4b24720beae472333d82880b8a585390363",
+      "repeated_manifest_sha256": [
+        "2899673d163b9bdf2428d539afadd4b24720beae472333d82880b8a585390363",
+        "2899673d163b9bdf2428d539afadd4b24720beae472333d82880b8a585390363",
+        "2899673d163b9bdf2428d539afadd4b24720beae472333d82880b8a585390363"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 3,
+          "tokens": 2426
+        }
+      }
+    },
+    {
+      "task_id": "task-06-sdtm-dm",
+      "arm": "aps_v5_frozen",
+      "run_id": 0,
+      "skills_tokens": 7991,
+      "budget_used": 7991,
+      "candidate_count": 13,
+      "admitted_skills": [
+        "sdtm-dm-mapper",
+        "sdtm-validator",
+        "p21-report-reviewer",
+        "p21-validator"
+      ],
+      "manifest_sha256": "9378bda0a7b227260827305b426de6f5b0a6bdb03ab830202d2cb084f8f2934b",
+      "repeated_manifest_sha256": [
+        "9378bda0a7b227260827305b426de6f5b0a6bdb03ab830202d2cb084f8f2934b",
+        "9378bda0a7b227260827305b426de6f5b0a6bdb03ab830202d2cb084f8f2934b",
+        "9378bda0a7b227260827305b426de6f5b0a6bdb03ab830202d2cb084f8f2934b"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 2,
+          "tokens": 4474
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 2,
+          "tokens": 3517
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    {
+      "task_id": "task-06-sdtm-dm",
+      "arm": "aps_gxp_optimized",
+      "run_id": 0,
+      "skills_tokens": 6215,
+      "budget_used": 6215,
+      "candidate_count": 13,
+      "admitted_skills": [
+        "sdtm-dm-mapper",
+        "sdtm-validator",
+        "quality-report",
+        "data-quality"
+      ],
+      "manifest_sha256": "2b518e8c5b61e1d8337101e283fc8eda75549febdbf7eb7f87e80d962661d975",
+      "repeated_manifest_sha256": [
+        "2b518e8c5b61e1d8337101e283fc8eda75549febdbf7eb7f87e80d962661d975",
+        "2b518e8c5b61e1d8337101e283fc8eda75549febdbf7eb7f87e80d962661d975",
+        "2b518e8c5b61e1d8337101e283fc8eda75549febdbf7eb7f87e80d962661d975"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 2,
+          "tokens": 4474
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 1,
+          "tokens": 962
+        },
+        "global": {
+          "skills": 1,
+          "tokens": 779
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    {
+      "task_id": "task-06-sdtm-dm",
+      "arm": "flat_8000",
+      "run_id": 0,
+      "skills_tokens": 7986,
+      "budget_used": 7986,
+      "candidate_count": 59,
+      "admitted_skills": [
+        "acrf-finalizer",
+        "adam-adae-builder",
+        "adam-adeff-builder",
+        "adam-adlb-builder",
+        "adam-adsl-builder",
+        "adam-adtte-builder",
+        "adam-custom-builder"
+      ],
+      "manifest_sha256": "d82b48c87db54315192868f11747697c2a71e2191ee0f505e12b44cd3802b9c7",
+      "repeated_manifest_sha256": [
+        "d82b48c87db54315192868f11747697c2a71e2191ee0f505e12b44cd3802b9c7",
+        "d82b48c87db54315192868f11747697c2a71e2191ee0f505e12b44cd3802b9c7",
+        "d82b48c87db54315192868f11747697c2a71e2191ee0f505e12b44cd3802b9c7"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 7,
+          "tokens": 7986
+        }
+      }
+    },
+    {
+      "task_id": "task-06-sdtm-dm",
+      "arm": "random_token_matched",
+      "run_id": 0,
+      "skills_tokens": 6215,
+      "budget_used": 6215,
+      "candidate_count": 59,
+      "admitted_skills": [
+        "sap-parser",
+        "sdtm-ex-mapper",
+        "sdtm-mh-mapper",
+        "adam-adsl-builder",
+        "p21-adam-validation"
+      ],
+      "manifest_sha256": "b0dd2aa39923461e41eb0570386caf2a8d23d7b292e446f86b55031080b8fa8d",
+      "repeated_manifest_sha256": [
+        "b0dd2aa39923461e41eb0570386caf2a8d23d7b292e446f86b55031080b8fa8d",
+        "b0dd2aa39923461e41eb0570386caf2a8d23d7b292e446f86b55031080b8fa8d",
+        "b0dd2aa39923461e41eb0570386caf2a8d23d7b292e446f86b55031080b8fa8d"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 5,
+          "tokens": 6215
+        }
+      }
+    },
+    {
+      "task_id": "task-07-sdtm-ae",
+      "arm": "aps_v5_frozen",
+      "run_id": 0,
+      "skills_tokens": 7993,
+      "budget_used": 7993,
+      "candidate_count": 14,
+      "admitted_skills": [
+        "sdtm-ae-mapper",
+        "sdtm-validator",
+        "adam-validator",
+        "p21-report-reviewer",
+        "p21-validator"
+      ],
+      "manifest_sha256": "0fd8015cfecd367482081d1f18ac56b8bc02b62c513cb17fb16e3b5d44c1e25f",
+      "repeated_manifest_sha256": [
+        "0fd8015cfecd367482081d1f18ac56b8bc02b62c513cb17fb16e3b5d44c1e25f",
+        "0fd8015cfecd367482081d1f18ac56b8bc02b62c513cb17fb16e3b5d44c1e25f",
+        "0fd8015cfecd367482081d1f18ac56b8bc02b62c513cb17fb16e3b5d44c1e25f"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 2,
+          "tokens": 4486
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 3,
+          "tokens": 3507
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    {
+      "task_id": "task-07-sdtm-ae",
+      "arm": "aps_gxp_optimized",
+      "run_id": 0,
+      "skills_tokens": 6351,
+      "budget_used": 6351,
+      "candidate_count": 14,
+      "admitted_skills": [
+        "sdtm-ae-mapper",
+        "sdtm-validator",
+        "adam-adae-builder",
+        "data-quality"
+      ],
+      "manifest_sha256": "d3f76ca64a0fa16fb5393331df254dc916b08ebab463f674619d0ea7f0c3e358",
+      "repeated_manifest_sha256": [
+        "d3f76ca64a0fa16fb5393331df254dc916b08ebab463f674619d0ea7f0c3e358",
+        "d3f76ca64a0fa16fb5393331df254dc916b08ebab463f674619d0ea7f0c3e358",
+        "d3f76ca64a0fa16fb5393331df254dc916b08ebab463f674619d0ea7f0c3e358"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 2,
+          "tokens": 4486
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 1,
+          "tokens": 1086
+        },
+        "global": {
+          "skills": 1,
+          "tokens": 779
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    {
+      "task_id": "task-07-sdtm-ae",
+      "arm": "flat_8000",
+      "run_id": 0,
+      "skills_tokens": 7986,
+      "budget_used": 7986,
+      "candidate_count": 59,
+      "admitted_skills": [
+        "acrf-finalizer",
+        "adam-adae-builder",
+        "adam-adeff-builder",
+        "adam-adlb-builder",
+        "adam-adsl-builder",
+        "adam-adtte-builder",
+        "adam-custom-builder"
+      ],
+      "manifest_sha256": "3f539b4d69c03528f0d88d47b04f0e1253b48ebb7b08416af5f157c9aced3329",
+      "repeated_manifest_sha256": [
+        "3f539b4d69c03528f0d88d47b04f0e1253b48ebb7b08416af5f157c9aced3329",
+        "3f539b4d69c03528f0d88d47b04f0e1253b48ebb7b08416af5f157c9aced3329",
+        "3f539b4d69c03528f0d88d47b04f0e1253b48ebb7b08416af5f157c9aced3329"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 1,
+          "tokens": 1086
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 6,
+          "tokens": 6900
+        }
+      }
+    },
+    {
+      "task_id": "task-07-sdtm-ae",
+      "arm": "random_token_matched",
+      "run_id": 0,
+      "skills_tokens": 6351,
+      "budget_used": 6351,
+      "candidate_count": 59,
+      "admitted_skills": [
+        "tfl-template-builder",
+        "sdtm-cm-mapper",
+        "adam-adeff-builder",
+        "tfl-comparator"
+      ],
+      "manifest_sha256": "298abcb4de2150ae07b48fb086846d141ecfc3e48ab1518794154554e7d0c512",
+      "repeated_manifest_sha256": [
+        "298abcb4de2150ae07b48fb086846d141ecfc3e48ab1518794154554e7d0c512",
+        "298abcb4de2150ae07b48fb086846d141ecfc3e48ab1518794154554e7d0c512",
+        "298abcb4de2150ae07b48fb086846d141ecfc3e48ab1518794154554e7d0c512"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 4,
+          "tokens": 6351
+        }
+      }
+    },
+    {
+      "task_id": "task-10-p21-sdtm",
+      "arm": "aps_v5_frozen",
+      "run_id": 0,
+      "skills_tokens": 7998,
+      "budget_used": 7998,
+      "candidate_count": 27,
+      "admitted_skills": [
+        "p21-report-reviewer",
+        "p21-validator",
+        "adam-adsl-builder",
+        "adam-validator"
+      ],
+      "manifest_sha256": "84e8e7ca73b2a2134a73dee3eb691696da02d8b3ebb78ff00486b84a14af2e3c",
+      "repeated_manifest_sha256": [
+        "84e8e7ca73b2a2134a73dee3eb691696da02d8b3ebb78ff00486b84a14af2e3c",
+        "84e8e7ca73b2a2134a73dee3eb691696da02d8b3ebb78ff00486b84a14af2e3c",
+        "84e8e7ca73b2a2134a73dee3eb691696da02d8b3ebb78ff00486b84a14af2e3c"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 2,
+          "tokens": 6852
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 2,
+          "tokens": 1146
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    {
+      "task_id": "task-10-p21-sdtm",
+      "arm": "aps_gxp_optimized",
+      "run_id": 0,
+      "skills_tokens": 6852,
+      "budget_used": 6852,
+      "candidate_count": 27,
+      "admitted_skills": [
+        "p21-report-reviewer",
+        "p21-validator"
+      ],
+      "manifest_sha256": "6ad58b4f081ae9ae115715474d1f2bb6b07e7fc48136c7ac99ec70e988d0262f",
+      "repeated_manifest_sha256": [
+        "6ad58b4f081ae9ae115715474d1f2bb6b07e7fc48136c7ac99ec70e988d0262f",
+        "6ad58b4f081ae9ae115715474d1f2bb6b07e7fc48136c7ac99ec70e988d0262f",
+        "6ad58b4f081ae9ae115715474d1f2bb6b07e7fc48136c7ac99ec70e988d0262f"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 2,
+          "tokens": 6852
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    {
+      "task_id": "task-10-p21-sdtm",
+      "arm": "flat_8000",
+      "run_id": 0,
+      "skills_tokens": 7986,
+      "budget_used": 7986,
+      "candidate_count": 59,
+      "admitted_skills": [
+        "acrf-finalizer",
+        "adam-adae-builder",
+        "adam-adeff-builder",
+        "adam-adlb-builder",
+        "adam-adsl-builder",
+        "adam-adtte-builder",
+        "adam-custom-builder"
+      ],
+      "manifest_sha256": "948e721ad268bd0eea20c942115eaec5c8cc3390df2d4bde1c12929bb77b2b40",
+      "repeated_manifest_sha256": [
+        "948e721ad268bd0eea20c942115eaec5c8cc3390df2d4bde1c12929bb77b2b40",
+        "948e721ad268bd0eea20c942115eaec5c8cc3390df2d4bde1c12929bb77b2b40",
+        "948e721ad268bd0eea20c942115eaec5c8cc3390df2d4bde1c12929bb77b2b40"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 2,
+          "tokens": 2584
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 5,
+          "tokens": 5402
+        }
+      }
+    },
+    {
+      "task_id": "task-10-p21-sdtm",
+      "arm": "random_token_matched",
+      "run_id": 0,
+      "skills_tokens": 6852,
+      "budget_used": 6852,
+      "candidate_count": 59,
+      "admitted_skills": [
+        "sdtm-sv-mapper",
+        "workflow",
+        "tfl-formatter",
+        "workflow-status",
+        "tfl-template-builder",
+        "sdrg-writer"
+      ],
+      "manifest_sha256": "6d7e127ec66d182271f2d876c76e6ac4ced24f044c194f0f30a5bebe797e09e7",
+      "repeated_manifest_sha256": [
+        "6d7e127ec66d182271f2d876c76e6ac4ced24f044c194f0f30a5bebe797e09e7",
+        "6d7e127ec66d182271f2d876c76e6ac4ced24f044c194f0f30a5bebe797e09e7",
+        "6d7e127ec66d182271f2d876c76e6ac4ced24f044c194f0f30a5bebe797e09e7"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 2,
+          "tokens": 1332
+        },
+        "global": {
+          "skills": 2,
+          "tokens": 2257
+        },
+        "out_of_scope": {
+          "skills": 2,
+          "tokens": 3263
+        }
+      }
+    },
+    {
+      "task_id": "task-13-adam-adsl",
+      "arm": "aps_v5_frozen",
+      "run_id": 0,
+      "skills_tokens": 7996,
+      "budget_used": 7996,
+      "candidate_count": 18,
+      "admitted_skills": [
+        "adam-adsl-builder",
+        "adam-validator",
+        "p21-report-reviewer",
+        "p21-validator",
+        "adam-traceability-checker"
+      ],
+      "manifest_sha256": "b031beda7711e6f4e401e21a1fe2f69eca1822789ff52dc19674be01baef5da7",
+      "repeated_manifest_sha256": [
+        "b031beda7711e6f4e401e21a1fe2f69eca1822789ff52dc19674be01baef5da7",
+        "b031beda7711e6f4e401e21a1fe2f69eca1822789ff52dc19674be01baef5da7",
+        "b031beda7711e6f4e401e21a1fe2f69eca1822789ff52dc19674be01baef5da7"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 2,
+          "tokens": 3992
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 3,
+          "tokens": 4004
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    {
+      "task_id": "task-13-adam-adsl",
+      "arm": "aps_gxp_optimized",
+      "run_id": 0,
+      "skills_tokens": 6707,
+      "budget_used": 6707,
+      "candidate_count": 18,
+      "admitted_skills": [
+        "adam-adsl-builder",
+        "adam-validator",
+        "tfl-listing-generator",
+        "adam-traceability-checker",
+        "p21-validator"
+      ],
+      "manifest_sha256": "e65847760b21c1d02ee7c5884c9cf01eb3490ddf026ca8880c9a3b14504c880e",
+      "repeated_manifest_sha256": [
+        "e65847760b21c1d02ee7c5884c9cf01eb3490ddf026ca8880c9a3b14504c880e",
+        "e65847760b21c1d02ee7c5884c9cf01eb3490ddf026ca8880c9a3b14504c880e",
+        "e65847760b21c1d02ee7c5884c9cf01eb3490ddf026ca8880c9a3b14504c880e"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 2,
+          "tokens": 3992
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 3,
+          "tokens": 2715
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    {
+      "task_id": "task-13-adam-adsl",
+      "arm": "flat_8000",
+      "run_id": 0,
+      "skills_tokens": 7986,
+      "budget_used": 7986,
+      "candidate_count": 59,
+      "admitted_skills": [
+        "acrf-finalizer",
+        "adam-adae-builder",
+        "adam-adeff-builder",
+        "adam-adlb-builder",
+        "adam-adsl-builder",
+        "adam-adtte-builder",
+        "adam-custom-builder"
+      ],
+      "manifest_sha256": "1d751a5a26d03552b5bf2f5c30f264a780f46b32b50c7e2af01ce5b32a7b0e31",
+      "repeated_manifest_sha256": [
+        "1d751a5a26d03552b5bf2f5c30f264a780f46b32b50c7e2af01ce5b32a7b0e31",
+        "1d751a5a26d03552b5bf2f5c30f264a780f46b32b50c7e2af01ce5b32a7b0e31",
+        "1d751a5a26d03552b5bf2f5c30f264a780f46b32b50c7e2af01ce5b32a7b0e31"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 1,
+          "tokens": 879
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 5,
+          "tokens": 5402
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 1,
+          "tokens": 1705
+        }
+      }
+    },
+    {
+      "task_id": "task-13-adam-adsl",
+      "arm": "random_token_matched",
+      "run_id": 0,
+      "skills_tokens": 6707,
+      "budget_used": 6707,
+      "candidate_count": 59,
+      "admitted_skills": [
+        "sdtm-validator",
+        "spec-reviewer",
+        "data-validator",
+        "crf-validator"
+      ],
+      "manifest_sha256": "cee59a50ba64a17214fcbbe78e5c57b30d05a2b843506fb17a58347915fee6dd",
+      "repeated_manifest_sha256": [
+        "cee59a50ba64a17214fcbbe78e5c57b30d05a2b843506fb17a58347915fee6dd",
+        "cee59a50ba64a17214fcbbe78e5c57b30d05a2b843506fb17a58347915fee6dd",
+        "cee59a50ba64a17214fcbbe78e5c57b30d05a2b843506fb17a58347915fee6dd"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 4,
+          "tokens": 6707
+        }
+      }
+    },
+    {
+      "task_id": "task-14-adam-adae",
+      "arm": "aps_v5_frozen",
+      "run_id": 0,
+      "skills_tokens": 7976,
+      "budget_used": 7976,
+      "candidate_count": 13,
+      "admitted_skills": [
+        "adam-validator",
+        "adam-adae-builder",
+        "p21-report-reviewer",
+        "p21-validator",
+        "adam-traceability-checker"
+      ],
+      "manifest_sha256": "cfe113a8ae918fad22cd8c87cbc05cb97c0b3c62963ed58c7b6be0000eb0f83a",
+      "repeated_manifest_sha256": [
+        "cfe113a8ae918fad22cd8c87cbc05cb97c0b3c62963ed58c7b6be0000eb0f83a",
+        "cfe113a8ae918fad22cd8c87cbc05cb97c0b3c62963ed58c7b6be0000eb0f83a",
+        "cfe113a8ae918fad22cd8c87cbc05cb97c0b3c62963ed58c7b6be0000eb0f83a"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 2,
+          "tokens": 4199
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 3,
+          "tokens": 3777
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    {
+      "task_id": "task-14-adam-adae",
+      "arm": "aps_gxp_optimized",
+      "run_id": 0,
+      "skills_tokens": 5867,
+      "budget_used": 5867,
+      "candidate_count": 13,
+      "admitted_skills": [
+        "adam-validator",
+        "adam-adae-builder",
+        "sdtm-ae-mapper"
+      ],
+      "manifest_sha256": "69b1099b71dbb30868c14aca35a0a5b8862d94b1f0454742af477b9460c26f9e",
+      "repeated_manifest_sha256": [
+        "69b1099b71dbb30868c14aca35a0a5b8862d94b1f0454742af477b9460c26f9e",
+        "69b1099b71dbb30868c14aca35a0a5b8862d94b1f0454742af477b9460c26f9e",
+        "69b1099b71dbb30868c14aca35a0a5b8862d94b1f0454742af477b9460c26f9e"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 2,
+          "tokens": 4199
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 1,
+          "tokens": 1668
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    {
+      "task_id": "task-14-adam-adae",
+      "arm": "flat_8000",
+      "run_id": 0,
+      "skills_tokens": 7986,
+      "budget_used": 7986,
+      "candidate_count": 59,
+      "admitted_skills": [
+        "acrf-finalizer",
+        "adam-adae-builder",
+        "adam-adeff-builder",
+        "adam-adlb-builder",
+        "adam-adsl-builder",
+        "adam-adtte-builder",
+        "adam-custom-builder"
+      ],
+      "manifest_sha256": "ddb1ec510cafc6851d7a36dc56f1e6894417380e0a8720bbfc2d9709462d9066",
+      "repeated_manifest_sha256": [
+        "ddb1ec510cafc6851d7a36dc56f1e6894417380e0a8720bbfc2d9709462d9066",
+        "ddb1ec510cafc6851d7a36dc56f1e6894417380e0a8720bbfc2d9709462d9066",
+        "ddb1ec510cafc6851d7a36dc56f1e6894417380e0a8720bbfc2d9709462d9066"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 1,
+          "tokens": 1086
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 1,
+          "tokens": 879
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 5,
+          "tokens": 6021
+        }
+      }
+    },
+    {
+      "task_id": "task-14-adam-adae",
+      "arm": "random_token_matched",
+      "run_id": 0,
+      "skills_tokens": 5867,
+      "budget_used": 5867,
+      "candidate_count": 59,
+      "admitted_skills": [
+        "tfl-table-generator",
+        "adam-validator",
+        "define-draft-builder"
+      ],
+      "manifest_sha256": "e88296c16dc6ef71b0ea51e961fc3fe6fafe94e9af26bd9e7e4c9f9a684a8621",
+      "repeated_manifest_sha256": [
+        "e88296c16dc6ef71b0ea51e961fc3fe6fafe94e9af26bd9e7e4c9f9a684a8621",
+        "e88296c16dc6ef71b0ea51e961fc3fe6fafe94e9af26bd9e7e4c9f9a684a8621",
+        "e88296c16dc6ef71b0ea51e961fc3fe6fafe94e9af26bd9e7e4c9f9a684a8621"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 1,
+          "tokens": 3113
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 1,
+          "tokens": 2619
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 1,
+          "tokens": 135
+        }
+      }
+    },
+    {
+      "task_id": "task-17-tfl-demographics",
+      "arm": "aps_v5_frozen",
+      "run_id": 0,
+      "skills_tokens": 7994,
+      "budget_used": 7994,
+      "candidate_count": 15,
+      "admitted_skills": [
+        "tfl-formatter",
+        "tfl-table-generator",
+        "tfl-comparator",
+        "tfl-qc-validator",
+        "tfl-double-programmer"
+      ],
+      "manifest_sha256": "d39bbbca140810dcfdc8b29b3f7a4f361c1953b6a7c78c4540233e76f40efda2",
+      "repeated_manifest_sha256": [
+        "d39bbbca140810dcfdc8b29b3f7a4f361c1953b6a7c78c4540233e76f40efda2",
+        "d39bbbca140810dcfdc8b29b3f7a4f361c1953b6a7c78c4540233e76f40efda2",
+        "d39bbbca140810dcfdc8b29b3f7a4f361c1953b6a7c78c4540233e76f40efda2"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 2,
+          "tokens": 4472
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 3,
+          "tokens": 3522
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    {
+      "task_id": "task-17-tfl-demographics",
+      "arm": "aps_gxp_optimized",
+      "run_id": 0,
+      "skills_tokens": 6151,
+      "budget_used": 6151,
+      "candidate_count": 15,
+      "admitted_skills": [
+        "tfl-formatter",
+        "tfl-table-generator",
+        "adam-validator"
+      ],
+      "manifest_sha256": "a99ac107b93056967800152caeb0b3331bd3f1594f13c8c4357b9d3b312ed3d1",
+      "repeated_manifest_sha256": [
+        "a99ac107b93056967800152caeb0b3331bd3f1594f13c8c4357b9d3b312ed3d1",
+        "a99ac107b93056967800152caeb0b3331bd3f1594f13c8c4357b9d3b312ed3d1",
+        "a99ac107b93056967800152caeb0b3331bd3f1594f13c8c4357b9d3b312ed3d1"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 2,
+          "tokens": 4472
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 1,
+          "tokens": 1679
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    {
+      "task_id": "task-17-tfl-demographics",
+      "arm": "flat_8000",
+      "run_id": 0,
+      "skills_tokens": 7986,
+      "budget_used": 7986,
+      "candidate_count": 59,
+      "admitted_skills": [
+        "acrf-finalizer",
+        "adam-adae-builder",
+        "adam-adeff-builder",
+        "adam-adlb-builder",
+        "adam-adsl-builder",
+        "adam-adtte-builder",
+        "adam-custom-builder"
+      ],
+      "manifest_sha256": "4655ab7da7361a14caeda6ecc3350945e3ce0bbfd416850d0fae325268440453",
+      "repeated_manifest_sha256": [
+        "4655ab7da7361a14caeda6ecc3350945e3ce0bbfd416850d0fae325268440453",
+        "4655ab7da7361a14caeda6ecc3350945e3ce0bbfd416850d0fae325268440453",
+        "4655ab7da7361a14caeda6ecc3350945e3ce0bbfd416850d0fae325268440453"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 4,
+          "tokens": 4414
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 3,
+          "tokens": 3572
+        }
+      }
+    },
+    {
+      "task_id": "task-17-tfl-demographics",
+      "arm": "random_token_matched",
+      "run_id": 0,
+      "skills_tokens": 6151,
+      "budget_used": 6151,
+      "candidate_count": 59,
+      "admitted_skills": [
+        "tfl-double-programmer",
+        "spec-builder",
+        "sdtm-validator",
+        "sdtm-dm-mapper"
+      ],
+      "manifest_sha256": "d4830286a3da355d8d9a9b3299e907f2f6c391b417979dcd22baf683b481dcd8",
+      "repeated_manifest_sha256": [
+        "d4830286a3da355d8d9a9b3299e907f2f6c391b417979dcd22baf683b481dcd8",
+        "d4830286a3da355d8d9a9b3299e907f2f6c391b417979dcd22baf683b481dcd8",
+        "d4830286a3da355d8d9a9b3299e907f2f6c391b417979dcd22baf683b481dcd8"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 1,
+          "tokens": 2006
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 3,
+          "tokens": 4145
+        }
+      }
+    },
+    {
+      "task_id": "task-20-tfl-ae",
+      "arm": "aps_v5_frozen",
+      "run_id": 0,
+      "skills_tokens": 7994,
+      "budget_used": 7994,
+      "candidate_count": 15,
+      "admitted_skills": [
+        "tfl-formatter",
+        "tfl-table-generator",
+        "tfl-comparator",
+        "tfl-qc-validator",
+        "tfl-double-programmer"
+      ],
+      "manifest_sha256": "240ef1cd22b45905d7c6a4a6c57572407082a06cfb995c5fe3602e90e71a39b8",
+      "repeated_manifest_sha256": [
+        "240ef1cd22b45905d7c6a4a6c57572407082a06cfb995c5fe3602e90e71a39b8",
+        "240ef1cd22b45905d7c6a4a6c57572407082a06cfb995c5fe3602e90e71a39b8",
+        "240ef1cd22b45905d7c6a4a6c57572407082a06cfb995c5fe3602e90e71a39b8"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 2,
+          "tokens": 4472
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 3,
+          "tokens": 3522
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    {
+      "task_id": "task-20-tfl-ae",
+      "arm": "aps_gxp_optimized",
+      "run_id": 0,
+      "skills_tokens": 6718,
+      "budget_used": 6718,
+      "candidate_count": 15,
+      "admitted_skills": [
+        "tfl-formatter",
+        "tfl-table-generator",
+        "adam-adae-builder",
+        "adam-validator"
+      ],
+      "manifest_sha256": "25d26e70ea0ca1e842d7be414eda9a94fe3120a10bbb10ae6bad5d9d6e2d55b9",
+      "repeated_manifest_sha256": [
+        "25d26e70ea0ca1e842d7be414eda9a94fe3120a10bbb10ae6bad5d9d6e2d55b9",
+        "25d26e70ea0ca1e842d7be414eda9a94fe3120a10bbb10ae6bad5d9d6e2d55b9",
+        "25d26e70ea0ca1e842d7be414eda9a94fe3120a10bbb10ae6bad5d9d6e2d55b9"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 2,
+          "tokens": 4472
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 2,
+          "tokens": 2246
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    {
+      "task_id": "task-20-tfl-ae",
+      "arm": "flat_8000",
+      "run_id": 0,
+      "skills_tokens": 7986,
+      "budget_used": 7986,
+      "candidate_count": 59,
+      "admitted_skills": [
+        "acrf-finalizer",
+        "adam-adae-builder",
+        "adam-adeff-builder",
+        "adam-adlb-builder",
+        "adam-adsl-builder",
+        "adam-adtte-builder",
+        "adam-custom-builder"
+      ],
+      "manifest_sha256": "7497ca5113a757aa90dd424d7535df9ff44f285b5c0f4fc347e8ea33549ffdea",
+      "repeated_manifest_sha256": [
+        "7497ca5113a757aa90dd424d7535df9ff44f285b5c0f4fc347e8ea33549ffdea",
+        "7497ca5113a757aa90dd424d7535df9ff44f285b5c0f4fc347e8ea33549ffdea",
+        "7497ca5113a757aa90dd424d7535df9ff44f285b5c0f4fc347e8ea33549ffdea"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 4,
+          "tokens": 4414
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 3,
+          "tokens": 3572
+        }
+      }
+    },
+    {
+      "task_id": "task-20-tfl-ae",
+      "arm": "random_token_matched",
+      "run_id": 0,
+      "skills_tokens": 6718,
+      "budget_used": 6718,
+      "candidate_count": 59,
+      "admitted_skills": [
+        "sdtm-sv-mapper",
+        "sdtm-trial-design-builder",
+        "data-extract",
+        "sdrg-writer"
+      ],
+      "manifest_sha256": "622e7f33c3388b1e08fa83ce7e1d03ec542035cb11d5f3623fb12692ef003cae",
+      "repeated_manifest_sha256": [
+        "622e7f33c3388b1e08fa83ce7e1d03ec542035cb11d5f3623fb12692ef003cae",
+        "622e7f33c3388b1e08fa83ce7e1d03ec542035cb11d5f3623fb12692ef003cae",
+        "622e7f33c3388b1e08fa83ce7e1d03ec542035cb11d5f3623fb12692ef003cae"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 4,
+          "tokens": 6718
+        }
+      }
+    },
+    {
+      "task_id": "task-21-define-sdtm",
+      "arm": "aps_v5_frozen",
+      "run_id": 0,
+      "skills_tokens": 7979,
+      "budget_used": 7979,
+      "candidate_count": 10,
+      "admitted_skills": [
+        "define-xml-builder",
+        "define-xml-validator",
+        "p21-report-reviewer",
+        "p21-validator",
+        "tfl-comparator"
+      ],
+      "manifest_sha256": "1cfb48d55c410f7d4a46784a72bfcb58c2e48c54389489d0c6ced378244cb5b6",
+      "repeated_manifest_sha256": [
+        "1cfb48d55c410f7d4a46784a72bfcb58c2e48c54389489d0c6ced378244cb5b6",
+        "1cfb48d55c410f7d4a46784a72bfcb58c2e48c54389489d0c6ced378244cb5b6",
+        "1cfb48d55c410f7d4a46784a72bfcb58c2e48c54389489d0c6ced378244cb5b6"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 2,
+          "tokens": 3566
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 3,
+          "tokens": 4413
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    {
+      "task_id": "task-21-define-sdtm",
+      "arm": "aps_gxp_optimized",
+      "run_id": 0,
+      "skills_tokens": 6474,
+      "budget_used": 6474,
+      "candidate_count": 10,
+      "admitted_skills": [
+        "define-xml-builder",
+        "define-xml-validator",
+        "p21-validator",
+        "define-draft-builder"
+      ],
+      "manifest_sha256": "f6beba306f3b5aa4935e328c62870282c757436fd1aa996d7a220cde3049d3cb",
+      "repeated_manifest_sha256": [
+        "f6beba306f3b5aa4935e328c62870282c757436fd1aa996d7a220cde3049d3cb",
+        "f6beba306f3b5aa4935e328c62870282c757436fd1aa996d7a220cde3049d3cb",
+        "f6beba306f3b5aa4935e328c62870282c757436fd1aa996d7a220cde3049d3cb"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 2,
+          "tokens": 3566
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 2,
+          "tokens": 2908
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 0,
+          "tokens": 0
+        }
+      }
+    },
+    {
+      "task_id": "task-21-define-sdtm",
+      "arm": "flat_8000",
+      "run_id": 0,
+      "skills_tokens": 7986,
+      "budget_used": 7986,
+      "candidate_count": 59,
+      "admitted_skills": [
+        "acrf-finalizer",
+        "adam-adae-builder",
+        "adam-adeff-builder",
+        "adam-adlb-builder",
+        "adam-adsl-builder",
+        "adam-adtte-builder",
+        "adam-custom-builder"
+      ],
+      "manifest_sha256": "cff6e078d5b62071069d62275c2d729e871a548ce91b249f3cd96baf5680d97d",
+      "repeated_manifest_sha256": [
+        "cff6e078d5b62071069d62275c2d729e871a548ce91b249f3cd96baf5680d97d",
+        "cff6e078d5b62071069d62275c2d729e871a548ce91b249f3cd96baf5680d97d",
+        "cff6e078d5b62071069d62275c2d729e871a548ce91b249f3cd96baf5680d97d"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 7,
+          "tokens": 7986
+        }
+      }
+    },
+    {
+      "task_id": "task-21-define-sdtm",
+      "arm": "random_token_matched",
+      "run_id": 0,
+      "skills_tokens": 6474,
+      "budget_used": 6474,
+      "candidate_count": 59,
+      "admitted_skills": [
+        "adam-adtte-builder",
+        "data-extract",
+        "crf-annotator"
+      ],
+      "manifest_sha256": "56422ae927a5cf90738ebfe8a7d5aeb43e61051f8b37c495bc543fb5b5e7078b",
+      "repeated_manifest_sha256": [
+        "56422ae927a5cf90738ebfe8a7d5aeb43e61051f8b37c495bc543fb5b5e7078b",
+        "56422ae927a5cf90738ebfe8a7d5aeb43e61051f8b37c495bc543fb5b5e7078b",
+        "56422ae927a5cf90738ebfe8a7d5aeb43e61051f8b37c495bc543fb5b5e7078b"
+      ],
+      "provenance_complete": true,
+      "validation_errors": [],
+      "scope": {
+        "current": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "relevance_qualified_adjacent": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "global": {
+          "skills": 0,
+          "tokens": 0
+        },
+        "out_of_scope": {
+          "skills": 3,
+          "tokens": 6474
+        }
+      }
+    }
+  ]
+}

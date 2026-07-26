@@ -1,7 +1,7 @@
 ---
 name: p21-validator
 description: Run Pinnacle 21 validation on datasets. Triggers on "P21", "Pinnacle 21", "SDTM validation", "P21 validation", "compliance check", "validation report".
-version: "1.0"
+version: "3.0"
 user-invocable: true
 context: fork
 model: sonnet
@@ -35,9 +35,17 @@ Parse $ARGUMENTS: --input, --output, --spec, --validate, --dry-run
 ---
 
 ## Philosophy
-**P21 validation is the industry standard compliance gate.** Zero errors is mandatory for submission; warnings must be reviewed and justified. P21 checks SDTM datasets against CDISC implementation guide rules, FDA/EMA conformance rules, and controlled terminology consistency.
+**Pinnacle 21 is a validation tool, not a declaration of regulatory compliance.**
+Its findings depend on the product, engine/rule-catalog release, selected agency
+profile, standard versions, and controlled-terminology packages. A clean run is a
+quality target, but neither a zero-count report nor an individual severity label
+establishes submission acceptability.
 
-**Key Principle:** Every P21 issue must be triaged -- errors are resolved, warnings are justified or fixed, and informational items are reviewed. The validation report becomes part of the regulatory submission package.
+**Key Principle:** Import actual finding identifiers, severities, messages, and
+record keys from the executed report. Never synthesize a rule ID or infer a
+disposition from a generic example. The report and resolution log are sponsor QC
+artifacts; material data issues may be summarized in the SDRG/ADRG, but the
+validator workbook itself is not automatically an eCTD deliverable.
 
 ---
 
@@ -84,58 +92,32 @@ python csp-skills/layer-3-sdtm-qc/p21-validator/script.py \
 
 ## Validation Rule Categories
 
-### SDTM Conformance Rules (FDA)
-| Category | Description | Severity |
-|----------|-------------|----------|
-| SD00xx | Structural checks (variables, keys, order) | Error |
-| SD01xx | Data type and format checks | Error |
-| SD02xx | Value-level checks (CT, ranges) | Error/Warning |
-| SD03xx | Cross-domain consistency | Error |
-| SD04xx | Business rule checks | Warning |
-| SD05xx | Dataset-level checks | Info |
+### Versioned Rule-Catalog Handling
 
-### Implementation Guide Rules (SDTM IG v3.4)
-| Category | Description | Severity |
-|----------|-------------|----------|
-| IG00xx | Required variable presence | Error |
-| IG01xx | Variable labeling | Warning |
-| IG02xx | Domain structure compliance | Error |
-| IG03xx | Controlled terminology | Error/Warning |
+Do not treat prefixes such as `SD00xx` or `IG00xx` as a stable public taxonomy.
+Rule IDs, severities, availability, and messages are engine-version-specific.
+The executable validation record must capture:
 
-### Common P21 Errors by Domain
+- product/edition and engine version;
+- rule-catalog or configuration version and agency profile;
+- SDTM/SDTMIG or ADaM/ADaMIG versions;
+- CDISC CT package date and external dictionary versions;
+- input dataset and Define-XML SHA-256 values;
+- exact finding ID, severity, message, dataset, variable, record keys, and count
+  as returned by the engine.
 
-#### DM Domain
-| Rule ID | Message | Fix |
-|---------|---------|-----|
-| SD0001 | Missing required variable | Add STUDYID, DOMAIN, USUBJID |
-| SD0007 | RFSTDTC is missing | Derive from first EX record |
-| SD1002 | Invalid ARMCD format | Use 8-char max, alphanumeric only |
-| SD0020 | AGEU missing | Always populate as "YEARS" |
-| SD0051 | Date format invalid | Use ISO 8601 (YYYY-MM-DD) |
+### Versioned Finding Handling
 
-#### AE Domain
-| Rule ID | Message | Fix |
-|---------|---------|-----|
-| SD0001 | AETERM is missing | Populate verbatim term |
-| SD0002 | AEDECOD is missing | Complete MedDRA coding |
-| SD0003 | AEBODSYS is missing | Derive from MedDRA hierarchy |
-| SD1001 | AESER inconsistent | AESER='Y' iff any criterion='Y' |
-| SD0051 | AESTDTC format invalid | Use ISO 8601 format |
+Never infer a Pinnacle 21 rule identifier from a generic data-quality issue. Rule
+identifiers, messages, severity, and availability must be copied verbatim from the
+frozen engine output and interpreted against the matching rule catalog. Domain
+review may group findings by dataset and variable, but it must retain the original
+finding identifier and record keys. A remediation may change data, metadata, or
+configuration only after the finding is reproduced with the recorded engine,
+agency profile, standards versions, and terminology packages.
 
-#### EX Domain
-| Rule ID | Message | Fix |
-|---------|---------|-----|
-| SD0001 | EXTRT is missing | Populate treatment name from study config |
-| SD0002 | EXDOSE is missing | Populate dose amount |
-| SD0051 | EXSTDTC format invalid | Use ISO 8601 format |
-| SD0053 | EXENDTC before EXSTDTC | Validate date logic |
-
-#### DS Domain
-| Rule ID | Message | Fix |
-|---------|---------|-----|
-| SD0001 | DSTERM is missing | Populate disposition term |
-| SD0002 | DSDECOD is missing | Map to standard disposition term |
-| SD1003 | Invalid DSDECOD value | Use CDISC CT C66769 |
+Potential data issues that are not emitted by the frozen engine are reported in a
+separate sponsor-QC section without a fabricated Pinnacle 21 identifier.
 
 ---
 
@@ -169,9 +151,9 @@ def run_p21_validation(sdtm_dir, study_config, define_xml=None):
     Execute P21 validation on all SDTM datasets.
 
     1. Load all XPT files from sdtm_dir matching study_config.sdtm_domains
-    2. Apply SDTM IG v3.4 rules
-    3. Apply FDA conformance rules
-    4. Check controlled terminology consistency using study_config.ct_version
+    2. Run the configured, version-pinned engine and rule catalog
+    3. Preserve returned findings without rewriting identifiers or severity
+    4. Check controlled terminology against the pinned package date
     5. Generate issue report
     """
     datasets = load_xpt_files(sdtm_dir, domains=study_config['sdtm_domains'])
@@ -356,15 +338,17 @@ p21_report:
 ## Evaluation Criteria
 
 **Mandatory:**
-- Zero P21 errors (severity = Error)
-- All warnings reviewed and justified or resolved
+- Every returned finding has a documented disposition based on source data,
+  specifications, and the active rule documentation
+- No unresolved finding that the study team classifies as submission-blocking
 - Validation report generated in XLSX format
 - Issue tracking file created at path from regulatory-graph.yaml
 - Study config loaded with all required keys
 - CT version from study config used for validation
 
 **Recommended:**
-- Zero P21 warnings
+- Independent confirmation that engine/configuration/version metadata and input
+  hashes are complete
 - All informational items reviewed
 - CT version documented in report metadata
 - Define.xml referenced for metadata rules
@@ -374,7 +358,7 @@ p21_report:
 ## Critical Constraints
 
 **Never:**
-- Submit datasets with unresolved P21 errors
+- Treat a tool severity alone as a regulatory disposition
 - Ignore warnings without documented justification
 - Suppress valid P21 rules to achieve zero issues
 - Skip validation after dataset modifications
@@ -387,7 +371,56 @@ p21_report:
 - Document resolution for every error and warning
 - Track issues in the path specified by regulatory-graph.yaml
 - Re-validate after fixing issues
-- Include P21 report in submission package
+- Retain the report and resolution log in the controlled QC evidence package;
+  summarize material issues in the appropriate reviewer guide when required
+
+---
+
+## Audited Validation and Provenance Rules (V7-RS-P21-2026-07)
+
+### Constraints
+
+- Never invent a finding identifier, severity, or remediation. Use the exact
+  values returned by the pinned engine/rule catalog.
+- A change from one engine or rule-catalog version to another requires a new run;
+  findings from different versions are not silently merged.
+- The validation workbook is retained QC evidence, not automatically a submitted
+  dataset or eCTD document. The SDRG/ADRG records material conformance issues and
+  explanations when applicable.
+- If the engine is unavailable, record `validation_not_run` and fail the gate.
+  Do not emulate a proprietary rule catalog with a handcrafted list.
+
+### Output Schema
+
+```yaml
+validation_run:
+  engine_product: string
+  engine_version: string
+  rule_catalog_version: string
+  agency_profile: string
+  standard_name: string
+  standard_version: string
+  ct_package_date: string
+  external_dictionary_versions: {}
+  input_sha256: {}
+  findings:
+    - finding_id: string
+      severity: string
+      message: string
+      dataset: string
+      variable: string
+      record_keys: {}
+      count: integer
+      disposition: open|fixed|explained|not_applicable
+      evidence: string
+```
+
+### Change Impact
+
+Changing the engine, rule catalog, standard version, CT package, external
+dictionary, dataset, or Define-XML hash invalidates the prior validation-run
+manifest and requires revalidation plus downstream reviewer-guide impact review.
+It does not by itself change raw data or authorize a dataset correction.
 - Generate traceable, reproducible results
 - Resolve study_id from study config, never hardcode
 - Resolve path patterns from regulatory-graph.yaml node definitions

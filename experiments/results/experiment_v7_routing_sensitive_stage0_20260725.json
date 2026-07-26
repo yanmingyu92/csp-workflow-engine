@@ -1,0 +1,1427 @@
+{
+  "candidate_diagnostics": [
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.619408803993,
+        "mean_context_tokens": 1141.9,
+        "precision_at_k": 0.348333333333,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.136377494351
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.68,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 0.35,
+        "seed": 20260725,
+        "top_k": 8,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.619503288493,
+        "mean_context_tokens": 1143.0,
+        "precision_at_k": 0.348333333333,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.136387741537
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.78,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 0.35,
+        "seed": 20260725,
+        "top_k": 8,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.619503288493,
+        "mean_context_tokens": 1143.0,
+        "precision_at_k": 0.348333333333,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.136387741537
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.88,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 0.35,
+        "seed": 20260725,
+        "top_k": 8,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.653537527088,
+        "mean_context_tokens": 1470.4,
+        "precision_at_k": 0.315,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.130592680196
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.68,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 0.35,
+        "seed": 20260725,
+        "top_k": 12,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.654847996905,
+        "mean_context_tokens": 1498.6,
+        "precision_at_k": 0.315,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.131179160457
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.78,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 0.35,
+        "seed": 20260725,
+        "top_k": 12,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.655633953382,
+        "mean_context_tokens": 1505.4,
+        "precision_at_k": 0.315,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.134882121587
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.88,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 0.35,
+        "seed": 20260725,
+        "top_k": 12,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.66725480489,
+        "mean_context_tokens": 1774.2,
+        "precision_at_k": 0.3025,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.130744279916
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.68,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 0.35,
+        "seed": 20260725,
+        "top_k": 16,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.667377770752,
+        "mean_context_tokens": 1777.3,
+        "precision_at_k": 0.3025,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.130782479765
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.78,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 0.35,
+        "seed": 20260725,
+        "top_k": 16,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.667377770752,
+        "mean_context_tokens": 1777.3,
+        "precision_at_k": 0.3025,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.130782479765
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.88,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 0.35,
+        "seed": 20260725,
+        "top_k": 16,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.765877386216,
+        "mean_context_tokens": 1645.6,
+        "precision_at_k": 0.2125,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.100858107432
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.78,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 0.65,
+        "seed": 20260725,
+        "top_k": 8,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.765877386216,
+        "mean_context_tokens": 1645.6,
+        "precision_at_k": 0.2125,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.100858107432
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.78,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 1.0,
+        "seed": 20260725,
+        "top_k": 8,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.769005695139,
+        "mean_context_tokens": 1665.4,
+        "precision_at_k": 0.2125,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.102216586297
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.88,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 0.65,
+        "seed": 20260725,
+        "top_k": 8,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.769005695139,
+        "mean_context_tokens": 1665.4,
+        "precision_at_k": 0.2125,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.102216586297
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.88,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 1.0,
+        "seed": 20260725,
+        "top_k": 8,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.777365249288,
+        "mean_context_tokens": 1636.0,
+        "precision_at_k": 0.2,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.098477572744
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.68,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 0.65,
+        "seed": 20260725,
+        "top_k": 8,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.777365249288,
+        "mean_context_tokens": 1636.0,
+        "precision_at_k": 0.2,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.098477572744
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.68,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 1.0,
+        "seed": 20260725,
+        "top_k": 8,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.835791579439,
+        "mean_context_tokens": 2358.3,
+        "precision_at_k": 0.141666666667,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.083034979117
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.68,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 0.65,
+        "seed": 20260725,
+        "top_k": 12,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.835791579439,
+        "mean_context_tokens": 2358.3,
+        "precision_at_k": 0.141666666667,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.083034979117
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.68,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 1.0,
+        "seed": 20260725,
+        "top_k": 12,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.838378683431,
+        "mean_context_tokens": 2398.6,
+        "precision_at_k": 0.141666666667,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.092282533211
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.88,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 0.65,
+        "seed": 20260725,
+        "top_k": 12,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.838378683431,
+        "mean_context_tokens": 2398.6,
+        "precision_at_k": 0.141666666667,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.092282533211
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.88,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 1.0,
+        "seed": 20260725,
+        "top_k": 12,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.839928647071,
+        "mean_context_tokens": 2423.7,
+        "precision_at_k": 0.141666666667,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.087599843602
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.78,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 0.65,
+        "seed": 20260725,
+        "top_k": 12,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.839928647071,
+        "mean_context_tokens": 2423.7,
+        "precision_at_k": 0.141666666667,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.087599843602
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.78,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 1.0,
+        "seed": 20260725,
+        "top_k": 12,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.873741306269,
+        "mean_context_tokens": 3088.0,
+        "precision_at_k": 0.10625,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.076701534095
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.68,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 1.0,
+        "seed": 20260725,
+        "top_k": 16,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.873901922519,
+        "mean_context_tokens": 3091.7,
+        "precision_at_k": 0.10625,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.078345361303
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.68,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 0.65,
+        "seed": 20260725,
+        "top_k": 16,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.874985679692,
+        "mean_context_tokens": 3102.3,
+        "precision_at_k": 0.10625,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.081290049954
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.88,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 0.65,
+        "seed": 20260725,
+        "top_k": 16,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.874985679692,
+        "mean_context_tokens": 3102.3,
+        "precision_at_k": 0.10625,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.081290049954
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.88,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 1.0,
+        "seed": 20260725,
+        "top_k": 16,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.875207523351,
+        "mean_context_tokens": 3112.0,
+        "precision_at_k": 0.10625,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.080512725637
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.78,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 0.65,
+        "seed": 20260725,
+        "top_k": 16,
+        "two_hop_penalty": 0.5
+      }
+    },
+    {
+      "aggregate": {
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.875207523351,
+        "mean_context_tokens": 3112.0,
+        "precision_at_k": 0.10625,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.080512725637
+      },
+      "change_impact_passed": true,
+      "config": {
+        "bm25_b": 0.75,
+        "bm25_k1": 1.2,
+        "context_budget": 4000,
+        "current_service_floor_tokens": 320,
+        "dependency_boost": 3.0,
+        "flat_budget": 8000,
+        "graph_current_boost": 1.25,
+        "max_chunk_tokens": 360,
+        "mmr_lambda": 0.78,
+        "pinned_versions": {
+          "ADaM IG": "1.3",
+          "Define-XML": "2.1.0",
+          "SDTM IG": "3.4"
+        },
+        "score_gap_ratio": 1.0,
+        "seed": 20260725,
+        "top_k": 16,
+        "two_hop_penalty": 0.5
+      }
+    }
+  ],
+  "completed_at": "2026-07-25",
+  "corpus_audit": {
+    "audited_skill_count": 9,
+    "operational_compliance_claimed": false,
+    "skills": [
+      {
+        "corrections": [
+          "standard treatment variables and inclusive duration",
+          "SAP-driven population flags",
+          "partial-date fail-closed behavior"
+        ],
+        "path": "csp-skills/layer-4-adam/adam-adsl-builder/SKILL.md",
+        "sha256": "d83e51b36189db6d6a2f9d897545e9cfeb1fc0701659f2736b69a97b8e217be5",
+        "skill_name": "adam-adsl-builder"
+      },
+      {
+        "corrections": [
+          "versioned finding identity",
+          "no fabricated stable rule IDs",
+          "internal QC evidence rather than compliance certification"
+        ],
+        "path": "csp-skills/layer-3-sdtm-qc/p21-validator/SKILL.md",
+        "sha256": "7fa2bd6bb5fc5dd401db8602b731e2380ab24f12337cf868c1e44ebed50c1637",
+        "skill_name": "p21-validator"
+      },
+      {
+        "corrections": [
+          "ODM/Define namespaces and version pins",
+          "MethodDef plus ItemRef MethodOID",
+          "Description/TranslatedText labels and ValueListRef"
+        ],
+        "path": "csp-skills/layer-6-submission/define-xml-builder/SKILL.md",
+        "sha256": "678fda7fe41dc3fbcc66e876117fa9cee5d7503f24760b91f6ba554bc03f60da",
+        "skill_name": "define-xml-builder"
+      },
+      {
+        "corrections": [
+          "MethodDef cross-reference validation",
+          "forbidden invented method vocabulary"
+        ],
+        "path": "csp-skills/layer-6-submission/define-xml-validator/SKILL.md",
+        "sha256": "2effe631e42a3e651a3d050a9559eb08c243d96d0ba3c60813d298ba37d5b7ca",
+        "skill_name": "define-xml-validator"
+      },
+      {
+        "corrections": [
+          "sponsor-defined USUBJID length",
+          "no-day-zero study day",
+          "partial birth date behavior"
+        ],
+        "path": "csp-skills/layer-2-sdtm/sdtm-dm-mapper/SKILL.md",
+        "sha256": "f21d10c9009f16685aa0ee9153723a640ec01c3b1df7548a1b1f83c46a0a7167",
+        "skill_name": "sdtm-dm-mapper"
+      },
+      {
+        "corrections": [
+          "partial AE dates",
+          "pinned MedDRA package",
+          "treatment-emergence deferred to ADAE"
+        ],
+        "path": "csp-skills/layer-2-sdtm/sdtm-ae-mapper/SKILL.md",
+        "sha256": "e0ab4fea2694335e2fbaef453efc0361b8d9672f3d1dddec7ecbd8dfeb4283fc",
+        "skill_name": "sdtm-ae-mapper"
+      },
+      {
+        "corrections": [
+          "distinct-subject incidence",
+          "population denominator",
+          "event-count separation and change impact"
+        ],
+        "path": "csp-skills/layer-5-tfl/tfl-table-generator/SKILL.md",
+        "sha256": "04f1e86c296b52b5996670a443366c13f1e170ebb9eb3f583d3fd8dbc77c6fd7",
+        "skill_name": "tfl-table-generator"
+      },
+      {
+        "corrections": [
+          "SAP/shell population denominator",
+          "validated ADSL AGE reuse",
+          "change propagation"
+        ],
+        "path": "csp-skills/layer-5-tfl/tfl-demographics/SKILL.md",
+        "sha256": "94aa7d8c9333917974ec548c5de4e17e69b659fc000383b728eaff91a36ecfce",
+        "skill_name": "tfl-demographics"
+      },
+      {
+        "corrections": [
+          "structured/data QC primary",
+          "rendering diff secondary",
+          "provenance-complete change containment"
+        ],
+        "path": "csp-skills/layer-5-tfl/tfl-qc-validator/SKILL.md",
+        "sha256": "69fcfcb076d07375ddcaddd1297628add4ff69a711f7b191ca7c8b3156bc5f95",
+        "skill_name": "tfl-qc-validator"
+      }
+    ]
+  },
+  "network_calls": 0,
+  "paid_calls": 0,
+  "schema_version": "v7-stage0-offline-diagnostics-1",
+  "selected_config": {
+    "bm25_b": 0.75,
+    "bm25_k1": 1.2,
+    "context_budget": 4000,
+    "current_service_floor_tokens": 320,
+    "dependency_boost": 3.0,
+    "flat_budget": 8000,
+    "graph_current_boost": 1.25,
+    "max_chunk_tokens": 360,
+    "mmr_lambda": 0.68,
+    "pinned_versions": {
+      "ADaM IG": "1.3",
+      "Define-XML": "2.1.0",
+      "SDTM IG": "3.4"
+    },
+    "score_gap_ratio": 0.35,
+    "seed": 20260725,
+    "top_k": 8,
+    "two_hop_penalty": 0.5
+  },
+  "selected_config_sha256": "53a14bb6f1337d498f2715ae293e7006ac65a7767b224329047af0eb706cec3b",
+  "selected_diagnostics": {
+    "aggregate": {
+      "dependency_coverage": 1.0,
+      "irrelevant_token_ratio": 0.619408803993,
+      "mean_context_tokens": 1141.9,
+      "precision_at_k": 0.348333333333,
+      "provenance_completeness": 1.0,
+      "recall_at_k": 1.0,
+      "redundancy": 0.136377494351
+    },
+    "change_impact": {
+      "mean_scope_precision": 0.462962962963,
+      "passed": true,
+      "per_skill": [
+        {
+          "changed_skill": "adam-adsl-builder",
+          "observed_affected_task_ids": [
+            "dev-adsl-dates",
+            "dev-adsl-flags"
+          ],
+          "observed_unaffected_task_ids": [
+            "dev-define-schema",
+            "dev-define-validation",
+            "dev-p21-versioning",
+            "dev-sdtm-ae",
+            "dev-sdtm-dm",
+            "dev-tfl-counting",
+            "dev-tfl-demographics",
+            "dev-tfl-qc"
+          ],
+          "partition_complete": true,
+          "required_evidence_task_ids": [
+            "dev-adsl-dates",
+            "dev-adsl-flags"
+          ],
+          "required_recall": 1.0,
+          "scope_precision": 1.0
+        },
+        {
+          "changed_skill": "define-xml-builder",
+          "observed_affected_task_ids": [
+            "dev-define-schema",
+            "dev-define-validation"
+          ],
+          "observed_unaffected_task_ids": [
+            "dev-adsl-dates",
+            "dev-adsl-flags",
+            "dev-p21-versioning",
+            "dev-sdtm-ae",
+            "dev-sdtm-dm",
+            "dev-tfl-counting",
+            "dev-tfl-demographics",
+            "dev-tfl-qc"
+          ],
+          "partition_complete": true,
+          "required_evidence_task_ids": [
+            "dev-define-schema"
+          ],
+          "required_recall": 1.0,
+          "scope_precision": 0.5
+        },
+        {
+          "changed_skill": "define-xml-validator",
+          "observed_affected_task_ids": [
+            "dev-define-schema",
+            "dev-define-validation",
+            "dev-sdtm-dm"
+          ],
+          "observed_unaffected_task_ids": [
+            "dev-adsl-dates",
+            "dev-adsl-flags",
+            "dev-p21-versioning",
+            "dev-sdtm-ae",
+            "dev-tfl-counting",
+            "dev-tfl-demographics",
+            "dev-tfl-qc"
+          ],
+          "partition_complete": true,
+          "required_evidence_task_ids": [
+            "dev-define-validation"
+          ],
+          "required_recall": 1.0,
+          "scope_precision": 0.3333333333333333
+        },
+        {
+          "changed_skill": "p21-validator",
+          "observed_affected_task_ids": [
+            "dev-p21-versioning",
+            "dev-sdtm-dm",
+            "dev-tfl-demographics"
+          ],
+          "observed_unaffected_task_ids": [
+            "dev-adsl-dates",
+            "dev-adsl-flags",
+            "dev-define-schema",
+            "dev-define-validation",
+            "dev-sdtm-ae",
+            "dev-tfl-counting",
+            "dev-tfl-qc"
+          ],
+          "partition_complete": true,
+          "required_evidence_task_ids": [
+            "dev-p21-versioning"
+          ],
+          "required_recall": 1.0,
+          "scope_precision": 0.3333333333333333
+        },
+        {
+          "changed_skill": "sdtm-ae-mapper",
+          "observed_affected_task_ids": [
+            "dev-adsl-dates",
+            "dev-p21-versioning",
+            "dev-sdtm-ae"
+          ],
+          "observed_unaffected_task_ids": [
+            "dev-adsl-flags",
+            "dev-define-schema",
+            "dev-define-validation",
+            "dev-sdtm-dm",
+            "dev-tfl-counting",
+            "dev-tfl-demographics",
+            "dev-tfl-qc"
+          ],
+          "partition_complete": true,
+          "required_evidence_task_ids": [
+            "dev-sdtm-ae"
+          ],
+          "required_recall": 1.0,
+          "scope_precision": 0.3333333333333333
+        },
+        {
+          "changed_skill": "sdtm-dm-mapper",
+          "observed_affected_task_ids": [
+            "dev-adsl-dates",
+            "dev-adsl-flags",
+            "dev-sdtm-dm"
+          ],
+          "observed_unaffected_task_ids": [
+            "dev-define-schema",
+            "dev-define-validation",
+            "dev-p21-versioning",
+            "dev-sdtm-ae",
+            "dev-tfl-counting",
+            "dev-tfl-demographics",
+            "dev-tfl-qc"
+          ],
+          "partition_complete": true,
+          "required_evidence_task_ids": [
+            "dev-sdtm-dm"
+          ],
+          "required_recall": 1.0,
+          "scope_precision": 0.3333333333333333
+        },
+        {
+          "changed_skill": "tfl-demographics",
+          "observed_affected_task_ids": [
+            "dev-sdtm-dm",
+            "dev-tfl-demographics"
+          ],
+          "observed_unaffected_task_ids": [
+            "dev-adsl-dates",
+            "dev-adsl-flags",
+            "dev-define-schema",
+            "dev-define-validation",
+            "dev-p21-versioning",
+            "dev-sdtm-ae",
+            "dev-tfl-counting",
+            "dev-tfl-qc"
+          ],
+          "partition_complete": true,
+          "required_evidence_task_ids": [
+            "dev-tfl-demographics"
+          ],
+          "required_recall": 1.0,
+          "scope_precision": 0.5
+        },
+        {
+          "changed_skill": "tfl-qc-validator",
+          "observed_affected_task_ids": [
+            "dev-tfl-counting",
+            "dev-tfl-qc"
+          ],
+          "observed_unaffected_task_ids": [
+            "dev-adsl-dates",
+            "dev-adsl-flags",
+            "dev-define-schema",
+            "dev-define-validation",
+            "dev-p21-versioning",
+            "dev-sdtm-ae",
+            "dev-sdtm-dm",
+            "dev-tfl-demographics"
+          ],
+          "partition_complete": true,
+          "required_evidence_task_ids": [
+            "dev-tfl-qc"
+          ],
+          "required_recall": 1.0,
+          "scope_precision": 0.5
+        },
+        {
+          "changed_skill": "tfl-table-generator",
+          "observed_affected_task_ids": [
+            "dev-adsl-flags",
+            "dev-tfl-counting",
+            "dev-tfl-demographics"
+          ],
+          "observed_unaffected_task_ids": [
+            "dev-adsl-dates",
+            "dev-define-schema",
+            "dev-define-validation",
+            "dev-p21-versioning",
+            "dev-sdtm-ae",
+            "dev-sdtm-dm",
+            "dev-tfl-qc"
+          ],
+          "partition_complete": true,
+          "required_evidence_task_ids": [
+            "dev-tfl-counting"
+          ],
+          "required_recall": 1.0,
+          "scope_precision": 0.3333333333333333
+        }
+      ]
+    },
+    "generation_or_judge_scores_used": false,
+    "per_task": [
+      {
+        "context_tokens": 1616,
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.8917079207920792,
+        "manifest_errors": [],
+        "manifest_sha256": "338b1817e45462878c3b08e28564cbcd2c79ce77fc7180a7b59e861be32f7a09",
+        "precision_at_k": 0.125,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.06982819407666975,
+        "required_evidence_count": 1,
+        "retrieved_required_evidence_count": 1,
+        "selected_chunk_count": 8,
+        "task_id": "dev-adsl-flags"
+      },
+      {
+        "context_tokens": 1612,
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.6290322580645161,
+        "manifest_errors": [],
+        "manifest_sha256": "51b70a3642c28d3feb10708be8c6fc259a239a570a216edc3453d0cfe43d389e",
+        "precision_at_k": 0.375,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.09099621476390952,
+        "required_evidence_count": 1,
+        "retrieved_required_evidence_count": 1,
+        "selected_chunk_count": 8,
+        "task_id": "dev-adsl-dates"
+      },
+      {
+        "context_tokens": 1854,
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.8398058252427184,
+        "manifest_errors": [],
+        "manifest_sha256": "00569c2c9462f72961bd44c7836ddefd3a586fec0007bc19ba7c9dfe3c0b09ef",
+        "precision_at_k": 0.125,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.08045915883907759,
+        "required_evidence_count": 1,
+        "retrieved_required_evidence_count": 1,
+        "selected_chunk_count": 8,
+        "task_id": "dev-sdtm-dm"
+      },
+      {
+        "context_tokens": 388,
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.0,
+        "manifest_errors": [],
+        "manifest_sha256": "5587583744cb1842a2fc6faa2af299b99a6b4b7fbad8470efc3a88db5960ed4b",
+        "precision_at_k": 1.0,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.10112359550561797,
+        "required_evidence_count": 1,
+        "retrieved_required_evidence_count": 1,
+        "selected_chunk_count": 2,
+        "task_id": "dev-sdtm-ae"
+      },
+      {
+        "context_tokens": 976,
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.5522540983606558,
+        "manifest_errors": [],
+        "manifest_sha256": "9d014f7ae80bcae5b8c4230802b4e1f2003664d1a8d5e5465f2e60d44552c446",
+        "precision_at_k": 0.4,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.18516369016345366,
+        "required_evidence_count": 1,
+        "retrieved_required_evidence_count": 1,
+        "selected_chunk_count": 5,
+        "task_id": "dev-p21-versioning"
+      },
+      {
+        "context_tokens": 1465,
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.6546075085324232,
+        "manifest_errors": [],
+        "manifest_sha256": "ea172b0460f97c4f35c9eaba8671d722e1b9d164f7531ce98a92b9f06a1f5297",
+        "precision_at_k": 0.25,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.1196946286576457,
+        "required_evidence_count": 1,
+        "retrieved_required_evidence_count": 1,
+        "selected_chunk_count": 8,
+        "task_id": "dev-define-schema"
+      },
+      {
+        "context_tokens": 1395,
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.832258064516129,
+        "manifest_errors": [],
+        "manifest_sha256": "38f6fad6473890d1af731037a32afcbcfa5d9498c4fa591faeec4cd82c97f988",
+        "precision_at_k": 0.125,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.09956515586203216,
+        "required_evidence_count": 1,
+        "retrieved_required_evidence_count": 1,
+        "selected_chunk_count": 8,
+        "task_id": "dev-define-validation"
+      },
+      {
+        "context_tokens": 801,
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.6354556803995006,
+        "manifest_errors": [],
+        "manifest_sha256": "d49bc270d9f35738f4677b6b30d825aab96157027ea84d2a0025f1e8747432ff",
+        "precision_at_k": 0.3333333333333333,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.16567661728952052,
+        "required_evidence_count": 1,
+        "retrieved_required_evidence_count": 1,
+        "selected_chunk_count": 3,
+        "task_id": "dev-tfl-counting"
+      },
+      {
+        "context_tokens": 904,
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.6736725663716814,
+        "manifest_errors": [],
+        "manifest_sha256": "39885cbabfc63deb0a6f8b6c58157e0d8d913ce7b44fbf485f3f3f4ac32d04cd",
+        "precision_at_k": 0.25,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.1377083663184435,
+        "required_evidence_count": 1,
+        "retrieved_required_evidence_count": 1,
+        "selected_chunk_count": 4,
+        "task_id": "dev-tfl-demographics"
+      },
+      {
+        "context_tokens": 408,
+        "dependency_coverage": 1.0,
+        "irrelevant_token_ratio": 0.4852941176470589,
+        "manifest_errors": [],
+        "manifest_sha256": "e9d564429d099e0eff981252c020f75035442c9988dcd0ca1244572780976086",
+        "precision_at_k": 0.5,
+        "provenance_completeness": 1.0,
+        "recall_at_k": 1.0,
+        "redundancy": 0.3135593220338983,
+        "required_evidence_count": 1,
+        "retrieved_required_evidence_count": 1,
+        "selected_chunk_count": 2,
+        "task_id": "dev-tfl-qc"
+      }
+    ]
+  },
+  "task_registry": {
+    "development_count": 10,
+    "heldout_count": 24,
+    "holdout_isolation": {
+      "answer_leakage_detected": false,
+      "development_count": 10,
+      "heldout_count": 24,
+      "maximum_prompt_similarity": 0.2,
+      "maximum_similarity_pair": [
+        "dev-tfl-qc",
+        "v7h22-tfl-qc-method"
+      ],
+      "passed": true
+    },
+    "path": "experiments/config/experiment_v7_routing_sensitive_tasks_20260725.yaml",
+    "sha256": "48776a35bad2ff77f5a70441066a7e511eaab3d0b1ea35a286a1de604a945368",
+    "smoke_count": 1
+  },
+  "tuning_policy": {
+    "candidate_count": 27,
+    "development_retrieval_diagnostics_only": true,
+    "generation_or_judge_scores_used": false,
+    "ranking_order": [
+      "recall_at_k",
+      "dependency_coverage",
+      "provenance_completeness",
+      "precision_at_k",
+      "irrelevant_token_ratio",
+      "redundancy",
+      "mean_context_tokens"
+    ]
+  },
+  "v6_immutable_audit": {
+    "arm_count": 4,
+    "arm_means": {
+      "aps_gxp_optimized": 4.2446666667,
+      "aps_v5_frozen": 4.2333333333,
+      "flat_8000": 4.067,
+      "random_token_matched": 4.0333333333
+    },
+    "arms": [
+      "aps_gxp_optimized",
+      "aps_v5_frozen",
+      "flat_8000",
+      "random_token_matched"
+    ],
+    "generation_failure_count": 0,
+    "immutable_verified": true,
+    "path": "experiments/results/experiment_v6_aps_gxp_formal_20260724_judged.json",
+    "row_count": 120,
+    "runs_per_cell": 3,
+    "sha256": "fb9f787a6e95e2bd0813c7f7b90fd986e64adeba09305645572a3875df927aa0",
+    "task_count": 10,
+    "v7_accounting_fields_missing": [
+      "cache_creation_tokens",
+      "cache_read_tokens",
+      "canonical_prompt_tokens",
+      "serialized_prompt_bytes",
+      "serialized_prompt_characters"
+    ]
+  }
+}
