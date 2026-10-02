@@ -142,16 +142,16 @@ python scripts/graph-validator.py graph/regulatory-graph.yaml
 
 If you use this framework in your research, please cite:
 
-> Yan, J. (2026). Graph-Constrained Skill Loading for Domain-Specific Agentic AI: A Regulatory Clinical Trial Programming Framework. *Therapeutic Innovation & Regulatory Science* (Submitted). DOI: https://doi.org/10.5281/zenodo.21614975
+> Yan J. CSP Workflow Engine [software]. GitHub; 2026. URL: https://github.com/yanmingyu92/csp-workflow-engine. Versioned archival snapshot: doi:10.5281/zenodo.21614975
 
 ```bibtex
-@article{yan2026csp,
-  title={Graph-Constrained Skill Loading for Domain-Specific Agentic AI: A Regulatory Clinical Trial Programming Framework},
+@software{yan2026csp,
+  title={CSP Workflow Engine},
   author={Yan, Jaime},
-  journal={Therapeutic Innovation \& Regulatory Science},
   year={2026},
-  note={Submitted},
-  doi={}
+  url={https://github.com/yanmingyu92/csp-workflow-engine},
+  version={jmir-100769-rev1},
+  doi={10.5281/zenodo.21614975}
 }
 ```
 
